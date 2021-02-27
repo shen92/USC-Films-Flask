@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HW6</title>
+    <style>
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+      }
+      .root{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+      }
+      .header {
+        display: flex;
+        flex-direction: row;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .headerTitle {
+        color: red;
+        font-size: 25px;
+        font-weight: 700;
+      }
+      .flexGrow {
+        flex: 1
+      }
+      .headerGradient {
+        flex: 1;
+        background: linear-gradient(90deg, rgba(0,0,0,1) 40%, rgba(255,0,0,1) 100%);
+      }
+      .body{
+        height: 100%;
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+      }
+      .sideBar{
+        height: 100%;
+        width: 160px;
+        border-right: 1px solid white;
+      }
+      .content {
+        flex: 1
+      }
+      #homeTab {
+        display: flex;
+        border-bottom: 1px solid white;
+        padding: 20px 10px;
+        color: red;
+        cursor: pointer;
+      }
+      #searchTab {
+        display: flex;
+        padding: 20px 10px;
+        color: white;
+        cursor: pointer;
+      }
+      #homePage {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        /* display: none; */
+      }
+      #searchPage {
+        height: 100%;
+        width: 100%;
+        /* display: flex; */
+        display: none;
+      }
+    </style>
+    
+  </head>
+  <body>
+      <!--On Page Mount-->
+     <div class="root">
+      <div class="header">
+        <div class="headerTitle">THE MOVIE DB</div>
+        <div class="flexGrow"></div>
+        <div class="headerGradient"></div>
+      </div>
+      <div class="body">
+        <div class="sideBar">
+          <div id="homeTab" onclick="onHomeTabClick()">
+            <div>Home</div>
+            <div class="flexGrow"></div>
+            <div>⟶</div>
+          </div>
+          <div id="searchTab" onclick="onSearchTabClick()">
+            <div>Search</div>
+            <div class="flexGrow"></div>
+            <div>⟶</div>
+          </div>
+        </div>
+        <div class="content">
+          <div id="homePage" >Home</div>
+          <div id="searchPage" >Search</div>
+          <div class="footer"></div>
+        </div>
+      </div>
+     </div>
+     <script>
+      const BASE_URL = 'http://localhost:5000/'
+      const onHomeTabClick = () =>{
+        document.getElementById("homeTab").style.color = 'red';
+        document.getElementById("homePage").style.display = 'flex';
+        document.getElementById("searchTab").style.color = 'white';
+        document.getElementById("searchPage").style.display = 'none';
+      }
+
+      const onSearchTabClick = () =>{
+        document.getElementById("homeTab").style.color = 'white';
+        document.getElementById("homePage").style.display = 'none';
+        document.getElementById("searchTab").style.color = 'red';
+        document.getElementById("searchPage").style.display = 'flex';
+      }
+
+      const getData = () => {
+        var requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+
+        fetch(`${BASE_URL}`, requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            const res = result;
+            var obj = JSON.parse(res);
+            console.log(obj)
+          })
+          .catch(error => console.log('error', error));
+      }
+
+      getData()
+    </script>
+  </body>
+</html>
