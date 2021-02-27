@@ -129,11 +129,10 @@
           redirect: 'follow'
         };
 
-        fetch(`${BASE_URL}`, requestOptions)
+        fetch(`${BASE_URL}/home`, requestOptions)
           .then(response => response.text())
           .then(result => {
-            const res = result;
-            var obj = JSON.parse(res);
+            var obj = JSON.parse(result);
             console.log(obj)
           })
           .catch(error => console.log('error', error));
