@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Python app to Azure Web App - movie-db
+name: Build and deploy Python app to Azure Web App - shen92MovieDB
 
 on:
   push:
@@ -30,6 +30,6 @@ jobs:
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'movie-db'
+        app-name: 'shen92MovieDB'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_a21e8786131b457c878cca2e597b24eb }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d4a28afc411c4720b10c35a831d11e2d }}
