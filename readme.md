@@ -10,7 +10,7 @@
 
   Initialize the project according to the following steps:
 
-  1. Use a virtual environment (venv) to manage the dependencies for your project
+  1. Install a virtual environment (venv)
   2. Install Flask and essential dependencies
 
 ### sh start.sh
