@@ -15,5 +15,9 @@ def get_home_contents():
     data = {"message": "this is info for home"}
     return jsonify(data)
 
+@add.route('/test')
+def test():
+    return 'test'
+
 if __name__ == '__main__':
     app.run()
