@@ -49,6 +49,7 @@ et-xmlfile==1.0.1
 fastcache==1.1.0
 filelock==3.0.12
 Flask==1.1.1
+Flask-Cors==3.0.10
 fsspec==0.5.2
 future==0.18.2
 gevent==1.4.0
