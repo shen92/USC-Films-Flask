@@ -8,7 +8,8 @@ CORS(app)
 
 @app.route('/')
 def get_landing_page():
-    return app.send_static_file("index.html")
+    #return app.send_static_file("index.html")
+    return 'hello'
 
 @app.route('/home')
 def get_home_contents():
