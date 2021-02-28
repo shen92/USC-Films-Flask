@@ -1,5 +1,5 @@
 pip freeze > requirements.txt
-COMMIT_ID=$(git rev-parse --verify HEAD)
+current_git_branch_latest_short_id=`git rev-parse --short HEAD`
 git add .
-git commit -m "deploy build ${COMMIT_ID}"
+git commit -m "deploy build ${current_git_branch_latest_short_id}"
 git push
