@@ -12,8 +12,8 @@ def get_landing_page():
 
 @app.route('/home', methods=['GET'])
 def get_home_contents():
-    data = {"message": "this is info for home"}
-    return jsonify(data)
+    response = {"message": "this is home"}
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run()
