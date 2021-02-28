@@ -108,7 +108,7 @@
       </div>
      </div>
      <script>
-      const BASE_URL = 'http://localhost:5000/'
+      
       const onHomeTabClick = () =>{
         document.getElementById("homeTab").style.color = 'red';
         document.getElementById("homePage").style.display = 'flex';
@@ -122,6 +122,8 @@
         document.getElementById("searchTab").style.color = 'red';
         document.getElementById("searchPage").style.display = 'flex';
       }
+
+      const BASE_URL = 'http://localhost:5000'
 
       const getData = () => {
         var requestOptions = {
