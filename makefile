@@ -1,6 +1,8 @@
 init:
 	rm -rf venv/
 	python3 -m venv venv
+
+activate:
 	. venv/bin/activate
 
 install:
