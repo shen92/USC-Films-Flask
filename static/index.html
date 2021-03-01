@@ -43,6 +43,11 @@
         flex-direction: row;
         margin: auto;
       }
+      @media only screen and (max-width: 1080px) {
+        .body {
+          width: 100%;
+        }
+      }
       .sideBar{
         height: 100%;
         width: 160px;
@@ -68,13 +73,13 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        /* display: none; */
+        display: none;
       }
       #searchPage {
         height: 100%;
         width: 100%;
-        /* display: flex; */
-        display: none;
+        display: flex;
+        /* display: none; */
       }
       .homeCard {
         width: 100%;
@@ -82,6 +87,19 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+      }
+      .searchForm {
+        height: 30%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 10px;
+        background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,0,0,1) 100%);
+      }
+      .searchFormRow{
+        width: 50%;
+        display: flex;
       }
     </style>
     
@@ -132,7 +150,27 @@
             </div>
           </div>
 
-          <div id="searchPage" >Search</div>
+          <div id="searchPage" >
+            <div id="searchForm" class="searchForm">
+              <div class="searchFormRow">
+                <div>Keyword</div>
+                <input id="searchInput" onchange="onSearchInputChange(this.value)">
+              </div>
+              <div class="searchFormRow">
+                <div>Category</div>
+                <select id="searchDropdown" onchange="onSearchDropdownChange(this.value)">
+                  <option></option>
+                  <option value="movie">Movies</option>
+                  <option value="tv">TV Shows</option>
+                  <option value="multi">Movies and TV Shows</option>
+                </select>
+            </div>
+            <div class="searchFormRow">
+              <button onclick="onSearchButtonClick()">Search</button>
+              <button onclick="onClearButtonClick()">Clear</button>
+            </div>
+            </div>
+          </div>
 
           <div class="footer"></div>
         </div>
@@ -145,14 +183,19 @@
        const homePage = document.getElementById("homePage");
        const searchPage = document.getElementById("searchPage");
        const trendingMovieImage = document.getElementById("trendingMovieImage");
-       const trendingTVShowImage = document.getElementById("trendingTVShowImage")
+       const trendingTVShowImage = document.getElementById("trendingTVShowImage");
+       const searchInput = document.getElementById("searchInput");
+       const searchDropdown = document.getElementById("searchDropdown");
 
        const BASE_URL = 'http://localhost:5000'
        const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
        let state = {
           tab: "home",
           homeMovies: [],
-          homeTVShows: []
+          homeTVShows: [],
+          keyword: "",
+          category: "",
+          queryResults: []
        }
        
       const onHomeTabClick = () =>{
@@ -161,6 +204,7 @@
         homePage.style.display = 'flex';
         searchTab.style.color = 'white';
         searchPage.style.display = 'none';
+        homePageDidMount();
       }
 
       const onHomeTabMouseOver = () => {
@@ -185,6 +229,34 @@
 
       const onSearchTabMouseOut = () => {
         searchTab.style.color = state.tab === 'search' ? 'red' : 'white';
+      }
+
+      const onSearchInputChange = (keyword) => {
+        state.keyword = keyword;
+      }
+
+      const onSearchDropdownChange = (category) => {
+        state.category = category;
+      }
+
+      const onSearchButtonClick = async() => {
+        // if(state.keyword === "" || state.category === ""){
+        //   alert("Please enter valid values");
+        //   return;
+        // }
+        console.table(state)
+        // const queryResults = await getQueryResults();
+        // state.queryResults = queryResults;
+        // console.log(state.queryResults)
+      }
+
+      const onClearButtonClick = () => {
+        state.keyword ="";
+        state.category = "";
+        state.queryResults = [];
+        searchInput.value = "";
+        searchDropdown.selectedIndex = -1;
+        //TODO: clear query results
       }
 
       const getHomeMovies = async() => {
@@ -213,6 +285,20 @@
         }
       }
 
+      const getQueryResults = async() => {
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+
+        };
+        try {
+          const response = await fetch(`${BASE_URL}/search?keyword=${state.keyword}&category=${state.category}"`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log('Request Failed', error);
+        }
+      }
+      
       const renderHomeMovieSlide = () =>{
         trendingMovieImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[0].backdrop_path}`)
       }
@@ -221,7 +307,7 @@
         trendingTVShowImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[0].backdrop_path}`)
       }
 
-      const pageDidMount = async() => {
+      const homePageDidMount = async() => {
         const homeMovies = await getHomeMovies();
         if(homeMovies.data.length !== 0){
           state.homeMovies = homeMovies.data;
@@ -234,7 +320,12 @@
         renderHomeTVShowSlide();
       }
 
-      pageDidMount();
+      const searchPageDidMount = () => {
+        searchDropdown.selectedIndex = -1;
+      }
+
+      homePageDidMount();
+      searchPageDidMount();
     </script>
   </body>
 </html>

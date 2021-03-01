@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask import jsonify
 from flask_cors import CORS
 import requests
@@ -43,6 +43,16 @@ def get_home_tv_shows():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code
+
+@app.route('/search', methods=['GET'])
+def get_query_results():
+    params = request.args
+    url = Template('$base_url/search/$category?api_key=$api_key&query=$keyword&language=en-US&page=1&include_adult=false').substitute(base_url=BASE_URL, api_key=API_KEY,category=params["category"],keyword=params["keyword"])
+    api_response = requests.get(url)
+    result = api_response.json()
+    result = result["results"]
+    result = result[0:5]
+    return jsonify({'data': result}), api_response.status_code
 
 if __name__ == '__main__':
     app.run()
