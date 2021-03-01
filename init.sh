@@ -1,4 +1,5 @@
 rm -rf venv/
+rm -rf requirements.txt
 python3 -m venv venv
 . venv/bin/activate
 pip install Flask
