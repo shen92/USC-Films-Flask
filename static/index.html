@@ -97,9 +97,43 @@
         margin-left: 10px;
         background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,0,0,1) 100%);
       }
+      .searchTitle{
+        margin: 20px 0px;
+        font-size: 25px;
+        font-weight: 700;
+      }
       .searchFormRow{
-        width: 50%;
+        width: 40%;
         display: flex;
+        margin: 10px 0px;
+      }
+      .searchFormLabel {
+        width: 80px;
+      }
+      .searchInput {
+        height: 20px;
+        flex: 1;
+        border: none;
+        border-radius: 5px;
+      }
+      .searchDropdown{
+        height: 23px;
+        flex: 0.4;
+        border: none;
+        border-radius: 5px;
+      }
+      .buttonRow {
+        justify-content: center;
+      }
+      .searchButton {
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+      }
+      .searchButton:hover {
+        background-color: red;
       }
     </style>
     
@@ -152,22 +186,38 @@
 
           <div id="searchPage" >
             <div id="searchForm" class="searchForm">
+              <div class="searchTitle">Search</div>
               <div class="searchFormRow">
-                <div>Keyword</div>
-                <input id="searchInput" onchange="onSearchInputChange(this.value)">
+                <div class="searchFormLabel">Keyword<span style="color:red; font-style:italic">*</span></div>
+                <input  id="searchInput" 
+                        class="searchInput"
+                        autocomplete="off" 
+                        onchange="onSearchInputChange(this.value)"
+                >
               </div>
               <div class="searchFormRow">
-                <div>Category</div>
-                <select id="searchDropdown" onchange="onSearchDropdownChange(this.value)">
+                <div class="searchFormLabel">Category<span style="color:red; font-style:italic">*</span></div>
+                <select id="searchDropdown" 
+                        class="searchDropdown"
+                        onchange="onSearchDropdownChange(this.value)">
                   <option></option>
                   <option value="movie">Movies</option>
                   <option value="tv">TV Shows</option>
                   <option value="multi">Movies and TV Shows</option>
                 </select>
             </div>
-            <div class="searchFormRow">
-              <button onclick="onSearchButtonClick()">Search</button>
-              <button onclick="onClearButtonClick()">Clear</button>
+            <div class="searchFormRow buttonRow">
+              <button class="searchButton"
+                      onclick="onSearchButtonClick()"
+              >
+                Search
+              </button>
+              <div style="width: 60px;"></div>
+              <button class="searchButton"
+                      onclick="onClearButtonClick()"
+              >
+                Clear
+              </button>
             </div>
             </div>
           </div>
@@ -231,8 +281,13 @@
         searchTab.style.color = state.tab === 'search' ? 'red' : 'white';
       }
 
+      const validateInput = (keyword) => {
+        return validKeyword = keyword.replace(/[^a-zA-Z0-9- _]/g, '').replace(/\s+/g, ' ').trim();
+      }
+ 
       const onSearchInputChange = (keyword) => {
-        state.keyword = keyword;
+        const keywords = validateInput(keyword).split(' ').join('%20');
+        state.keyword = keywords;
       }
 
       const onSearchDropdownChange = (category) => {
@@ -240,14 +295,13 @@
       }
 
       const onSearchButtonClick = async() => {
-        // if(state.keyword === "" || state.category === ""){
-        //   alert("Please enter valid values");
-        //   return;
-        // }
+        if(state.keyword === "" || state.category === ""){
+          alert("Please enter valid values");
+          return;
+        }
+        const queryResults = await getQueryResults();
+        state.queryResults = queryResults.data;
         console.table(state)
-        // const queryResults = await getQueryResults();
-        // state.queryResults = queryResults;
-        // console.log(state.queryResults)
       }
 
       const onClearButtonClick = () => {
@@ -289,10 +343,9 @@
         const requestOptions = {
           method: 'GET',
           redirect: 'follow',
-
         };
         try {
-          const response = await fetch(`${BASE_URL}/search?keyword=${state.keyword}&category=${state.category}"`, requestOptions);
+          const response = await fetch(`${BASE_URL}/search?keyword=${state.keyword}&category=${state.category}`, requestOptions);
           return await response.json();
         } catch (error) {
           console.log('Request Failed', error);
@@ -305,6 +358,10 @@
 
       const renderHomeTVShowSlide = () => {
         trendingTVShowImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[0].backdrop_path}`)
+      }
+
+      const renderQueryResults = () => {
+
       }
 
       const homePageDidMount = async() => {
