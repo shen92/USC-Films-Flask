@@ -5,56 +5,40 @@
     <style>
       html, body {
         height: 100%;
-        width: 100%;
+        max-width: 100%;
         margin: 0;
         font-family: Arial, Helvetica, sans-serif;
-        color: white;
+        color: red;
+        background-color: black;
+        overflow-x: hidden;
       }
-      .root{
-        height: 100%;
-        width: 100%;
+      body {
         display: flex;
         flex-direction: column;
-        background-color: black;
+        margin: 10px;
       }
-      .header {
+      #header {
         display: flex;
         flex-direction: row;
-        padding-top: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
       }
       .headerTitle {
-        color: red;
         font-size: 25px;
         font-weight: 700;
-      }
-      .flexGrow {
-        flex: 1
       }
       .headerGradient {
         flex: 1;
         background: linear-gradient(90deg, rgba(0,0,0,1) 40%, rgba(255,0,0,1) 100%);
       }
-      .body{
-        height: 100%;
-        width: 80%;
+      #content{
         display: flex;
+        flex-grow: 1;
         flex-direction: row;
-        margin: auto;
+        margin-top: 10px;
       }
-      @media only screen and (max-width: 1080px) {
-        .body {
-          width: 100%;
-        }
-      }
-      .sideBar{
-        height: 100%;
-        width: 160px;
-        border-right: 1px solid white;
-      }
-      .content {
-        flex: 1
+      #sideBar{
+        flex: 1;
+        display: flex;
+        border-right: 1px solid white;  
       }
       #homeTab {
         display: flex;
@@ -66,34 +50,34 @@
       #searchTab {
         display: flex;
         padding: 20px 10px;
+        color: white;
         cursor: pointer;
       }
       #homePage {
-        height: 100%;
-        width: 100%;
+        flex: 5 1;
+        max-width: 100%;
         display: flex;
         flex-direction: column;
-        display: none;
       }
       #searchPage {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        /* display: none; */
+        flex: 5 1;
+        max-width: 100%;
+        display: none;
+        flex-direction: column;
       }
       .homeCard {
-        width: 100%;
-        flex: 1;
+        width: 80%;
+        padding: 20px 0px 80px;
         display: flex;
         flex-direction: column;
         align-items: center;
       }
       .searchForm {
-        height: 30%;
-        width: 100%;
+        width: 80%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 1% 0px;
         margin-left: 10px;
         background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,0,0,1) 100%);
       }
@@ -133,59 +117,78 @@
         padding: 10px 15px;
       }
       .searchButton:hover {
-        background-color: red;
+        background-color: darkred;
+      }
+      #footer {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        padding: 15px 5px;
+        background-color: Maroon;
+        color: white;
+        font-style:italic
+      }
+      #footer div{
+        display: flex;
+        flex-direction: row-reverse;
       }
     </style>
     
   </head>
   <body>
-      <!--On Page Mount-->
-     <div class="root">
-      <div class="header">
+      <div id="header">
         <div class="headerTitle">THE MOVIE DB</div>
-        <div class="flexGrow"></div>
+        <div style="flex: 1"></div>
         <div class="headerGradient"></div>
       </div>
-      <div class="body">
-        <div class="sideBar">
-          <div  id="homeTab" 
-                onclick="onHomeTabClick()" 
-                onmouseover="onHomeTabMouseOver()"
-                onmouseout="onHomeTabMouseOut()"
-          >
-            <div>Home</div>
-            <div class="flexGrow"></div>
-            <div>⟶</div>
+      <div id=content>
+          <div id="sideBar">
+            <div style="flex: 1"></div>
+            <div style="flex: 1">
+              <div  id="homeTab" 
+                  onclick="onHomeTabClick()" 
+                  onmouseover="onHomeTabMouseOver()"
+                  onmouseout="onHomeTabMouseOut()"
+              >
+                <div>Home</div>
+                <div style="flex: 1"></div>
+                <div>⟶</div>
+              </div>
+                <div  id="searchTab" 
+                    onclick="onSearchTabClick()" 
+                    onmouseover="onSearchTabMouseOver()"
+                    onmouseout="onSearchTabMouseOut()"
+                >
+                <div>Search</div>
+                <div style="flex: 1"></div>
+                <div>⟶</div>
+              </div>
+            </div>
           </div>
-          <div  id="searchTab" 
-                onclick="onSearchTabClick()" 
-                onmouseover="onSearchTabMouseOver()"
-                onmouseout="onSearchTabMouseOut()"
-          >
-            <div>Search</div>
-            <div class="flexGrow"></div>
-            <div>⟶</div>
-          </div>
-        </div>
-        <div class="content">
 
-          <div id="homePage" >
+          <div id="homePage">
             <div class="homeCard">
-              <div>Trending Movies</div>
-              <div>
+              <div style="color: white">Trending Movies</div>
+              <div style="margin-top: 25px;">
                 <img id="trendingMovieImage" src="" alt="loading"> 
               </div>
             </div>
             <div class="homeCard">
-              <div>TV Shows On-Air Today</div>
-              <div>
+              <div style="color: white">TV Shows On-Air Today</div>
+              <div style="margin-top: 25px;">
                 <img id="trendingTVShowImage" src="" alt="loading"> 
               </div>
             </div>
+            <div id="footer">
+              <div>Designed and developed by Akansha, Pranav & Yash</div>
+              <div>Powered by TMDB</div>
+            </div>
           </div>
 
-          <div id="searchPage" >
-            <div id="searchForm" class="searchForm">
+          <div id="searchPage">
+            <div id="searchForm" 
+                  class="searchForm"
+            >
               <div class="searchTitle">Search</div>
               <div class="searchFormRow">
                 <div class="searchFormLabel">Keyword<span style="color:red; font-style:italic">*</span></div>
@@ -220,12 +223,26 @@
               </button>
             </div>
             </div>
+            <div id="notFound" style="display: block;">
+              No results found.
+            </div>
+            <div id="resultList" style="display: none;">
+              <div style="height: 200px;">list item</div>
+              <div style="height: 200px;">list item</div>
+              <div style="height: 200px;">list item</div>
+              <div style="height: 200px;">list item</div>
+              <div style="height: 200px;">list item</div>
+              <div style="height: 200px;">list item</div>
+              <div style="height: 200px;">list item</div>
+            </div>
+            <!-- <div style="flex: 1">padding</div> -->
+            <div id="footer">
+              <div>Designed and developed by Akansha, Pranav & Yash</div>
+              <div>Powered by TMDB</div>
+            </div>
           </div>
 
-          <div class="footer"></div>
-        </div>
       </div>
-     </div>
      <script>
        //Node References
        const homeTab = document.getElementById("homeTab");
@@ -236,6 +253,8 @@
        const trendingTVShowImage = document.getElementById("trendingTVShowImage");
        const searchInput = document.getElementById("searchInput");
        const searchDropdown = document.getElementById("searchDropdown");
+       const notFound = document.getElementById("notFound");
+       const resultList = document.getElementById("resultList");
 
        const BASE_URL = 'http://localhost:5000'
        const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
@@ -270,7 +289,7 @@
         homeTab.style.color = 'white';
         homePage.style.display = 'none';
         searchTab.style.color = 'red';
-        searchPage.style.display = 'flex';
+        searchPage.style.display = 'block';
       }
 
       const onSearchTabMouseOver = () => {
