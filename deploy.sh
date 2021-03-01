@@ -1,3 +1,4 @@
+rm -rf requirements.txt
 pip freeze > requirements.txt
 current_git_branch_latest_short_id=`git rev-parse --short HEAD`
 git add .
