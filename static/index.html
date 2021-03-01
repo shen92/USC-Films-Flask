@@ -31,7 +31,7 @@
       }
       #content{
         display: flex;
-        flex-grow: 1;
+        flex: 1;
         flex-direction: row;
         margin-top: 10px;
       }
@@ -54,15 +54,17 @@
         cursor: pointer;
       }
       #homePage {
-        flex: 5 1;
+        flex: 5;
+        height: 100%;
         max-width: 100%;
-        display: flex;
+        display: none;
         flex-direction: column;
       }
       #searchPage {
-        flex: 5 1;
+        flex: 5;
+        height: 100%;
         max-width: 100%;
-        display: none;
+        display: flex;
         flex-direction: column;
       }
       .homeCard {
@@ -223,7 +225,7 @@
               </button>
             </div>
             </div>
-            <div id="notFound" style="display: block;">
+            <div id="notFound" style="display: none; flex: 1;">
               No results found.
             </div>
             <div id="resultList" style="display: none;">
@@ -235,7 +237,7 @@
               <div style="height: 200px;">list item</div>
               <div style="height: 200px;">list item</div>
             </div>
-            <!-- <div style="flex: 1">padding</div> -->
+            <div style="display: flex; flex: 1;"></div>
             <div id="footer">
               <div>Designed and developed by Akansha, Pranav & Yash</div>
               <div>Powered by TMDB</div>
@@ -289,7 +291,7 @@
         homeTab.style.color = 'white';
         homePage.style.display = 'none';
         searchTab.style.color = 'red';
-        searchPage.style.display = 'block';
+        searchPage.style.display = 'flex';
       }
 
       const onSearchTabMouseOver = () => {
