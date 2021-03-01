@@ -120,9 +120,15 @@
           <div id="homePage" >
             <div class="homeCard">
               <div>Trending Movies</div>
+              <div>
+                <img id="trendingMovieImage" src="" alt="loading"> 
+              </div>
             </div>
             <div class="homeCard">
               <div>TV Shows On-Air Today</div>
+              <div>
+                <img id="trendingTVShowImage" src="" alt="loading"> 
+              </div>
             </div>
           </div>
 
@@ -138,13 +144,17 @@
        const searchTab = document.getElementById("searchTab");
        const homePage = document.getElementById("homePage");
        const searchPage = document.getElementById("searchPage");
+       const trendingMovieImage = document.getElementById("trendingMovieImage");
+       const trendingTVShowImage = document.getElementById("trendingTVShowImage")
 
+       const BASE_URL = 'http://localhost:5000'
+       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
        let state = {
           tab: "home",
           homeMovies: [],
           homeTVShows: []
        }
-      
+       
       const onHomeTabClick = () =>{
         state.tab = "home";
         homeTab.style.color = 'red';
@@ -177,26 +187,51 @@
         searchTab.style.color = state.tab === 'search' ? 'red' : 'white';
       }
 
-      const BASE_URL = 'http://localhost:5000'
-
-      const getTredndingMovies = () => {
+      const getHomeMovies = async() => {
         const requestOptions = {
           method: 'GET',
           redirect: 'follow'
         };
-        fetch(`${BASE_URL}/home/movies`, requestOptions)
-          .then(response => response.text())
-          .then(result => {
-            const data = JSON.parse(result);
-            state.homeMovies = data;
-            console.log(data)
-          })
-          .catch(error => console.log('error', error));
+        try {
+          const response = await fetch(`${BASE_URL}/home/movies`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log('Request Failed', error);
+        }
       }
 
+      const getHomeTVShows = async() => {
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        try {
+          const response = await fetch(`${BASE_URL}/home/tvshows`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log('Request Failed', error);
+        }
+      }
 
-      const pageDidMount = () => {
-        getTredndingMovies();
+      const renderHomeMovieSlide = () =>{
+        trendingMovieImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[0].backdrop_path}`)
+      }
+
+      const renderHomeTVShowSlide = () => {
+        trendingTVShowImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[0].backdrop_path}`)
+      }
+
+      const pageDidMount = async() => {
+        const homeMovies = await getHomeMovies();
+        if(homeMovies.data.length !== 0){
+          state.homeMovies = homeMovies.data;
+        }
+        const homeTVShows = await getHomeTVShows();
+        if(homeTVShows.data.length !== 0){
+          state.homeTVShows = homeTVShows.data;
+        }
+        renderHomeMovieSlide();
+        renderHomeTVShowSlide();
       }
 
       pageDidMount();
