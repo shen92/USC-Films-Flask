@@ -51,7 +51,7 @@ def get_query_results():
     api_response = requests.get(url)
     result = api_response.json()
     result = result["results"]
-    result = result[0:5]
+    result = result[0:10]
     return jsonify({'data': result}), api_response.status_code
 
 if __name__ == '__main__':

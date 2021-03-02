@@ -57,14 +57,14 @@
         flex: 5;
         height: 100%;
         max-width: 100%;
-        display: flex;
+        display: none;
         flex-direction: column;
       }
       #searchPage {
         flex: 5;
         height: 100%;
         max-width: 100%;
-        display: none;
+        display: flex;
         flex-direction: column;
       }
       .homeCard {
@@ -79,7 +79,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 1% 0px;
         margin-left: 10px;
         background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,0,0,1) 100%);
       }
@@ -87,6 +86,7 @@
         margin: 20px 0px;
         font-size: 25px;
         font-weight: 700;
+        color: white;
       }
       .searchFormRow{
         width: 40%;
@@ -95,6 +95,7 @@
       }
       .searchFormLabel {
         width: 80px;
+        color: white;
       }
       .searchInput {
         height: 20px;
@@ -120,6 +121,32 @@
       }
       .searchButton:hover {
         background-color: darkred;
+      }
+      #searchPadding {
+        margin-left: 10px;
+        display: flex; 
+        flex: 1;
+      }
+      #searchResults{
+        display: none;
+        margin-left: 10px;
+        flex-direction: column;
+      }
+      .resultCard {
+        height: 200px;
+        display: none;
+        margin: 10px 0px;
+      }
+      #notFound{
+        margin-left: 10px;
+        width: 80%;
+        /* display: flex; */
+        flex-direction: column;
+        display: none; 
+        flex: 1;
+        color: white;
+        align-items: center;
+        justify-content: center;
       }
       #footer {
         display: flex;
@@ -225,19 +252,75 @@
               </button>
             </div>
             </div>
-            <div id="notFound" style="display: none; flex: 1;">
-              No results found.
+
+            <div id="notFound">
+              <div style="flex: 1"></div>
+              <div style="flex: 5">No results found.</div>
             </div>
-            <div id="resultList" style="display: none;">
-              <div style="height: 200px;">list item</div>
-              <div style="height: 200px;">list item</div>
-              <div style="height: 200px;">list item</div>
-              <div style="height: 200px;">list item</div>
-              <div style="height: 200px;">list item</div>
-              <div style="height: 200px;">list item</div>
-              <div style="height: 200px;">list item</div>
+            <div id="searchResults">
+              <div id="searchResultsTitle"style="color: white; padding: 25px 0px">Showing results...</div>
+              <div id="resultCard0" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div >
+                  <img id="poster0" alt="poster0">
+                </div>
+              </div>
+              <div id="resultCard1" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div >
+                  <img id="poster1" alt="poster1">
+                </div>
+              </div>
+              <div id="resultCard2" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster2" alt="poster2">
+                </div>
+              </div>
+              <div id="resultCard3" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster3" alt="poster3">
+                </div>
+              </div>
+              <div id="resultCard4" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster4" alt="poster4">
+                </div>
+              </div>
+              <div id="resultCard5" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster5" alt="poster5">
+                </div>
+              </div>
+              <div id="resultCard6" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster6" alt="poster6">
+                </div>
+              </div>
+              <div id="resultCard7" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster7" alt="poster7">
+                </div>
+              </div>
+              <div id="resultCard8" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster8" alt="poster8">
+                </div>
+              </div>
+              <div id="resultCard9" class="resultCard">
+                <div style="background-color: red; width: 10px"></div>
+                <div>
+                  <img id="poster9" alt="poster9">
+                </div>
+              </div>
             </div>
-            <div style="display: flex; flex: 1;"></div>
+            <div id="searchPadding" ></div>
             <div id="footer">
               <div>Designed and developed by Akansha, Pranav & Yash</div>
               <div>Powered by TMDB</div>
@@ -256,7 +339,16 @@
        const searchInput = document.getElementById("searchInput");
        const searchDropdown = document.getElementById("searchDropdown");
        const notFound = document.getElementById("notFound");
-       const resultList = document.getElementById("resultList");
+       const searchResults = document.getElementById("searchResults");
+       const searchResultsTitle = document.getElementById("searchResultsTitle");
+       let searchResultCards = [];
+       for(let i = 0; i < 10; i++){
+         searchResultCards.push(document.getElementById(`resultCard${i}`))
+       }
+       let resultPosters = [];
+       for(let i = 0; i < 10; i++){
+         resultPosters.push(document.getElementById(`poster${i}`))
+       }
 
        const BASE_URL = 'http://localhost:5000'
        const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
@@ -264,8 +356,9 @@
           tab: "home",
           homeMovies: [],
           homeTVShows: [],
-          keyword: "",
-          category: "",
+          //TODO: RESET BEFORE SUBMIT
+          keyword: "avenger",
+          category: "movie",
           queryResults: []
        }
        
@@ -316,13 +409,13 @@
       }
 
       const onSearchButtonClick = async() => {
-        if(state.keyword === "" || state.category === ""){
-          alert("Please enter valid values");
-          return;
-        }
+        // if(state.keyword === "" || state.category === ""){
+        //   alert("Please enter valid values");
+        //   return;
+        // }
         const queryResults = await getQueryResults();
         state.queryResults = queryResults.data;
-        console.table(state)
+        renderQueryResults();
       }
 
       const onClearButtonClick = () => {
@@ -382,7 +475,14 @@
       }
 
       const renderQueryResults = () => {
-
+        searchResults.style.display = "flex";
+        searchResultCards.forEach((searchResultCard, index) => {
+          searchResultCard.style.display = state.queryResults[index] == null ? 'none' : 'flex';
+        })
+        resultPosters.forEach((resultPoster, index) => {
+          resultPoster.setAttribute("src", `${BASE_URL_IMG}/w185${state.queryResults[index].poster_path}`)
+        })
+        
       }
 
       const homePageDidMount = async() => {
