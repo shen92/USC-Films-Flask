@@ -635,6 +635,7 @@
           redirect: 'follow',
         };
         try {
+          console.log(`${BASE_URL}/search/${state.category}?keyword=${state.keyword}`)
           const response = await fetch(`${BASE_URL}/search/${state.category}?keyword=${state.keyword}`, requestOptions);
           return await response.json();
         } catch (error) {
@@ -686,7 +687,6 @@
         }
         renderHomeMovieSlide();
         renderHomeTVShowSlide();
-        console.log(state)
       }
 
       const searchPageDidMount = () => {

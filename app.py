@@ -63,7 +63,6 @@ def get_home_tv_shows():
 
 @app.route('/search/movie', methods=['GET'])
 def get_search_movies():
-    print('search movie called')
     params = request.args
     url = Template('$base_url/search/movie?api_key=$api_key&query=$keyword&language=en-US&page=1&include_adult=false').substitute(base_url=BASE_URL, api_key=API_KEY,keyword=params["keyword"])
     api_response = requests.get(url)
@@ -82,7 +81,8 @@ def get_search_movies():
                 "release_date": result["release_date"],
                 "vote_average": result["vote_average"], 
                 "vote_count": result["vote_count"], 
-                "genre_ids": result["genre_ids"]
+                "genre_ids": result["genre_ids"],
+                "media_type": "movie"
                 }
             response.append(movie)
         return jsonify({"data": response})
@@ -92,7 +92,6 @@ def get_search_movies():
 
 @app.route('/search/tv', methods=['GET'])
 def get_search_tv_shows():
-    print('search tv called')
     params = request.args
     url = Template('$base_url/search/tv?api_key=$api_key&query=$keyword&language=en-US&page=1&include_adult=false').substitute(base_url=BASE_URL, api_key=API_KEY,keyword=params["keyword"])
     api_response = requests.get(url)
@@ -112,6 +111,7 @@ def get_search_tv_shows():
                 "vote_average": result["vote_average"],
                 "vote_count": result["vote_count"],
                 "genre_ids": result["genre_ids"],
+                "media_type": "tv"
                 }
             response.append(tvshow)
         return jsonify({"data": response})
@@ -121,7 +121,6 @@ def get_search_tv_shows():
 
 @app.route('/search/multi', methods=['GET'])
 def get_search_multi():
-    print('search multi called')
     params = request.args
     url = Template('$base_url/search/multi?api_key=$api_key&query=$keyword&language=en-US&page=1&include_adult=false').substitute(base_url=BASE_URL, api_key=API_KEY,keyword=params["keyword"])
     api_response = requests.get(url)
@@ -129,9 +128,36 @@ def get_search_multi():
         #Extract response
         results = api_response.json()
         results = results["results"]
-        results = results[0:10]
         response = []
-        return jsonify({"data": results})
+        for result in results:
+            if(result["media_type"] == "movie"):
+                data = {
+                    "id": result["id"], 
+                    "title": result["title"],
+                    "overview": result["overview"],
+                    "poster_path": result["poster_path"],
+                    "release_date": result["release_date"],
+                    "vote_average": result["vote_average"], 
+                    "vote_count": result["vote_count"], 
+                    "genre_ids": result["genre_ids"],
+                    "media_type": "movie"
+                    }
+                response.append(data)
+            elif(result["media_type"] == "tv"):
+                data = {
+                    "id": result["id"],
+                    "name": result["name"],
+                    "overview": result["overview"],
+                    "poster_path": result["poster_path"],
+                    "first_air_date": result["first_air_date"],
+                    "vote_average": result["vote_average"],
+                    "vote_count": result["vote_count"],
+                    "genre_ids": result["genre_ids"],
+                    "media_type": "tv"
+                }
+                response.append(data)
+        response = response[0:10]
+        return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code
