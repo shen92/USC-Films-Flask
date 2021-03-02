@@ -526,18 +526,19 @@
        }
        
       //Configs
-       const BASE_URL = 'http://localhost:5000'
-       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
-       let state = {
-          tab: "home",
-          homeMovies: [],
-          homeTVShows: [],
-          //TODO: RESET BEFORE SUBMIT
-          keyword: "avengers",
-          category: "movie",
-          queryResults: [],
-          movieGenres: [],
-          tvGenres:[]
+      const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+      //const BASE_URL = 'http://localhost:5000'  //Dev server
+      const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
+      let state = {
+        tab: "home",
+        homeMovies: [],
+        homeTVShows: [],
+        //TODO: RESET BEFORE SUBMIT
+        keyword: "avengers",
+        category: "movie",
+        queryResults: [],
+        movieGenres: [],
+        tvGenres:[]
        }
       
       //Event Handlers
