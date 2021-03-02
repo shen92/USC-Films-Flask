@@ -13,7 +13,6 @@ BASE_URL = "https://api.themoviedb.org/3"
 API_KEY = 'ffacc501334b9c13b0136b785a4a2d81'
 
 @app.route('/', methods=['GET'])
-@app.route('/static/index.html', methods=['GET'])
 def get_landing_page():
     return app.send_static_file("index.html")
 
@@ -157,6 +156,32 @@ def get_search_multi():
                 }
                 response.append(data)
         response = response[0:10]
+        return jsonify({"data": response})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/genres/movie')
+def get_movie_genres(): 
+    url = Template('$base_url/genre/movie/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        results = api_response.json()
+        response = results["genres"]
+        return jsonify({"data": response})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/genres/tv')
+def get_tv_show_genres():
+    url = Template('$base_url/genre/tv/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        results = api_response.json()
+        response = results["genres"]
         return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
