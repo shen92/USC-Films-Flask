@@ -29,13 +29,13 @@
         flex: 1;
         background: linear-gradient(90deg, rgba(0,0,0,1) 40%, rgba(255,0,0,1) 100%);
       }
-      #content{
+      #content {
         display: flex;
         flex: 1;
         flex-direction: row;
         margin-top: 10px;
       }
-      #sideBar{
+      #sideBar {
         flex: 1;
         display: flex;
         border-right: 1px solid white;  
@@ -82,13 +82,13 @@
         margin-left: 10px;
         background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,0,0,1) 100%);
       }
-      .searchTitle{
+      .searchTitle {
         margin: 20px 0px;
         font-size: 25px;
         font-weight: 700;
         color: white;
       }
-      .searchFormRow{
+      .searchFormRow {
         width: 40%;
         display: flex;
         margin: 10px 0px;
@@ -127,26 +127,38 @@
         display: flex; 
         flex: 1;
       }
-      #searchResults{
+      #searchResults {
         display: none;
         margin-left: 10px;
         flex-direction: column;
       }
       .resultCard {
+        width: 80%;
         display: none;
         margin: 10px 0px;
       }
-      .resultCardInfo{
+      .resultCardInfo {
+        flex: 1;
         margin-left: 40px;
         color: white;
       }
-      .resultTitle{
+      .resultTitle {
         margin: 25px 0px;
         font-weight: 700;
         font-size: 25px;
-        
       }
-      .resultYear{
+      .resultDescription {
+        margin: 20px 0px;
+      }
+      .showMoreButton {
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: red;
+        color: white;
+      }
+      .showMoreButton:hover {
+        background-color: gray;
       }
       #notFound{
         margin-left: 10px;
@@ -268,10 +280,11 @@
               <div style="flex: 1"></div>
               <div style="flex: 5">No results found.</div>
             </div>
+
             <div id="searchResults">
               <div id="searchResultsTitle"style="color: white; padding: 25px 0px">Showing results...</div>
               <div id="resultCard0" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div >
                   <img id="resultPoster0" alt="poster0">
                 </div>
@@ -282,16 +295,18 @@
                     <span id="resultGenre0">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate0">{rate}</span>/5
-                    <span id="resultVote0">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate0" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span> 
+                    <span id="resultVote0">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription0">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription0" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard1" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster1" alt="poster1">
                 </div>
@@ -302,16 +317,18 @@
                     <span id="resultGenre1">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate1">{rate}</span>/5
-                    <span id="resultVote1">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate1" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span>
+                    <span id="resultVote1">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription1">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription1" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard2" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster2" alt="poster2">
                 </div>
@@ -322,16 +339,18 @@
                     <span id="resultGenre2">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate2">{rate}</span>/5
-                    <span id="resultVote2">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate2" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span> 
+                    <span id="resultVote2">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription2">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription2" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard3" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster3" alt="poster3">
                 </div>
@@ -342,16 +361,18 @@
                     <span id="resultGenre3">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate3">{rate}</span>/5
-                    <span id="resultVote3">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate3" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span>
+                    <span id="resultVote3">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription3">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription3" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard4" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster4" alt="poster4">
                 </div>
@@ -362,16 +383,18 @@
                     <span id="resultGenre4">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate4">{rate}</span>/5
-                    <span id="resultVote4">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate4" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span>
+                    <span id="resultVote4">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription4">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription4" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard5" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster5" alt="poster5">
                 </div>
@@ -382,16 +405,18 @@
                     <span id="resultGenre5">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate5">{rate}</span>/5
-                    <span id="resultVote5">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate5" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span>
+                    <span id="resultVote5">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription5">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription5" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard6" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster6" alt="poster6">
                 </div>
@@ -402,16 +427,18 @@
                     <span id="resultGenre6">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate6">{rate}</span>/5
-                    <span id="resultVote6">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate6" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span>
+                    <span id="resultVote6">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription6">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription6" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard7" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster7" alt="poster7">
                 </div>
@@ -422,16 +449,18 @@
                     <span id="resultGenre7">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate7">{rate}</span>/5
-                    <span id="resultVote7">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate7" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span>
+                    <span id="resultVote7">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription7">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription7" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard8" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster8" alt="poster8">
                 </div>
@@ -442,16 +471,18 @@
                     <span id="resultGenre8">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate8">{rate}</span>/5
-                    <span id="resultVote8">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate8" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span>
+                    <span id="resultVote8">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription8">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription8" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
               <div id="resultCard9" class="resultCard">
-                <div style="background-color: red; width: 10px"></div>
+                <div style="background-color: red; width: 8px; margin-right: 8px"></div>
                 <div>
                   <img id="resultPoster9" alt="poster9">
                 </div>
@@ -462,16 +493,20 @@
                     <span id="resultGenre9">{general_ids}</span>
                   </div>
                   <div>
-                    <span>star</span>
-                    <span id="resultRate9">{rate}</span>/5
-                    <span id="resultVote9">{vote}</span>votes
+                    <span style="color: red">★</span>
+                    <span id="resultRate9" style="color: red;">{rate}</span><!--
+                    --><span style="color: red;">/5</span> 
+                    <span id="resultVote9">{vote}</span>
+                    <span>votes</span>
                   </div>
-                  <div id="resultDescription9">{description}</div>
-                  <button onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription9" class="resultDescription">{description}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
                 </div>
               </div>
             </div>
+
             <div id="searchPadding"></div>
+
             <div id="footer">
               <div>Designed and developed by Akansha, Pranav & Yash</div>
               <div>Powered by TMDB</div>
@@ -526,8 +561,8 @@
        }
        
       //Configs
-      const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-      //const BASE_URL = 'http://localhost:5000'  //Dev server
+      //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+      const BASE_URL = 'http://localhost:5000'  //Dev server
       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
       let state = {
         tab: "home",
