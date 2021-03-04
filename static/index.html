@@ -193,6 +193,17 @@
       .modalMain {
         flex: 12;
       }
+      .modalTitle {
+        margin-top: 20px;
+        color: black;
+        font-size: 25px;
+      }
+      .modalYear {
+        color: black;
+      }
+      .modalGenre {
+        color: black;
+      }
       #footer {
         display: flex;
         flex-direction: column;
@@ -217,15 +228,18 @@
             <div>
               <img id="modalPoster" src="" alt="Modal Poster">
             </div>
-            <div id="modalTitle">{modalTitle}</div>
-            <div>
-              <span id="modalYear">{modalYear}</span><!--
+            <div id="modalTitle" class="modalTitle">{modalTitle}</div>
+            <div style="margin-top: 20px; color: black;">
+              <span id="modalYear" class="modalYear">{modalYear}</span><!--
               --><span> | </span><!--
-              --><span id="modalGenre">{modalGenre}</span>
+              --><span id="modalGenre" class="modalGenre">{modalGenre}</span>
             </div>
-            <div>
-              <span id="modalRate">{modalRate}</span>
+            <div style="margin-top: 15px; color: black;">
+              <span style="color:red">★</span>
+              <span id="modalRate" style="color:red">{modalRate}</span><!--
+              --><span style="color:red">/5</span>
               <span id="modalVote">{modalVote}</span>
+              <span>votes</span>
             </div>
             <div id="modalDescription" class="modalDescription">
               {modalDescription}
@@ -762,6 +776,7 @@
         movieGenres: [],
         tvGenres:[],
         targetMediaIndex: -1,
+        modalMediaDetails: {},
         modalOpen: false,
        }
       
@@ -772,7 +787,7 @@
         homePage.style.display = 'flex';
         searchTab.style.color = 'white';
         searchPage.style.display = 'none';
-        homePageDidMount();
+        renderHomePage();
       }
 
       const onHomeTabMouseOver = () => {
@@ -816,7 +831,7 @@
         const queryResults = await fetchQueryResults();
         state.queryResults = queryResults.data;
         await renderQueryResults();
-        console.log(state.queryResults)
+        console.log(state.queryResults);
       }
 
       const onClearButtonClick = () => {
@@ -830,12 +845,19 @@
 
       }
 
-      const onShowMoreButtonClick = (index) => {
+      const onShowMoreButtonClick = async(index) => {
         state.modalOpen = true;
         state.targetMediaIndex = index;
         modalContainer.style.display = 'block';
         document.documentElement.style.overflow = "hidden";
-        const targetMedia = state.queryResults[state.targetMediaIndex];
+        
+        if(state.targetMediaIndex >= 0 && state.targetMediaIndex <= 9){
+          const targetMedia = state.queryResults[state.targetMediaIndex];
+          if(targetMedia != null){
+            const modalMediaDetails = await fetchResultDetails(targetMedia.media_type, targetMedia.id);
+            state.modalMediaDetails = modalMediaDetails.data;
+          }
+        }
         renderModal();
       }
 
@@ -851,15 +873,58 @@
         return validKeyword = keyword.replace(/[^a-zA-Z0-9- _]/g, '').replace(/\s+/g, ' ').trim();
       }
       
-      const getGenre = (genreIds, mediaType="movie") => {
-        let result = [];
-        genreIds.forEach(genreId => {
-          mediaType === "movie" ? 
-            result.push(state.movieGenres.find(genre => genre.id === genreId).name) :
-            result.push(state.tvGenres.find(genre => genre.id === genreId).name)
-        })
-        return result.join(', ')
+      const getTitle = (media) => {
+        return media.media_type === 'movie' ? 
+          (media.title == null ? "Not Available" : media.title ) : 
+          (media.name == null ? "Not Available" : media.name);
+      }
+      
+      const getYear = (media) => {
+        if(media == null) return  "Not Available";
+        return media.media_type === 'movie' ? 
+            (media.release_date == null ? "Not Available" : media.release_date.substring(0,4)) : 
+            (media.first_air_date == null ? "Not Available" : media.first_air_date.substring(0,4));
+      }
+
+      const getGenres = (media) => {
+        if(media == null) return  "";
+        return getGenresHelper(media);
       } 
+
+      const getGenresHelper = (media) => {
+        let result = [];
+        if(media.hasOwnProperty('genre_ids')){
+          media.media_type === "movie" ? 
+          (media.genre_ids.forEach(genreId => {
+            const genre = state.movieGenres.find(genre => genre.id === genreId);
+            if(genre != null) result.push(genre.name);
+          })) : 
+          (media.genre_ids.forEach(genreId => {
+            const genre = state.tvGenres.find(genre => genre.id === genreId);
+            if(genre != null) result.push(genre.name) ;
+          }))
+        }else if(media.hasOwnProperty('genres')){
+          result = media.genres.map(genre => {
+            if(genre != null && genre.hasOwnProperty('name') && 
+                genre.name != null && genre.name.length > 0)
+              return genre.name
+          })
+        }
+        return result.join(', ');  
+      }
+
+      const getRates = (media) => {
+        return media.vote_average == null ? "0.0" : keepTwoDecimal(media.vote_average / 2)
+      }
+
+      const getVotes = (media) => {
+        return media.vote_count == null ? 0: media.vote_count;
+      }
+
+      const getSpokenLanguages = (spokenLanguages) => {
+        //TODO
+        return ""
+      }
 
       const keepTwoDecimal = (num) => {  
         let result = parseFloat(num);  
@@ -925,8 +990,19 @@
         }
       }
 
-      const fetchResultDetails = async() => {
-        //TODO
+      const fetchResultDetails = async(mediaType="movie", mediaId="") => {
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+        };
+        try {
+          if(mediaId === "" || mediaId === "") return {};
+          console.log(`${BASE_URL}/details/${mediaType}?id=${mediaId}`)
+          const response = await fetch(`${BASE_URL}/details/${mediaType}?id=${mediaId}`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log('Request Failed', error);
+        }
       }
 
       //Render Functions
@@ -942,30 +1018,28 @@
         searchResults.style.display = "flex";
         searchResultCards.forEach((searchResultCard, index) => {
           const result = state.queryResults[index];
+          if(result == null) return;
           searchResultCard.style.display = result == null ? 'none' : 'flex';
           resultPosters[index].setAttribute("src", `${BASE_URL_IMG}/w185${result.poster_path}`)
-          resultTitles[index].innerHTML = result.media_type === 'movie' ? 
-            (result.title == null ? "Not Available" : result.title ) : 
-            (result.name == null ? "Not Available" : result.name);
-          resultYears[index].innerHTML = result.media_type === 'movie' ? 
-            (result.release_date == null ? "Not Available" : result.release_date.substring(0,4)): 
-            (result.first_air_date == null ? "Not Available" : result.first_air_date.substring(0,4));
-          resultGenres[index].innerHTML = result.media_type === 'movie' ? 
-            (result.genre_ids == null || result.genre_ids.length === 0 ? "Not Available" : getGenre(result.genre_ids, "movie")) : 
-            (result.genre_ids == null || result.genre_ids.length === 0 ? "Not Available" : getGenre(result.genre_ids, "tv"));
-          resultRates[index].innerHTML = result.vote_average == null ? "0.0" : keepTwoDecimal(result.vote_average / 2);
-          resultVotes[index].innerHTML = result.vote_count == null ? 0: result.vote_count;
+          resultTitles[index].innerHTML = getTitle(result);
+          resultYears[index].innerHTML = getYear(result);
+          resultGenres[index].innerHTML = getGenres(result);
+          resultRates[index].innerHTML = getRates(result);
+          resultVotes[index].innerHTML = getVotes(result);
           resultDescriptions[index].innerHTML = result.overview == null ? "" : result.overview;
         })
       }
 
       const renderModal = () => {
+        const modalMediaDetails = state.modalMediaDetails;
+        if(modalMediaDetails == null) return;
+        console.log(modalMediaDetails)
         //modalPoster.innerHTML = ""
-        modalTitle.innerHTML = "fetch title later"
-        modalYear.innerHTML = "fetch year later"
-        modalGenre.innerHTML = "fetch genre later" 
-        modalRate.innerHTML = "fetch rate later"
-        modalVote.innerHTML = "fetch vote later"
+        modalTitle.innerHTML = getTitle(modalMediaDetails);
+        modalYear.innerHTML = getYear(modalMediaDetails);
+        modalGenre.innerHTML = getGenres(modalMediaDetails);
+        modalRate.innerHTML = getRates(modalMediaDetails)
+        modalVote.innerHTML = getVotes(modalMediaDetails)
         modalDescription.innerHTML = "fetch description later"
         // modalCasts;
         reviewUsernames.forEach((reviewUsername, index) => {
@@ -992,13 +1066,17 @@
         if(homeTVShows.data.length !== 0){
           state.homeTVShows = homeTVShows.data;
         }
-        const movieGenres = await fetchGenres('movie')
-        if(movieGenres.data.length !== 0){
-          state.movieGenres = movieGenres.data;
+        if(state.movieGenres.length === 0){
+          const movieGenres = await fetchGenres('movie')
+          if(movieGenres.data.length !== 0){
+            state.movieGenres = movieGenres.data;
+          }
         }
-        const tvGenres = await fetchGenres('tv')
-        if(tvGenres.data.length !== 0){
-          state.tvGenres = tvGenres.data;
+        if(state.tvGenres.length === 0){
+          const tvGenres = await fetchGenres('tv')
+          if(tvGenres.data.length !== 0){
+            state.tvGenres = tvGenres.data;
+          }
         }
         renderHomeMovieSlide();
         renderHomeTVShowSlide();

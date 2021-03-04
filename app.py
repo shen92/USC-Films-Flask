@@ -161,7 +161,7 @@ def get_search_multi():
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code
 
-@app.route('/genres/movie')
+@app.route('/genres/movie', methods=['GET'])
 def get_movie_genres(): 
     url = Template('$base_url/genre/movie/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
     api_response = requests.get(url)
@@ -174,7 +174,7 @@ def get_movie_genres():
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code
 
-@app.route('/genres/tv')
+@app.route('/genres/tv', methods=['GET'])
 def get_tv_show_genres():
     url = Template('$base_url/genre/tv/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
     api_response = requests.get(url)
@@ -183,6 +183,60 @@ def get_tv_show_genres():
         results = api_response.json()
         response = results["genres"] if "genres" in results else None
         return jsonify({"data": response})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/details/movie', methods=['GET'])
+def get_movie_details():
+    params = request.args
+    url = Template('$base_url/movie/$id?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY,id=params["id"])
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        result = api_response.json()
+        data = {
+            "id": result["id"] if "id" in result else None,
+            "title": result["title"] if "title" in result else None,
+            "runtime": result["runtime"] if "runtime" in result else None,
+            "release_date": result["release_date"] if "release_date" in result else None,
+            "spoken_languages": result["spoken_languages"] if "spoken_languages" in result else None,
+            "vote_average": result["vote_average"] if "vote_average" in result else None,
+            "vote_count": result["vote_count"] if "vote_count" in result else None,
+            "poster_path": result["poster_path"] if "poster_path" in result else None,
+            "backdrop_path": result["backdrop_path"] if "backdrop_path" in result else None,
+            "genres": result["genres"] if "genres" in result else None,
+            "media_type": "movie"
+        }
+        return jsonify({"data": data})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/details/tv', methods=['GET'])
+def get_tv_details():
+    params = request.args
+    url = Template('$base_url/tv/$id?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY,id=params["id"])
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        result = api_response.json()
+        data = {
+            "backdrop_path": result["backdrop_path"] if "backdrop_path" in result else None,
+            "episode_run_time": result["episode_run_time"] if "episode_run_time" in result else None,
+            "first_air_date": result["first_air_date"] if "first_air_date" in result else None,
+            "genres": result["genres"] if "genres" in result else None,
+            "id": result["id"] if "id" in result else None,
+            "name": result["name"] if "name" in result else None,
+            "number_of_seasons": result["number_of_seasons"] if "number_of_seasons" in result else None,
+            "overview": result["overview"] if "overview" in result else None,
+            "poster_path": result["poster_path"] if "poster_path" in result else None,
+            "spoken languages": result["spoken languages"] if "spoken languages" in result else None,
+            "vote_average": result["vote_average"] if "vote_average" in result else None,
+            "vote_count": result["vote_count"] if "vote_count" in result else None,
+            "media_type": "tv"
+        }
+        return jsonify({"data": data})
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code
