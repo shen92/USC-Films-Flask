@@ -297,17 +297,19 @@ def get_movie_reviews():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        # results = results[0:5]
+        results = results["results"] if "results" in results else []
+        results = results[0:5] if len(results) > 0 else []
         response = []
         for result in results:
+            author_details = result["author_details"] if "author_details" in result else None
             data = {
-                "username": result["username"] if "username" in result else None,
+                "username": author_details["username"] if author_details is not None and "username" in author_details else None,
                 "content": result["content"] if "content" in result else None,
-                "rating": result["rating"] if "rating" in result else None,
+                "rating": author_details["rating"] if author_details is not None and "rating" in author_details else None,
                 "created_at": result["created_at"] if "created_at" in result else None,
             }
             response.append(data)
-        return jsonify({"data": results})
+        return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code
@@ -320,17 +322,19 @@ def get_tv_reviews():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        # results = results[0:5]
+        results = results["results"] if "results" in results else []
+        results = results[0:5] if len(results) > 0 else []
         response = []
         for result in results:
+            author_details = result["author_details"] if "author_details" in result else None
             data = {
-                "username": result["username"] if "username" in result else None,
+                "username": author_details["username"] if author_details is not None and "username" in author_details else None,
                 "content": result["content"] if "content" in result else None,
-                "rating": result["rating"] if "rating" in result else None,
+                "rating": author_details["rating"] if author_details is not None and "rating" in author_details else None,
                 "created_at": result["created_at"] if "created_at" in result else None,
             }
             response.append(data)
-        return jsonify({"data": results})
+        return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code

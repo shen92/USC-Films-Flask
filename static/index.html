@@ -56,7 +56,7 @@
         flex: 5;
         height: 100%;
         max-width: 100%;
-        display: block;
+        display: flex;
         flex-direction: column;
       }
       #searchPage {
@@ -181,9 +181,9 @@
         overflow-y: auto;
       }
       #modal {
-        height: 2000px;
         width: 50%;
         margin: 5% auto;
+        padding: 25px 0px;
         display: flex;
         background-color: #d0d0d0;
       }
@@ -222,7 +222,7 @@
       }
       .modalCastSlot {
         flex: 1;
-        width: 25%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -242,6 +242,27 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+      }
+      .modalReviewCard{
+        margin-top: 25px;
+      }
+      .reviewUsernameSlot {
+        color: black
+      }
+      .reviewRateSlot {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .reviewUsername {
+        font-weight: 700;
+        font-size: 20px;
+      }
+      .reviewComment {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+        color: black
       }
       #footer {
         display: flex;
@@ -264,7 +285,7 @@
         <div id="modal">
           <div style="flex: 1;"></div>
           <div class="modalMain">
-            <div style="margin-top: 25px;">
+            <div>
               <img id="modalPoster" src="" alt="Modal Poster">
             </div>
             <div id="modalTitle" class="modalTitle">{modalTitle}</div>
@@ -287,10 +308,9 @@
               <span>Spoken languages:</span>
               <span id="modalSpokenLanguages">{modalSpokenLanguages}</span>
             </div>
-            <div style="font-weight: 700; color: black; font-size: 20px; margin-top: 40px;">Cast</div>
+            <div style="font-weight: 700; color: black; font-size: 24px; margin-top: 40px;">Cast</div>
             <div class="castContainer">
               <div class="castRow">
-
                 <div id="modalCastSlot0" class="modalCastSlot">
                   <img id="modalCastAvatar0" class="modalCastAvatar" src="" alt="cast 0">
                   <div id="modalCastName0" 
@@ -305,7 +325,6 @@
                     {modalCharacterName}
                   </div>
                 </div>
-
                 <div id="modalCastSlot1" class="modalCastSlot">
                   <img id="modalCastAvatar1" class="modalCastAvatar" src="" alt="cast 1">
                   <div id="modalCastName1" 
@@ -320,7 +339,6 @@
                     {modalCharacterName}
                   </div>
                 </div>
-
                 <div id="modalCastSlot2" class="modalCastSlot">
                   <img id="modalCastAvatar2" class="modalCastAvatar" src="" alt="cast 2">
                   <div id="modalCastName2" 
@@ -335,7 +353,6 @@
                     {modalCharacterName}
                   </div>
                 </div>
-
                 <div id="modalCastSlot3" class="modalCastSlot">
                   <img id="modalCastAvatar3" class="modalCastAvatar" src="" alt="cast 3">
                   <div id="modalCastName3" 
@@ -350,10 +367,8 @@
                     {modalCharacterName}
                   </div>
                 </div>
-
               </div>
               <div class="castRow">
-
                 <div id="modalCastSlot4" class="modalCastSlot">
                   <img id="modalCastAvatar4" class="modalCastAvatar" src="" alt="cast 4">
                   <div id="modalCastName4" 
@@ -368,7 +383,6 @@
                     {modalCharacterName}
                   </div>
                 </div>
-
                 <div id="modalCastSlot5" class="modalCastSlot">
                   <img id="modalCastAvatar5" class="modalCastAvatar" src="" alt="cast 5">
                   <div id="modalCastName5" 
@@ -383,7 +397,6 @@
                     {modalCharacterName}
                   </div>
                 </div>
-
                 <div id="modalCastSlot6" class="modalCastSlot">
                   <img id="modalCastAvatar6" class="modalCastAvatar" src="" alt="cast 6">
                   <div id="modalCastName6" 
@@ -398,7 +411,6 @@
                     {modalCharacterName}
                   </div>
                 </div>
-
                 <div id="modalCastSlot7" class="modalCastSlot">
                   <img id="modalCastAvatar7" class="modalCastAvatar" src="" alt="cast 7">
                   <div id="modalCastName7" 
@@ -413,89 +425,94 @@
                     {modalCharacterName}
                   </div>
                 </div>
-                
               </div>
             </div>
-            <div style="font-weight: 700; color: black; font-size: 20px; margin-top: 40px;">Review</div>
+            <div style="font-weight: 700; color: black; font-size: 24px; margin-top: 40px;">Review</div>
             <div class="reviewsContainer">
+
               <div id="modalReviewCard0" class="modalReviewCard">
-                <div id="reviewRateSlot0">
+                <div class="reviewUsernameSlot">
                   <span id="reviewUsername0" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate0">{reviewDate}</span>
                 </div>
-                <div>
-                  <span>star</span><!--
-                  --><span id="reviewRate0">{reviewRate}</span><!--
+                <div id="reviewRateSlot0" class="reviewRateSlot">
+                  <span>★</span>
+                  <span id="reviewRate0">{reviewRate}</span><!--
                   --><span>/5</span>
                 </div>
-                <div id="reviewComment0">
+                <div id="reviewComment0" class="reviewComment">
                   {reviewComment}
                 </div>
+                <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
 
               <div id="modalReviewCard1" class="modalReviewCard">
-                <div id="reviewRateSlot1">
+                <div class="reviewUsernameSlot">
                   <span id="reviewUsername1" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate1">{reviewDate}</span>
                 </div>
-                <div>
-                  <span>star</span><!--
-                  --><span id="reviewRate1">{reviewRate}</span><!--
+                <div id="reviewRateSlot1" class="reviewRateSlot">
+                  <span>★</span>
+                  <span id="reviewRate1">{reviewRate}</span><!--
                   --><span>/5</span>
                 </div>
-                <div id="reviewComment1">
+                <div id="reviewComment1" class="reviewComment">
                   {reviewComment}
                 </div>
+                <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
 
               <div id="modalReviewCard2" class="modalReviewCard">
-                <div id="reviewRateSlot2">
+                <div class="reviewUsernameSlot">
                   <span id="reviewUsername2" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate2">{reviewDate}</span>
                 </div>
-                <div>
-                  <span>star</span><!--
-                  --><span id="reviewRate2">{reviewRate}</span><!--
+                <div id="reviewRateSlot2" class="reviewRateSlot">
+                  <span>★</span>
+                  <span id="reviewRate2">{reviewRate}</span><!--
                   --><span>/5</span>
                 </div>
-                <div id="reviewComment2">
+                <div id="reviewComment2" class="reviewComment">
                   {reviewComment}
                 </div>
+                <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
 
               <div id="modalReviewCard3" class="modalReviewCard">
-                <div id="reviewRateSlot3">
+                <div class="reviewUsernameSlot">
                   <span id="reviewUsername3" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate3">{reviewDate}</span>
                 </div>
-                <div>
-                  <span>star</span><!--
-                  --><span id="reviewRate3">{reviewRate}</span><!--
+                <div id="reviewRateSlot3" class="reviewRateSlot">
+                  <span>★</span>
+                  <span id="reviewRate3">{reviewRate}</span><!--
                   --><span>/5</span>
                 </div>
-                <div id="reviewComment3">
+                <div id="reviewComment3" class="reviewComment">
                   {reviewComment}
                 </div>
+                <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
 
               <div id="modalReviewCard4" class="modalReviewCard">
-                <div id="reviewRateSlot4">
+                <div class="reviewUsernameSlot">
                   <span id="reviewUsername4" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate4">{reviewDate}</span>
                 </div>
-                <div>
-                  <span>star</span><!--
-                  --><span id="reviewRate4">{reviewRate}</span><!--
+                <div id="reviewRateSlot4" class="reviewRateSlot">
+                  <span>★</span>
+                  <span id="reviewRate4">{reviewRate}</span><!--
                   --><span>/5</span>
                 </div>
-                <div id="reviewComment4">
+                <div id="reviewComment4" class="reviewComment">
                   {reviewComment}
                 </div>
+                <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
             </div>
           </div>
@@ -535,18 +552,23 @@
           </div>
 
           <div id="homePage">
+
             <div class="homeCard">
               <div style="color: white">Trending Movies</div>
               <div style="margin-top: 25px;">
                 <img id="trendingMovieImage" src="" alt="loading"> 
               </div>
             </div>
+
             <div class="homeCard">
               <div style="color: white">TV Shows On-Air Today</div>
               <div style="margin-top: 25px;">
                 <img id="trendingTVShowImage" src="" alt="loading"> 
               </div>
             </div>
+
+            <div id="searchPadding"></div>
+
             <div id="footer">
               <div>Designed and developed by Akansha, Pranav & Yash</div>
               <div>Powered by TMDB</div>
@@ -901,9 +923,14 @@
         modalCastCharacterNames.push(document.getElementById(`modalCastCharacterName${i}`));
        }
 
-       //reviews
        let modalReviewCards = [];
+       for(let i = 0; i < 5; i++){
+        modalReviewCards.push(document.getElementById(`modalReviewCard${i}`));
+       }
        let reviewRateSlots = [];
+       for(let i = 0; i < 5; i++){
+        reviewRateSlots.push(document.getElementById(`reviewRateSlot${i}`));
+       }
        let reviewUsernames =[];
        for(let i = 0; i < 5; i++){
         reviewUsernames.push(document.getElementById(`reviewUsername${i}`));
@@ -922,16 +949,15 @@
        }
 
       //Configs
-      //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-      const BASE_URL = 'http://localhost:5000'  //Dev server
+      const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+      //const BASE_URL = 'http://localhost:5000'  //Dev server
       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
       let state = {
         tab: "home",
         homeMovies: [],
         homeTVShows: [],
-        //TODO: RESET BEFORE SUBMIT
-        keyword: "avengers",
-        category: "movie",
+        keyword: "",
+        category: "",
         queryResults: [],
         movieGenres: [],
         tvGenres:[],
@@ -993,7 +1019,6 @@
         const queryResults = await fetchQueryResults();
         state.queryResults = queryResults.data;
         await renderQueryResults();
-        //console.log(state.queryResults);
       }
 
       const onClearButtonClick = () => {
@@ -1020,8 +1045,8 @@
             state.modalMediaDetails = modalMediaDetails.data;
             const modalCasts = await fetchCasts(targetMedia.media_type, targetMedia.id);
             state.modalCasts = modalCasts.data;
-            // const modalReviews = await fetchReviews(targetMedia.media_type, targetMedia.id);
-            // state.modalReviews = modalReviews;
+            const modalReviews = await fetchReviews(targetMedia.media_type, targetMedia.id);
+            state.modalReviews = modalReviews.data;
           }
         }
         renderModal();
@@ -1117,7 +1142,7 @@
         return result.join(', ');
       }
 
-      const getName = (cast) => {
+      const getCastName = (cast) => {
         if(cast == null) return "";
         return !cast.hasOwnProperty('name') || cast.name == null || cast.name.length === 0 ? 
           "" : cast.name;
@@ -1129,6 +1154,31 @@
           "" : cast.character;
       }
 
+      const getReviewUserName = (review) => {
+        if(review == null) return "";
+        return !review.hasOwnProperty('username') || review.username == null || review.username.length === 0 ?
+           "" : review.username;
+      }
+
+      const getReviewDate = (review) => {
+        if(review == null) return "";
+        return !review.hasOwnProperty('created_at') || review.created_at == null || review.created_at.length === 0 ? 
+          "" : unixToTime(review.created_at);
+      
+      }
+
+      const getReviewRate = (review) => {
+        if(review == null) return "";
+        return !review.hasOwnProperty('rating') || review.rating == null ? 
+          "0.0" : keepTwoDecimal(review.rating / 2);
+      }
+
+      const getReviewComment = (review) => {
+        if(review == null) return "";
+        return !review.hasOwnProperty('content') || review.content == null || review.content.length === 0 ? 
+          "" : review.content;
+      }
+
       const keepTwoDecimal = (num) => {  
         let result = parseFloat(num);  
         if (isNaN(result)) {   
@@ -1138,6 +1188,14 @@
         if(Number.isInteger(result))
           return `${result}.0`
         return result;  
+      }
+
+      const unixToTime = (unixTime) => {
+        const date = new Date(unixTime);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${month < 10 ? "0" + month : month}/${day < 10 ? "0" + day : day}/${year}`;
       }
 
       //API Calls
@@ -1266,8 +1324,7 @@
         const modalMediaDetails = state.modalMediaDetails;
         const modalCasts = state.modalCasts;
         const modalReviews = state.modalReviews;
-        console.log(modalCasts)
-        //console.log(modalReviews)
+        
 
         modalPoster.setAttribute("src", 
           modalMediaDetails.backdrop_path == null ? 
@@ -1288,24 +1345,19 @@
           modalCast.profile_path == null || modalCast.profile_path.length === 0 ? 
             "img/person-placeholder.png" :
             `${BASE_URL_IMG}/w185${modalCast.profile_path}`);
-          modalCastNames[index].innerHTML = getName(modalCast);
+          modalCastNames[index].innerHTML = getCastName(modalCast);
           modalCastCharacterNames[index].innerHTML = getCharacterName(modalCast);
         })
 
-
-        reviewUsernames.forEach((reviewUsername, index) => {
-          reviewUsername.innerHTML = `fetch username${index} later`
-        });
-        reviewDates.forEach((reviewDate, index) => {
-          reviewDate.innerHTML = `fetch date${index} later`
-        });  
-        reviewRates.forEach((reviewRate, index) => {
-          reviewRate.innerHTML = `fetch rate${index} later`
-        });
-        reviewComments.forEach((reviewComment, index) => {
-          reviewComment.innerHTML = `fetch comment${index} later`
-        });
-
+        modalReviews.forEach((modalReview, index) => {
+          modalReviewCards[index].style.display = modalReview == null ? 'none' : 'block';
+          reviewRateSlots[index].style.display = modalReview.rating == null ? 'none' : 'block';
+          reviewUsernames[index].innerHTML = getReviewUserName(modalReview);
+          reviewDates[index].innerHTML = getReviewDate(modalReview);
+          reviewRates[index].innerHTML = getReviewRate(modalReview);
+          reviewComments[index].innerHTML = getReviewComment(modalReview);
+        })
+        
       }
 
       const renderHomePage = async() => {
