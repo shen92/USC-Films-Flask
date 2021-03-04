@@ -173,7 +173,7 @@
       #modalContainer {
         display: none;
         position: absolute;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.8);
         width: 100%;
         height: 105%;
         z-index: 100;
@@ -204,6 +204,20 @@
       .modalGenre {
         color: black;
       }
+      .modalDescription {
+        margin-top: 30px;
+        color: black;
+      }
+      .modalSpokenLanguages {
+        margin-top: 30px;
+        color: black;
+        font-style: italic;
+      }
+      .castContainer {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+      }
       #footer {
         display: flex;
         flex-direction: column;
@@ -225,7 +239,7 @@
         <div id="modal">
           <div style="flex: 1;"></div>
           <div class="modalMain">
-            <div>
+            <div style="margin-top: 25px;">
               <img id="modalPoster" src="" alt="Modal Poster">
             </div>
             <div id="modalTitle" class="modalTitle">{modalTitle}</div>
@@ -244,8 +258,13 @@
             <div id="modalDescription" class="modalDescription">
               {modalDescription}
             </div>
+            <div class="modalSpokenLanguages">
+              <span>Spoken languages:</span>
+              <span id="modalSpokenLanguages">{modalSpokenLanguages}</span>
+            </div>
+            <div style="font-weight: 700; color: black; font-size: 20px; margin-top: 40px;">Cast</div>
             <div class="castContainer">
-              <div>Cast</div>
+              
               <div>
                 <div>
                   <img id="modalCast0" src="" alt="cast 0">
@@ -740,6 +759,7 @@
        const modalRate = document.getElementById('modalRate');
        const modalVote = document.getElementById('modalVote');
        const modalDescription = document.getElementById('modalDescription');
+       const modalSpokenLanguages = document.getElementById('modalSpokenLanguages');
        let modalCasts = [];
        for(let i = 0; i < 8; i++){
          modalCasts.push(document.getElementById(`modalCast${i}`));
@@ -762,8 +782,8 @@
        }
 
       //Configs
-      //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-      const BASE_URL = 'http://localhost:5000'  //Dev server
+      const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+      //const BASE_URL = 'http://localhost:5000'  //Dev server
       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
       let state = {
         tab: "home",
@@ -777,6 +797,8 @@
         tvGenres:[],
         targetMediaIndex: -1,
         modalMediaDetails: {},
+        modalCast: [],
+        modalReviews: [],
         modalOpen: false,
        }
       
@@ -831,7 +853,7 @@
         const queryResults = await fetchQueryResults();
         state.queryResults = queryResults.data;
         await renderQueryResults();
-        console.log(state.queryResults);
+        //console.log(state.queryResults);
       }
 
       const onClearButtonClick = () => {
@@ -888,12 +910,11 @@
 
       const getGenres = (media) => {
         if(media == null) return  "";
-        return getGenresHelper(media);
-      } 
 
-      const getGenresHelper = (media) => {
         let result = [];
         if(media.hasOwnProperty('genre_ids')){
+          if(media.genre_ids == null || media.genre_ids.length === 0)
+            return "";
           media.media_type === "movie" ? 
           (media.genre_ids.forEach(genreId => {
             const genre = state.movieGenres.find(genre => genre.id === genreId);
@@ -904,14 +925,16 @@
             if(genre != null) result.push(genre.name) ;
           }))
         }else if(media.hasOwnProperty('genres')){
+          if(media.genres == null || media.genres.length === 0)
+            return "";
           result = media.genres.map(genre => {
             if(genre != null && genre.hasOwnProperty('name') && 
                 genre.name != null && genre.name.length > 0)
               return genre.name
           })
         }
-        return result.join(', ');  
-      }
+        return result.join(', '); 
+      } 
 
       const getRates = (media) => {
         return media.vote_average == null ? "0.0" : keepTwoDecimal(media.vote_average / 2)
@@ -921,9 +944,21 @@
         return media.vote_count == null ? 0: media.vote_count;
       }
 
-      const getSpokenLanguages = (spokenLanguages) => {
-        //TODO
-        return ""
+      const getDescription = (media) => {
+        if(media == null) return "";
+        return media.overview == null ? "" : media.overview;
+      }
+
+      const getSpokenLanguages = (media) => {
+        if(media == null) return "";
+        const spokenLanguages = media["spoken_languages"] || media["spoken languages"];
+        if(spokenLanguages == null || spokenLanguages.length === 0) return "";
+        const result = spokenLanguages.map(spokenLanguage => {
+          if(spokenLanguage != null && spokenLanguage.hasOwnProperty('name') &&
+          spokenLanguage.name != null && spokenLanguage.name.length > 0)
+            return spokenLanguage.name
+        });
+        return result.join(', ');
       }
 
       const keepTwoDecimal = (num) => {  
@@ -997,7 +1032,6 @@
         };
         try {
           if(mediaId === "" || mediaId === "") return {};
-          console.log(`${BASE_URL}/details/${mediaType}?id=${mediaId}`)
           const response = await fetch(`${BASE_URL}/details/${mediaType}?id=${mediaId}`, requestOptions);
           return await response.json();
         } catch (error) {
@@ -1018,29 +1052,33 @@
         searchResults.style.display = "flex";
         searchResultCards.forEach((searchResultCard, index) => {
           const result = state.queryResults[index];
-          if(result == null) return;
           searchResultCard.style.display = result == null ? 'none' : 'flex';
-          resultPosters[index].setAttribute("src", `${BASE_URL_IMG}/w185${result.poster_path}`)
+          resultPosters[index].setAttribute("src", result.poster_path == null ? 
+          "img/movie_placeholder.png" :`${BASE_URL_IMG}/w185${result.poster_path}`)
           resultTitles[index].innerHTML = getTitle(result);
           resultYears[index].innerHTML = getYear(result);
           resultGenres[index].innerHTML = getGenres(result);
           resultRates[index].innerHTML = getRates(result);
           resultVotes[index].innerHTML = getVotes(result);
-          resultDescriptions[index].innerHTML = result.overview == null ? "" : result.overview;
+          resultDescriptions[index].innerHTML = getDescription(result);
         })
       }
 
       const renderModal = () => {
         const modalMediaDetails = state.modalMediaDetails;
-        if(modalMediaDetails == null) return;
         console.log(modalMediaDetails)
-        //modalPoster.innerHTML = ""
+        modalPoster.setAttribute("src", 
+          modalMediaDetails.backdrop_path == null ? 
+            "img/movie-placeholder.jpg" :
+            `${BASE_URL_IMG}/w780${modalMediaDetails.backdrop_path}`
+          )
         modalTitle.innerHTML = getTitle(modalMediaDetails);
         modalYear.innerHTML = getYear(modalMediaDetails);
         modalGenre.innerHTML = getGenres(modalMediaDetails);
-        modalRate.innerHTML = getRates(modalMediaDetails)
-        modalVote.innerHTML = getVotes(modalMediaDetails)
-        modalDescription.innerHTML = "fetch description later"
+        modalRate.innerHTML = getRates(modalMediaDetails);
+        modalVote.innerHTML = getVotes(modalMediaDetails);
+        modalDescription.innerHTML = getDescription(modalMediaDetails);
+        modalSpokenLanguages.innerHTML = getSpokenLanguages(modalMediaDetails);
         // modalCasts;
         reviewUsernames.forEach((reviewUsername, index) => {
           reviewUsername.innerHTML = `fetch username${index} later`

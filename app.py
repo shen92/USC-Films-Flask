@@ -81,7 +81,7 @@ def get_search_movies():
                 "vote_average": result["vote_average"] if "vote_average" in result else None, 
                 "vote_count": result["vote_count"] if "vote_count" in result else None, 
                 "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
-                "media_type": "movie"
+                "media_type": "movie" #Additional field
                 }
             response.append(movie)
         return jsonify({"data": response})
@@ -110,7 +110,7 @@ def get_search_tv_shows():
                 "vote_average": result["vote_average"] if "vote_average" in result else None,
                 "vote_count": result["vote_count"] if "vote_count" in result else None,
                 "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
-                "media_type": "tv"
+                "media_type": "tv"  #Additional field
                 }
             response.append(tvshow)
         return jsonify({"data": response})
@@ -139,7 +139,7 @@ def get_search_multi():
                     "vote_average": result["vote_average"] if "vote_average" in result else None, 
                     "vote_count": result["vote_count"] if "vote_count" in result else None, 
                     "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
-                    "media_type": "movie"
+                    "media_type": "movie" #Additional field
                     }
                 response.append(data)
             elif(result["media_type"] == "tv"):
@@ -152,7 +152,7 @@ def get_search_multi():
                     "vote_average": result["vote_average"] if "vote_average" in result else None,
                     "vote_count": result["vote_count"] if "vote_count" in result else None,
                     "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
-                    "media_type": "tv"
+                    "media_type": "tv" #Additional field
                 }
                 response.append(data)
         response = response[0:10]
@@ -206,7 +206,8 @@ def get_movie_details():
             "poster_path": result["poster_path"] if "poster_path" in result else None,
             "backdrop_path": result["backdrop_path"] if "backdrop_path" in result else None,
             "genres": result["genres"] if "genres" in result else None,
-            "media_type": "movie"
+            "overview": result["overview"] if "overview" in result else None, #Additional field
+            "media_type": "movie"   #Additional field
         }
         return jsonify({"data": data})
     else:
@@ -233,7 +234,8 @@ def get_tv_details():
             "poster_path": result["poster_path"] if "poster_path" in result else None,
             "spoken languages": result["spoken languages"] if "spoken languages" in result else None,
             "vote_average": result["vote_average"] if "vote_average" in result else None,
-            "vote_count": result["vote_count"] if "vote_count" in result else None,
+            "vote_count": result["vote_count"] if "vote_count" in result else None, #Additional field
+            "overview": result["overview"] if "overview" in result else None, #Additional field
             "media_type": "tv"
         }
         return jsonify({"data": data})
