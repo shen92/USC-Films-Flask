@@ -10,16 +10,16 @@
         font-family: Arial, Helvetica, sans-serif;
         color: red;
         background-color: black;
-        overflow-x: hidden;
       }
       body {
         display: flex;
         flex-direction: column;
-        margin: 10px;
+        overflow-x: hidden;
       }
       #header {
         display: flex;
         flex-direction: row;
+        margin: 10px;
       }
       .headerTitle {
         font-size: 25px;
@@ -33,7 +33,6 @@
         display: flex;
         flex: 1;
         flex-direction: row;
-        margin-top: 10px;
       }
       #sideBar {
         flex: 1;
@@ -57,7 +56,7 @@
         flex: 5;
         height: 100%;
         max-width: 100%;
-        display: flex;
+        display: block;
         flex-direction: column;
       }
       #searchPage {
@@ -129,11 +128,11 @@
       }
       #searchResults {
         display: none;
+        width: 80%;
         margin-left: 10px;
         flex-direction: column;
       }
-      .resultCard {
-        width: 80%;
+      .resultCard {   
         display: none;
         margin: 10px 0px;
       }
@@ -171,10 +170,33 @@
         align-items: center;
         justify-content: center;
       }
+      #modalContainer {
+        display: none;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.4);
+        width: 100%;
+        height: 105%;
+        z-index: 100;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      #modal {
+        height: 2000px;
+        width: 50%;
+        margin: 5% auto;
+        display: flex;
+        background-color: #d0d0d0;
+      }
+      .modalPadding {
+        flex: 1;
+      }
+      .modalMain {
+        flex: 12;
+      }
       #footer {
         display: flex;
         flex-direction: column;
-        margin-left: 10px;
+        margin: 10px 10px 0px 10px;
         padding: 15px 5px;
         background-color: Maroon;
         color: white;
@@ -188,6 +210,143 @@
     
   </head>
   <body>
+      <div id="modalContainer" class="disabledArea">
+        <div id="modal">
+          <div style="flex: 1;"></div>
+          <div class="modalMain">
+            <div>
+              <img id="modalPoster" src="" alt="Modal Poster">
+            </div>
+            <div id="modalTitle">{modalTitle}</div>
+            <div>
+              <span id="modalYear">{modalYear}</span><!--
+              --><span> | </span><!--
+              --><span id="modalGenre">{modalGenre}</span>
+            </div>
+            <div>
+              <span id="modalRate">{modalRate}</span>
+              <span id="modalVote">{modalVote}</span>
+            </div>
+            <div id="modalDescription" class="modalDescription">
+              {modalDescription}
+            </div>
+            <div class="castContainer">
+              <div>Cast</div>
+              <div>
+                <div>
+                  <img id="modalCast0" src="" alt="cast 0">
+                </div>
+                <div>
+                  <img id="modalCast1" src="" alt="cast 1">
+                </div>
+                <div>
+                  <img id="modalCast2" src="" alt="cast 2">
+                </div>
+                <div>
+                  <img id="modalCast3" src="" alt="cast 3">
+                </div>
+                <div>
+                  <img id="modalCast4" src="" alt="cast 4">
+                </div>
+                <div>
+                  <img id="modalCast5" src="" alt="cast 5">
+                </div>
+                <div>
+                  <img id="modalCast6" src="" alt="cast 6">
+                </div>
+                <div>
+                  <img id="modalCast7" src="" alt="cast 7">
+                </div>
+              </div>
+            </div>
+            <div class="reviewsContainer">
+              <div>Reviews</div>
+              <div class="modalReviewCard">
+                <div>
+                  <span id="reviewUsername0" class="reviewUsername">{reviewUsername}</span><!--
+                  --><span> on </span><!--
+                  --><span id="reviewDate0">{reviewDate}</span>
+                </div>
+                <div>
+                  <span>star</span><!--
+                  --><span id="reviewRate0">{reviewRate}</span><!--
+                  --><span>/5</span>
+                </div>
+                <div id="reviewComment0">
+                  {reviewComment}
+                </div>
+              </div>
+
+              <div class="modalReviewCard">
+                <div>
+                  <span id="reviewUsername1" class="reviewUsername">{reviewUsername}</span><!--
+                  --><span> on </span><!--
+                  --><span id="reviewDate1">{reviewDate}</span>
+                </div>
+                <div>
+                  <span>star</span><!--
+                  --><span id="reviewRate1">{reviewRate}</span><!--
+                  --><span>/5</span>
+                </div>
+                <div id="reviewComment1">
+                  {reviewComment}
+                </div>
+              </div>
+
+              <div class="modalReviewCard">
+                <div>
+                  <span id="reviewUsername2" class="reviewUsername">{reviewUsername}</span><!--
+                  --><span> on </span><!--
+                  --><span id="reviewDate2">{reviewDate}</span>
+                </div>
+                <div>
+                  <span>star</span><!--
+                  --><span id="reviewRate2">{reviewRate}</span><!--
+                  --><span>/5</span>
+                </div>
+                <div id="reviewComment2">
+                  {reviewComment}
+                </div>
+              </div>
+
+              <div class="modalReviewCard">
+                <div>
+                  <span id="reviewUsername3" class="reviewUsername">{reviewUsername}</span><!--
+                  --><span> on </span><!--
+                  --><span id="reviewDate3">{reviewDate}</span>
+                </div>
+                <div>
+                  <span>star</span><!--
+                  --><span id="reviewRate3">{reviewRate}</span><!--
+                  --><span>/5</span>
+                </div>
+                <div id="reviewComment3">
+                  {reviewComment}
+                </div>
+              </div>
+
+              <div class="modalReviewCard">
+                <div>
+                  <span id="reviewUsername4" class="reviewUsername">{reviewUsername}</span><!--
+                  --><span> on </span><!--
+                  --><span id="reviewDate4">{reviewDate}</span>
+                </div>
+                <div>
+                  <span>star</span><!--
+                  --><span id="reviewRate4">{reviewRate}</span><!--
+                  --><span>/5</span>
+                </div>
+                <div id="reviewComment4">
+                  {reviewComment}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="flex: 1.2;">
+            <button onclick="onCloseModalButtonClick()">close</button>
+          </div>
+        </div>
+      </div>
       <div id="header">
         <div class="headerTitle">THE MOVIE DB</div>
         <div style="flex: 1"></div>
@@ -289,20 +448,20 @@
                   <img id="resultPoster0" alt="poster0">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle0" class="resultTitle">{title}</div>
+                  <div id="resultTitle0" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear0" class="resultYear">{year}</span> |
-                    <span id="resultGenre0">{general_ids}</span>
+                    <span id="resultYear0" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre0">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate0" style="color: red;">{rate}</span><!--
+                    <span id="resultRate0" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span> 
-                    <span id="resultVote0">{vote}</span>
+                    <span id="resultVote0">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription0" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription0" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(0)">Show more</button>
                 </div>
               </div>
               <div id="resultCard1" class="resultCard">
@@ -311,20 +470,20 @@
                   <img id="resultPoster1" alt="poster1">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle1" class="resultTitle">{title}</div>
+                  <div id="resultTitle1" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear1" class="resultYear">{year}</span> |
-                    <span id="resultGenre1">{general_ids}</span>
+                    <span id="resultYear1" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre1">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate1" style="color: red;">{rate}</span><!--
+                    <span id="resultRate1" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span>
                     <span id="resultVote1">{vote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription1" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription1" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(1)">Show more</button>
                 </div>
               </div>
               <div id="resultCard2" class="resultCard">
@@ -333,20 +492,20 @@
                   <img id="resultPoster2" alt="poster2">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle2" class="resultTitle">{title}</div>
+                  <div id="resultTitle2" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear2" class="resultYear">{year}</span> |
-                    <span id="resultGenre2">{general_ids}</span>
+                    <span id="resultYear2" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre2">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate2" style="color: red;">{rate}</span><!--
+                    <span id="resultRate2" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span> 
-                    <span id="resultVote2">{vote}</span>
+                    <span id="resultVote2">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription2" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription2" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(2)">Show more</button>
                 </div>
               </div>
               <div id="resultCard3" class="resultCard">
@@ -355,20 +514,20 @@
                   <img id="resultPoster3" alt="poster3">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle3" class="resultTitle">{title}</div>
+                  <div id="resultTitle3" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear3" class="resultYear">{year}</span> |
-                    <span id="resultGenre3">{general_ids}</span>
+                    <span id="resultYear3" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre3">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate3" style="color: red;">{rate}</span><!--
+                    <span id="resultRate3" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span>
-                    <span id="resultVote3">{vote}</span>
+                    <span id="resultVote3">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription3" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription3" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(3)">Show more</button>
                 </div>
               </div>
               <div id="resultCard4" class="resultCard">
@@ -377,20 +536,20 @@
                   <img id="resultPoster4" alt="poster4">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle4" class="resultTitle">{title}</div>
+                  <div id="resultTitle4" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear4" class="resultYear">{year}</span> |
-                    <span id="resultGenre4">{general_ids}</span>
+                    <span id="resultYear4" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre4">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate4" style="color: red;">{rate}</span><!--
+                    <span id="resultRate4" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span>
-                    <span id="resultVote4">{vote}</span>
+                    <span id="resultVote4">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription4" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription4" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(4)">Show more</button>
                 </div>
               </div>
               <div id="resultCard5" class="resultCard">
@@ -399,20 +558,20 @@
                   <img id="resultPoster5" alt="poster5">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle5" class="resultTitle">{title}</div>
+                  <div id="resultTitle5" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear5" class="resultYear">{year}</span> |
-                    <span id="resultGenre5">{general_ids}</span>
+                    <span id="resultYear5" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre5">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate5" style="color: red;">{rate}</span><!--
+                    <span id="resultRate5" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span>
-                    <span id="resultVote5">{vote}</span>
+                    <span id="resultVote5">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription5" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription5" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(5)">Show more</button>
                 </div>
               </div>
               <div id="resultCard6" class="resultCard">
@@ -421,20 +580,20 @@
                   <img id="resultPoster6" alt="poster6">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle6" class="resultTitle">{title}</div>
+                  <div id="resultTitle6" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear6" class="resultYear">{year}</span> |
-                    <span id="resultGenre6">{general_ids}</span>
+                    <span id="resultYear6" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre6">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate6" style="color: red;">{rate}</span><!--
+                    <span id="resultRate6" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span>
-                    <span id="resultVote6">{vote}</span>
+                    <span id="resultVote6">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription6" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription6" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(6)">Show more</button>
                 </div>
               </div>
               <div id="resultCard7" class="resultCard">
@@ -443,20 +602,20 @@
                   <img id="resultPoster7" alt="poster7">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle7" class="resultTitle">{title}</div>
+                  <div id="resultTitle7" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear7" class="resultYear">{year}</span> |
-                    <span id="resultGenre7">{general_ids}</span>
+                    <span id="resultYear7" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre7">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate7" style="color: red;">{rate}</span><!--
+                    <span id="resultRate7" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span>
-                    <span id="resultVote7">{vote}</span>
+                    <span id="resultVote7">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription7" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription7" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(7)">Show more</button>
                 </div>
               </div>
               <div id="resultCard8" class="resultCard">
@@ -465,20 +624,20 @@
                   <img id="resultPoster8" alt="poster8">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle8" class="resultTitle">{title}</div>
+                  <div id="resultTitle8" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear8" class="resultYear">{year}</span> |
-                    <span id="resultGenre8">{general_ids}</span>
+                    <span id="resultYear8" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre8">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate8" style="color: red;">{rate}</span><!--
+                    <span id="resultRate8" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span>
-                    <span id="resultVote8">{vote}</span>
+                    <span id="resultVote8">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription8" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription8" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(8)">Show more</button>
                 </div>
               </div>
               <div id="resultCard9" class="resultCard">
@@ -487,20 +646,20 @@
                   <img id="resultPoster9" alt="poster9">
                 </div>
                 <div class="resultCardInfo">
-                  <div id="resultTitle9" class="resultTitle">{title}</div>
+                  <div id="resultTitle9" class="resultTitle">{resultTitle}</div>
                   <div>
-                    <span id="resultYear9" class="resultYear">{year}</span> |
-                    <span id="resultGenre9">{general_ids}</span>
+                    <span id="resultYear9" class="resultYear">{resultYear}</span> |
+                    <span id="resultGenre9">{resultGenre}</span>
                   </div>
                   <div>
                     <span style="color: red">★</span>
-                    <span id="resultRate9" style="color: red;">{rate}</span><!--
+                    <span id="resultRate9" style="color: red;">{resultRate}</span><!--
                     --><span style="color: red;">/5</span> 
-                    <span id="resultVote9">{vote}</span>
+                    <span id="resultVote9">{resultVote}</span>
                     <span>votes</span>
                   </div>
-                  <div id="resultDescription9" class="resultDescription">{description}</div>
-                  <button class="showMoreButton"onclick="onShowMoreButtonClick()">Show more</button>
+                  <div id="resultDescription9" class="resultDescription">{resultDescription}</div>
+                  <button class="showMoreButton"onclick="onShowMoreButtonClick(9)">Show more</button>
                 </div>
               </div>
             </div>
@@ -527,6 +686,7 @@
        const notFound = document.getElementById("notFound");
        const searchResults = document.getElementById("searchResults");
        const searchResultsTitle = document.getElementById("searchResultsTitle");
+       const modalContainer = document.getElementById('modalContainer')
        let searchResultCards = [];
        for(let i = 0; i < 10; i++){
          searchResultCards.push(document.getElementById(`resultCard${i}`))
@@ -559,7 +719,34 @@
        for(let i = 0; i < 10; i++){
         resultDescriptions.push(document.getElementById(`resultDescription${i}`))
        }
-       
+       const modalPoster = document.getElementById('modalPoster');
+       const modalTitle = document.getElementById('modalTitle');
+       const modalYear = document.getElementById('modalYear');
+       const modalGenre = document.getElementById('modalGenre');
+       const modalRate = document.getElementById('modalRate');
+       const modalVote = document.getElementById('modalVote');
+       const modalDescription = document.getElementById('modalDescription');
+       let modalCasts = [];
+       for(let i = 0; i < 8; i++){
+         modalCasts.push(document.getElementById(`modalCast${i}`));
+       }
+       let reviewUsernames =[];
+       for(let i = 0; i < 5; i++){
+        reviewUsernames.push(document.getElementById(`reviewUsername${i}`));
+       }
+       let reviewDates = [];
+       for(let i = 0; i < 5; i++){
+        reviewDates.push(document.getElementById(`reviewDate${i}`));
+       }
+       let reviewRates = [];
+       for(let i = 0; i < 5; i++){
+        reviewRates.push(document.getElementById(`reviewRate${i}`));
+       }
+       let reviewComments = [];
+       for(let i = 0; i < 5; i++){
+        reviewComments.push(document.getElementById(`reviewComment${i}`));
+       }
+
       //Configs
       //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
       const BASE_URL = 'http://localhost:5000'  //Dev server
@@ -569,11 +756,13 @@
         homeMovies: [],
         homeTVShows: [],
         //TODO: RESET BEFORE SUBMIT
-        keyword: "avengers",
+        keyword: "intern",
         category: "movie",
         queryResults: [],
         movieGenres: [],
-        tvGenres:[]
+        tvGenres:[],
+        targetMediaIndex: -1,
+        modalOpen: false,
        }
       
       //Event Handlers
@@ -627,7 +816,7 @@
         const queryResults = await fetchQueryResults();
         state.queryResults = queryResults.data;
         await renderQueryResults();
-        console.log(state)
+        console.log(state.queryResults)
       }
 
       const onClearButtonClick = () => {
@@ -641,19 +830,22 @@
 
       }
 
-      const fetchHomeMovies = async() => {
-        const requestOptions = {
-          method: 'GET',
-          redirect: 'follow'
-        };
-        try {
-          const response = await fetch(`${BASE_URL}/home/movies`, requestOptions);
-          return await response.json();
-        } catch (error) {
-          console.log('Request Failed', error);
-        }
+      const onShowMoreButtonClick = (index) => {
+        state.modalOpen = true;
+        state.targetMediaIndex = index;
+        modalContainer.style.display = 'block';
+        document.documentElement.style.overflow = "hidden";
+        const targetMedia = state.queryResults[state.targetMediaIndex];
+        renderModal();
       }
 
+      const onCloseModalButtonClick = () => {
+        state.modalOpen = false;
+        modalContainer.style.display = 'none';
+        document.documentElement.style.overflowX = "hidden";
+        document.documentElement.style.overflowY = "auto";
+      }
+      
       //Helper Functions
       const validateInput = (keyword) => {
         return validKeyword = keyword.replace(/[^a-zA-Z0-9- _]/g, '').replace(/\s+/g, ' ').trim();
@@ -681,6 +873,19 @@
       }
 
       //API Calls
+      const fetchHomeMovies = async() => {
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow'
+        };
+        try {
+          const response = await fetch(`${BASE_URL}/home/movies`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log('Request Failed', error);
+        }
+      }
+
       const fetchHomeTVShows = async() => {
         const requestOptions = {
           method: 'GET',
@@ -720,9 +925,13 @@
         }
       }
 
+      const fetchResultDetails = async() => {
+        //TODO
+      }
+
       //Render Functions
       const renderHomeMovieSlide = () =>{
-        trendingMovieImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[0].backdrop_path}`)
+        trendingMovieImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[0].backdrop_path}`);
       }
 
       const renderHomeTVShowSlide = () => {
@@ -735,16 +944,46 @@
           const result = state.queryResults[index];
           searchResultCard.style.display = result == null ? 'none' : 'flex';
           resultPosters[index].setAttribute("src", `${BASE_URL_IMG}/w185${result.poster_path}`)
-          resultTitles[index].innerHTML = result.media_type === 'movie' ? result.title : result.name;
-          resultYears[index].innerHTML = result.media_type === 'movie' ? result.release_date.substring(0,4) : result.first_air_date.substring(0,4);
-          resultGenres[index].innerHTML = result.media_type === 'movie' ? getGenre(result.genre_ids, "movie") : getGenre(result.genre_ids, "tv");
-          resultRates[index].innerHTML = keepTwoDecimal(result.vote_average / 2);
-          resultVotes[index].innerHTML = result.vote_count;
-          resultDescriptions[index].innerHTML = result.overview;
+          resultTitles[index].innerHTML = result.media_type === 'movie' ? 
+            (result.title == null ? "Not Available" : result.title ) : 
+            (result.name == null ? "Not Available" : result.name);
+          resultYears[index].innerHTML = result.media_type === 'movie' ? 
+            (result.release_date == null ? "Not Available" : result.release_date.substring(0,4)): 
+            (result.first_air_date == null ? "Not Available" : result.first_air_date.substring(0,4));
+          resultGenres[index].innerHTML = result.media_type === 'movie' ? 
+            (result.genre_ids == null || result.genre_ids.length === 0 ? "Not Available" : getGenre(result.genre_ids, "movie")) : 
+            (result.genre_ids == null || result.genre_ids.length === 0 ? "Not Available" : getGenre(result.genre_ids, "tv"));
+          resultRates[index].innerHTML = result.vote_average == null ? "0.0" : keepTwoDecimal(result.vote_average / 2);
+          resultVotes[index].innerHTML = result.vote_count == null ? 0: result.vote_count;
+          resultDescriptions[index].innerHTML = result.overview == null ? "" : result.overview;
         })
       }
 
-      const homePageDidMount = async() => {
+      const renderModal = () => {
+        //modalPoster.innerHTML = ""
+        modalTitle.innerHTML = "fetch title later"
+        modalYear.innerHTML = "fetch year later"
+        modalGenre.innerHTML = "fetch genre later" 
+        modalRate.innerHTML = "fetch rate later"
+        modalVote.innerHTML = "fetch vote later"
+        modalDescription.innerHTML = "fetch description later"
+        // modalCasts;
+        reviewUsernames.forEach((reviewUsername, index) => {
+          reviewUsername.innerHTML = `fetch username${index} later`
+        });
+        reviewDates.forEach((reviewDate, index) => {
+          reviewDate.innerHTML = `fetch date${index} later`
+        });  
+        reviewRates.forEach((reviewRate, index) => {
+          reviewRate.innerHTML = `fetch rate${index} later`
+        });
+        reviewComments.forEach((reviewComment, index) => {
+          reviewComment.innerHTML = `fetch comment${index} later`
+        });
+
+      }
+
+      const renderHomePage = async() => {
         const homeMovies = await fetchHomeMovies();
         if(homeMovies.data.length !== 0){
           state.homeMovies = homeMovies.data;
@@ -753,8 +992,6 @@
         if(homeTVShows.data.length !== 0){
           state.homeTVShows = homeTVShows.data;
         }
-        renderHomeMovieSlide();
-        renderHomeTVShowSlide();
         const movieGenres = await fetchGenres('movie')
         if(movieGenres.data.length !== 0){
           state.movieGenres = movieGenres.data;
@@ -763,15 +1000,16 @@
         if(tvGenres.data.length !== 0){
           state.tvGenres = tvGenres.data;
         }
+        renderHomeMovieSlide();
+        renderHomeTVShowSlide();
       }
 
-      const searchPageDidMount = () => {
+      const renderSearchPage = () => {
         searchDropdown.selectedIndex = -1;
       }
 
-      homePageDidMount();
-      
-      searchPageDidMount();
+      renderHomePage();
+      renderSearchPage();
     </script>
   </body>
 </html>

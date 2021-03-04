@@ -28,9 +28,9 @@ def get_home_movies():
         response = []
         for result in results:
             movie = {
-                "title": result["title"], 
-                "backdrop_path": result["backdrop_path"],
-                "release_date": result["release_date"]
+                "title": result["title"] if "title" in result else None, 
+                "backdrop_path": result["backdrop_path"] if "backdrop_path" in result else None,
+                "release_date": result["release_date"] if "release_date" in result else None
                 }
             response.append(movie)
         return jsonify({"data": response})
@@ -50,9 +50,9 @@ def get_home_tv_shows():
         response = []
         for result in results:
             tvshow = {
-                "name": result["name"], 
-                "backdrop_path": result["backdrop_path"],
-                "first_air_date": result["first_air_date"]
+                "name": result["name"] if "name" in result else None, 
+                "backdrop_path": result["backdrop_path"] if "backdrop_path" in result else None,
+                "first_air_date": result["first_air_date"] if "first_air_date" in result else None
                 }
             response.append(tvshow)
         return jsonify({"data": response})
@@ -73,14 +73,14 @@ def get_search_movies():
         response = []
         for result in results:
             movie = {
-                "id": result["id"], 
-                "title": result["title"],
-                "overview": result["overview"],
-                "poster_path": result["poster_path"],
-                "release_date": result["release_date"],
-                "vote_average": result["vote_average"], 
-                "vote_count": result["vote_count"], 
-                "genre_ids": result["genre_ids"],
+                "id": result["id"] if "id" in result else None, 
+                "title": result["title"] if "title" in result else None,
+                "overview": result["overview"] if "overview" in result else None,
+                "poster_path": result["poster_path"] if "poster_path" in result else None,
+                "release_date": result["release_date"] if "release_date" in result else None,
+                "vote_average": result["vote_average"] if "vote_average" in result else None, 
+                "vote_count": result["vote_count"] if "vote_count" in result else None, 
+                "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
                 "media_type": "movie"
                 }
             response.append(movie)
@@ -102,14 +102,14 @@ def get_search_tv_shows():
         response = []
         for result in results:
             tvshow = {
-                "id": result["id"],
-                "name": result["name"],
-                "overview": result["overview"],
-                "poster_path": result["poster_path"],
-                "first_air_date": result["first_air_date"],
-                "vote_average": result["vote_average"],
-                "vote_count": result["vote_count"],
-                "genre_ids": result["genre_ids"],
+                "id": result["id"] if "id" in result else None,
+                "name": result["name"] if "name" in result else None,
+                "overview": result["overview"] if "overview" in result else None,
+                "poster_path": result["poster_path"] if "poster_path" in result else None,
+                "first_air_date": result["first_air_date"] if "first_air_date" in result else None,
+                "vote_average": result["vote_average"] if "vote_average" in result else None,
+                "vote_count": result["vote_count"] if "vote_count" in result else None,
+                "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
                 "media_type": "tv"
                 }
             response.append(tvshow)
@@ -131,27 +131,27 @@ def get_search_multi():
         for result in results:
             if(result["media_type"] == "movie"):
                 data = {
-                    "id": result["id"], 
-                    "title": result["title"],
-                    "overview": result["overview"],
-                    "poster_path": result["poster_path"],
-                    "release_date": result["release_date"],
-                    "vote_average": result["vote_average"], 
-                    "vote_count": result["vote_count"], 
-                    "genre_ids": result["genre_ids"],
+                    "id": result["id"] if "id" in result else None, 
+                    "title": result["title"] if "title" in result else None,
+                    "overview": result["overview"] if "overview" in result else None,
+                    "poster_path": result["poster_path"] if "poster_path" in result else None,
+                    "release_date": result["release_date"] if "release_date" in result else None,
+                    "vote_average": result["vote_average"] if "vote_average" in result else None, 
+                    "vote_count": result["vote_count"] if "vote_count" in result else None, 
+                    "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
                     "media_type": "movie"
                     }
                 response.append(data)
             elif(result["media_type"] == "tv"):
                 data = {
-                    "id": result["id"],
-                    "name": result["name"],
-                    "overview": result["overview"],
-                    "poster_path": result["poster_path"],
-                    "first_air_date": result["first_air_date"],
-                    "vote_average": result["vote_average"],
-                    "vote_count": result["vote_count"],
-                    "genre_ids": result["genre_ids"],
+                    "id": result["id"] if "id" in result else None,
+                    "name": result["name"] if "name" in result else None,
+                    "overview": result["overview"] if "overview" in result else None,
+                    "poster_path": result["poster_path"] if "poster_path" in result else None,
+                    "first_air_date": result["first_air_date"] if "first_air_date" in result else None,
+                    "vote_average": result["vote_average"] if "vote_average" in result else None,
+                    "vote_count": result["vote_count"] if "vote_count" in result else None,
+                    "genre_ids": result["genre_ids"] if "genre_ids" in result else None,
                     "media_type": "tv"
                 }
                 response.append(data)
@@ -168,7 +168,7 @@ def get_movie_genres():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        response = results["genres"]
+        response = results["genres"] if "genres" in results else None
         return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
@@ -181,7 +181,7 @@ def get_tv_show_genres():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        response = results["genres"]
+        response = results["genres"] if "genres" in results else None
         return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
