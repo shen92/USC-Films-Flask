@@ -68,7 +68,7 @@ def get_search_movies():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        results = results["results"]
+        results = results["results"] if "results" in results else None
         results = results[0:10]
         response = []
         for result in results:
@@ -97,7 +97,7 @@ def get_search_tv_shows():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        results = results["results"]
+        results = results["results"] if "results" in results else None
         results = results[0:10]
         response = []
         for result in results:
@@ -239,6 +239,98 @@ def get_tv_details():
             "media_type": "tv"
         }
         return jsonify({"data": data})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/cast/movie', methods=['GET'])
+def get_movie_cast():
+    params = request.args
+    url = Template('$base_url/movie/$id/credits?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY,id=params["id"])
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        results = api_response.json()
+        results = results["cast"] if "cast" in results else []
+        results = results[0:8] if len(results) > 0 else []
+        response = []
+        for result in results:
+            data = {
+                "name": result["name"] if "name" in result else None,
+                "profile_path": result["profile_path"] if "profile_path" in result else None,
+                "character": result["character"] if "character" in result else None,
+            }
+            response.append(data)
+        return jsonify({"data": results})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/cast/tv', methods=['GET'])
+def get_tv_cast():
+    params = request.args
+    url = Template('$base_url/tv/$id/credits?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY,id=params["id"])
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        results = api_response.json()
+        results = results["cast"] if "cast" in results else []
+        results = results[0:8] if len(results) > 0 else []
+        response = []
+        for result in results:
+            data = {
+                "name": result["name"] if "name" in result else None,
+                "profile_path": result["profile_path"] if "profile_path" in result else None,
+                "character": result["character"] if "character" in result else None,
+            }
+            response.append(data)
+        return jsonify({"data": results})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/reviews/movie', methods=['GET'])
+def get_movie_reviews():
+    params = request.args
+    url = Template('$base_url/movie/$id/reviews?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY,id=params["id"])
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        results = api_response.json()
+        # results = results[0:5]
+        response = []
+        for result in results:
+            data = {
+                "username": result["username"] if "username" in result else None,
+                "content": result["content"] if "content" in result else None,
+                "rating": result["rating"] if "rating" in result else None,
+                "created_at": result["created_at"] if "created_at" in result else None,
+            }
+            response.append(data)
+        return jsonify({"data": results})
+    else:
+        response = {"message": "Unknown error occurred."}
+        return jsonify(response), api_response.status_code
+
+@app.route('/reviews/tv', methods=['GET'])
+def get_tv_reviews():
+    params = request.args
+    url = Template('$base_url/tv/$id/reviews?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY,id=params["id"])
+    api_response = requests.get(url)
+    if api_response.status_code == 200:
+        #Extract response
+        results = api_response.json()
+        # results = results[0:5]
+        response = []
+        for result in results:
+            data = {
+                "username": result["username"] if "username" in result else None,
+                "content": result["content"] if "content" in result else None,
+                "rating": result["rating"] if "rating" in result else None,
+                "created_at": result["created_at"] if "created_at" in result else None,
+            }
+            response.append(data)
+        return jsonify({"data": results})
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response), api_response.status_code

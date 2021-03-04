@@ -213,10 +213,35 @@
         color: black;
         font-style: italic;
       }
-      .castContainer {
-        margin-top: 20px;
+      .castRow {
+        width: 100%;
         display: flex;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      .modalCastSlot {
+        flex: 1;
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: black;
+      }
+      .modalCastName {
+        width: 100%;
+        height: 24px;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+
+      }
+      .modalCastAvatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
       #footer {
         display: flex;
@@ -264,38 +289,137 @@
             </div>
             <div style="font-weight: 700; color: black; font-size: 20px; margin-top: 40px;">Cast</div>
             <div class="castContainer">
-              
-              <div>
-                <div>
-                  <img id="modalCast0" src="" alt="cast 0">
+              <div class="castRow">
+
+                <div id="modalCastSlot0" class="modalCastSlot">
+                  <img id="modalCastAvatar0" class="modalCastAvatar" src="" alt="cast 0">
+                  <div id="modalCastName0" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName0" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
-                <div>
-                  <img id="modalCast1" src="" alt="cast 1">
+
+                <div id="modalCastSlot1" class="modalCastSlot">
+                  <img id="modalCastAvatar1" class="modalCastAvatar" src="" alt="cast 1">
+                  <div id="modalCastName1" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName1" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
-                <div>
-                  <img id="modalCast2" src="" alt="cast 2">
+
+                <div id="modalCastSlot2" class="modalCastSlot">
+                  <img id="modalCastAvatar2" class="modalCastAvatar" src="" alt="cast 2">
+                  <div id="modalCastName2" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName2" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
-                <div>
-                  <img id="modalCast3" src="" alt="cast 3">
+
+                <div id="modalCastSlot3" class="modalCastSlot">
+                  <img id="modalCastAvatar3" class="modalCastAvatar" src="" alt="cast 3">
+                  <div id="modalCastName3" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName3" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
-                <div>
-                  <img id="modalCast4" src="" alt="cast 4">
+
+              </div>
+              <div class="castRow">
+
+                <div id="modalCastSlot4" class="modalCastSlot">
+                  <img id="modalCastAvatar4" class="modalCastAvatar" src="" alt="cast 4">
+                  <div id="modalCastName4" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName4" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
-                <div>
-                  <img id="modalCast5" src="" alt="cast 5">
+
+                <div id="modalCastSlot5" class="modalCastSlot">
+                  <img id="modalCastAvatar5" class="modalCastAvatar" src="" alt="cast 5">
+                  <div id="modalCastName5" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName5" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
-                <div>
-                  <img id="modalCast6" src="" alt="cast 6">
+
+                <div id="modalCastSlot6" class="modalCastSlot">
+                  <img id="modalCastAvatar6" class="modalCastAvatar" src="" alt="cast 6">
+                  <div id="modalCastName6" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName6" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
-                <div>
-                  <img id="modalCast7" src="" alt="cast 7">
+
+                <div id="modalCastSlot7" class="modalCastSlot">
+                  <img id="modalCastAvatar7" class="modalCastAvatar" src="" alt="cast 7">
+                  <div id="modalCastName7" 
+                      style="font-weight: 700; margin-top: 10px"
+                      class="modalCastName"
+                  >
+                    {modalCastName}
+                  </div>
+                  <div style="margin: 5px 0px">AS</div>
+                  <div id="modalCastCharacterName7" 
+                    class="modalCastName">
+                    {modalCharacterName}
+                  </div>
                 </div>
+                
               </div>
             </div>
+            <div style="font-weight: 700; color: black; font-size: 20px; margin-top: 40px;">Review</div>
             <div class="reviewsContainer">
-              <div>Reviews</div>
-              <div class="modalReviewCard">
-                <div>
+              <div id="modalReviewCard0" class="modalReviewCard">
+                <div id="reviewRateSlot0">
                   <span id="reviewUsername0" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate0">{reviewDate}</span>
@@ -310,8 +434,8 @@
                 </div>
               </div>
 
-              <div class="modalReviewCard">
-                <div>
+              <div id="modalReviewCard1" class="modalReviewCard">
+                <div id="reviewRateSlot1">
                   <span id="reviewUsername1" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate1">{reviewDate}</span>
@@ -326,8 +450,8 @@
                 </div>
               </div>
 
-              <div class="modalReviewCard">
-                <div>
+              <div id="modalReviewCard2" class="modalReviewCard">
+                <div id="reviewRateSlot2">
                   <span id="reviewUsername2" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate2">{reviewDate}</span>
@@ -342,8 +466,8 @@
                 </div>
               </div>
 
-              <div class="modalReviewCard">
-                <div>
+              <div id="modalReviewCard3" class="modalReviewCard">
+                <div id="reviewRateSlot3">
                   <span id="reviewUsername3" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate3">{reviewDate}</span>
@@ -358,8 +482,8 @@
                 </div>
               </div>
 
-              <div class="modalReviewCard">
-                <div>
+              <div id="modalReviewCard4" class="modalReviewCard">
+                <div id="reviewRateSlot4">
                   <span id="reviewUsername4" class="reviewUsername">{reviewUsername}</span><!--
                   --><span> on </span><!--
                   --><span id="reviewDate4">{reviewDate}</span>
@@ -375,7 +499,7 @@
               </div>
             </div>
           </div>
-          <div style="flex: 1.2;">
+          <div style="flex: 1;">
             <button onclick="onCloseModalButtonClick()">close</button>
           </div>
         </div>
@@ -760,10 +884,26 @@
        const modalVote = document.getElementById('modalVote');
        const modalDescription = document.getElementById('modalDescription');
        const modalSpokenLanguages = document.getElementById('modalSpokenLanguages');
-       let modalCasts = [];
+       let modalCastSlots = [];
        for(let i = 0; i < 8; i++){
-         modalCasts.push(document.getElementById(`modalCast${i}`));
+         modalCastSlots.push(document.getElementById(`modalCastSlot${i}`));
        }
+       let modalCastAvatars = [];
+       for(let i = 0; i < 8; i++){
+        modalCastAvatars.push(document.getElementById(`modalCastAvatar${i}`));
+       }
+       let modalCastNames = [];
+       for(let i = 0; i < 8; i++){
+        modalCastNames.push(document.getElementById(`modalCastName${i}`));
+       }
+       let modalCastCharacterNames = [];
+       for(let i = 0; i < 8; i++){
+        modalCastCharacterNames.push(document.getElementById(`modalCastCharacterName${i}`));
+       }
+
+       //reviews
+       let modalReviewCards = [];
+       let reviewRateSlots = [];
        let reviewUsernames =[];
        for(let i = 0; i < 5; i++){
         reviewUsernames.push(document.getElementById(`reviewUsername${i}`));
@@ -782,24 +922,24 @@
        }
 
       //Configs
-      const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-      //const BASE_URL = 'http://localhost:5000'  //Dev server
+      //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+      const BASE_URL = 'http://localhost:5000'  //Dev server
       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
       let state = {
         tab: "home",
         homeMovies: [],
         homeTVShows: [],
         //TODO: RESET BEFORE SUBMIT
-        keyword: "intern",
+        keyword: "avengers",
         category: "movie",
         queryResults: [],
         movieGenres: [],
         tvGenres:[],
         targetMediaIndex: -1,
-        modalMediaDetails: {},
-        modalCast: [],
-        modalReviews: [],
         modalOpen: false,
+        modalMediaDetails: {},
+        modalCasts: [],
+        modalReviews: [],
        }
       
       //Event Handlers
@@ -878,6 +1018,10 @@
           if(targetMedia != null){
             const modalMediaDetails = await fetchResultDetails(targetMedia.media_type, targetMedia.id);
             state.modalMediaDetails = modalMediaDetails.data;
+            const modalCasts = await fetchCasts(targetMedia.media_type, targetMedia.id);
+            state.modalCasts = modalCasts.data;
+            // const modalReviews = await fetchReviews(targetMedia.media_type, targetMedia.id);
+            // state.modalReviews = modalReviews;
           }
         }
         renderModal();
@@ -896,16 +1040,21 @@
       }
       
       const getTitle = (media) => {
+        if(media == null) return  "Not Available";
         return media.media_type === 'movie' ? 
-          (media.title == null ? "Not Available" : media.title ) : 
-          (media.name == null ? "Not Available" : media.name);
+          (!media.hasOwnProperty('title') || media.title == null || media.title.length === 0 ? 
+            "Not Available" : media.title) : 
+          (!media.hasOwnProperty('name') || media.name == null || media.name.length === 0 ? 
+            "Not Available" : media.name);
       }
       
       const getYear = (media) => {
         if(media == null) return  "Not Available";
         return media.media_type === 'movie' ? 
-            (media.release_date == null ? "Not Available" : media.release_date.substring(0,4)) : 
-            (media.first_air_date == null ? "Not Available" : media.first_air_date.substring(0,4));
+            (!media.hasOwnProperty('release_date') || media.release_date == null || media.release_date.length === 0 ? 
+              "Not Available" : media.release_date.substring(0,4)) : 
+            (!media.hasOwnProperty('first_air_date') || media.first_air_date == null || media.first_air_date.length === 0? 
+              "Not Available" : media.first_air_date.substring(0,4));
       }
 
       const getGenres = (media) => {
@@ -937,28 +1086,47 @@
       } 
 
       const getRates = (media) => {
-        return media.vote_average == null ? "0.0" : keepTwoDecimal(media.vote_average / 2)
+        if(media == null) return "";
+        return !media.hasOwnProperty('vote_average') || media.vote_average == null ? 
+          "0.0" : keepTwoDecimal(media.vote_average / 2);
       }
 
       const getVotes = (media) => {
-        return media.vote_count == null ? 0: media.vote_count;
+        if(media == null) return "";
+        return !media.hasOwnProperty('vote_count') || media.vote_count == null ?
+          0: media.vote_count;
       }
 
       const getDescription = (media) => {
         if(media == null) return "";
-        return media.overview == null ? "" : media.overview;
+        return !media.hasOwnProperty('overview') || media.overview == null || media.overview.length === 0 ?   "" : media.overview;
       }
 
       const getSpokenLanguages = (media) => {
-        if(media == null) return "";
+        if(media == null || 
+          !(media.hasOwnProperty("spoken_languages") || media.hasOwnProperty("spoken languages"))
+        ) 
+          return "";
         const spokenLanguages = media["spoken_languages"] || media["spoken languages"];
         if(spokenLanguages == null || spokenLanguages.length === 0) return "";
         const result = spokenLanguages.map(spokenLanguage => {
-          if(spokenLanguage != null && spokenLanguage.hasOwnProperty('name') &&
-          spokenLanguage.name != null && spokenLanguage.name.length > 0)
-            return spokenLanguage.name
+          if(spokenLanguage != null && spokenLanguage.hasOwnProperty('english_name') && 
+              spokenLanguage.english_name != null && spokenLanguage.english_name.length !== 0)
+            return spokenLanguage.english_name;
         });
         return result.join(', ');
+      }
+
+      const getName = (cast) => {
+        if(cast == null) return "";
+        return !cast.hasOwnProperty('name') || cast.name == null || cast.name.length === 0 ? 
+          "" : cast.name;
+      }
+
+      const getCharacterName = (cast) => {
+        if(cast == null) return "";
+        return !cast.hasOwnProperty('character') || cast.character == null || cast.character.length === 0 ?
+          "" : cast.character;
       }
 
       const keepTwoDecimal = (num) => {  
@@ -1031,8 +1199,36 @@
           redirect: 'follow',
         };
         try {
-          if(mediaId === "" || mediaId === "") return {};
+          if(mediaId === "" || mediaId.length === 0) return {};
           const response = await fetch(`${BASE_URL}/details/${mediaType}?id=${mediaId}`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log('Request Failed', error);
+        }
+      }
+
+      const fetchCasts = async(mediaType="movie", mediaId="") => {
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+        };
+        try {
+          if(mediaId === "" || mediaId.length === 0) return {};
+          const response = await fetch(`${BASE_URL}/cast/${mediaType}?id=${mediaId}`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log('Request Failed', error);
+        }
+      }
+
+      const fetchReviews = async(mediaType="movie", mediaId="") => {
+        const requestOptions = {
+          method: 'GET',
+          redirect: 'follow',
+        };
+        try {
+          if(mediaId === "" || mediaId.length === 0) return {};
+          const response = await fetch(`${BASE_URL}/reviews/${mediaType}?id=${mediaId}`, requestOptions);
           return await response.json();
         } catch (error) {
           console.log('Request Failed', error);
@@ -1041,10 +1237,12 @@
 
       //Render Functions
       const renderHomeMovieSlide = () =>{
+        //TODO: SLIDER EFFECT + NULL CHECK
         trendingMovieImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[0].backdrop_path}`);
       }
 
       const renderHomeTVShowSlide = () => {
+        //TODO: SLIDER EFFECT + NULL CHECK
         trendingTVShowImage.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[0].backdrop_path}`)
       }
 
@@ -1066,7 +1264,11 @@
 
       const renderModal = () => {
         const modalMediaDetails = state.modalMediaDetails;
-        console.log(modalMediaDetails)
+        const modalCasts = state.modalCasts;
+        const modalReviews = state.modalReviews;
+        console.log(modalCasts)
+        //console.log(modalReviews)
+
         modalPoster.setAttribute("src", 
           modalMediaDetails.backdrop_path == null ? 
             "img/movie-placeholder.jpg" :
@@ -1079,7 +1281,18 @@
         modalVote.innerHTML = getVotes(modalMediaDetails);
         modalDescription.innerHTML = getDescription(modalMediaDetails);
         modalSpokenLanguages.innerHTML = getSpokenLanguages(modalMediaDetails);
-        // modalCasts;
+        
+        modalCasts.forEach((modalCast, index) => {
+          modalCastSlots[index].style.display = modalCasts[index] == null ? 'none' : 'flex'
+          modalCastAvatars[index].setAttribute("src", 
+          modalCast.profile_path == null || modalCast.profile_path.length === 0 ? 
+            "img/person-placeholder.png" :
+            `${BASE_URL_IMG}/w185${modalCast.profile_path}`);
+          modalCastNames[index].innerHTML = getName(modalCast);
+          modalCastCharacterNames[index].innerHTML = getCharacterName(modalCast);
+        })
+
+
         reviewUsernames.forEach((reviewUsername, index) => {
           reviewUsername.innerHTML = `fetch username${index} later`
         });
