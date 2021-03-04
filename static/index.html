@@ -853,105 +853,13 @@
 
       </div>
      <script>
-       //Node References
-       const homeTab = document.getElementById("homeTab");
-       const searchTab = document.getElementById("searchTab");
-       const homePage = document.getElementById("homePage");
-       const searchPage = document.getElementById("searchPage");
-       const trendingMovieImage = document.getElementById("trendingMovieImage");
-       const trendingTVShowImage = document.getElementById("trendingTVShowImage");
-       const searchInput = document.getElementById("searchInput");
-       const searchDropdown = document.getElementById("searchDropdown");
-       const notFound = document.getElementById("notFound");
-       const searchResults = document.getElementById("searchResults");
-       const searchResultsTitle = document.getElementById("searchResultsTitle");
-       const modalContainer = document.getElementById('modalContainer')
-       let searchResultCards = [];
-       for(let i = 0; i < 10; i++){
-         searchResultCards.push(document.getElementById(`resultCard${i}`))
-       }
-       let resultPosters = [];
-       for(let i = 0; i < 10; i++){
-         resultPosters.push(document.getElementById(`resultPoster${i}`))
-       }
-       let resultTitles = [];
-       for(let i = 0; i < 10; i++){
-        resultTitles.push(document.getElementById(`resultTitle${i}`))
-       }
-       let resultYears = [];
-       for(let i = 0; i < 10; i++){
-        resultYears.push(document.getElementById(`resultYear${i}`))
-       }
-       let resultGenres = [];
-       for(let i = 0; i < 10; i++){
-        resultGenres.push(document.getElementById(`resultGenre${i}`))
-       }
-       let resultRates = [];
-       for(let i = 0; i < 10; i++){
-        resultRates.push(document.getElementById(`resultRate${i}`))
-       }
-       let resultVotes = [];
-       for(let i = 0; i < 10; i++){
-        resultVotes.push(document.getElementById(`resultVote${i}`))
-       }
-       let resultDescriptions = [];
-       for(let i = 0; i < 10; i++){
-        resultDescriptions.push(document.getElementById(`resultDescription${i}`))
-       }
-       const modalPoster = document.getElementById('modalPoster');
-       const modalTitle = document.getElementById('modalTitle');
-       const modalYear = document.getElementById('modalYear');
-       const modalGenre = document.getElementById('modalGenre');
-       const modalRate = document.getElementById('modalRate');
-       const modalVote = document.getElementById('modalVote');
-       const modalDescription = document.getElementById('modalDescription');
-       const modalSpokenLanguages = document.getElementById('modalSpokenLanguages');
-       let modalCastSlots = [];
-       for(let i = 0; i < 8; i++){
-         modalCastSlots.push(document.getElementById(`modalCastSlot${i}`));
-       }
-       let modalCastAvatars = [];
-       for(let i = 0; i < 8; i++){
-        modalCastAvatars.push(document.getElementById(`modalCastAvatar${i}`));
-       }
-       let modalCastNames = [];
-       for(let i = 0; i < 8; i++){
-        modalCastNames.push(document.getElementById(`modalCastName${i}`));
-       }
-       let modalCastCharacterNames = [];
-       for(let i = 0; i < 8; i++){
-        modalCastCharacterNames.push(document.getElementById(`modalCastCharacterName${i}`));
-       }
-
-       let modalReviewCards = [];
-       for(let i = 0; i < 5; i++){
-        modalReviewCards.push(document.getElementById(`modalReviewCard${i}`));
-       }
-       let reviewRateSlots = [];
-       for(let i = 0; i < 5; i++){
-        reviewRateSlots.push(document.getElementById(`reviewRateSlot${i}`));
-       }
-       let reviewUsernames =[];
-       for(let i = 0; i < 5; i++){
-        reviewUsernames.push(document.getElementById(`reviewUsername${i}`));
-       }
-       let reviewDates = [];
-       for(let i = 0; i < 5; i++){
-        reviewDates.push(document.getElementById(`reviewDate${i}`));
-       }
-       let reviewRates = [];
-       for(let i = 0; i < 5; i++){
-        reviewRates.push(document.getElementById(`reviewRate${i}`));
-       }
-       let reviewComments = [];
-       for(let i = 0; i < 5; i++){
-        reviewComments.push(document.getElementById(`reviewComment${i}`));
-       }
-
       //Configs
       const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
       //const BASE_URL = 'http://localhost:5000'  //Dev server
       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
+      const NUM_RESULTS = 10;
+      const NUM_CAST = 8;
+      const NUM_COMMENTS = 5;
       let state = {
         tab: "home",
         homeMovies: [],
@@ -967,7 +875,71 @@
         modalCasts: [],
         modalReviews: [],
        }
-      
+
+       //Node References
+       const homeTab = document.getElementById("homeTab");
+       const searchTab = document.getElementById("searchTab");
+       const homePage = document.getElementById("homePage");
+       const searchPage = document.getElementById("searchPage");
+       const trendingMovieImage = document.getElementById("trendingMovieImage");
+       const trendingTVShowImage = document.getElementById("trendingTVShowImage");
+       const searchInput = document.getElementById("searchInput");
+       const searchDropdown = document.getElementById("searchDropdown");
+       const notFound = document.getElementById("notFound");
+       const searchResults = document.getElementById("searchResults");
+       const searchResultsTitle = document.getElementById("searchResultsTitle");
+       const modalContainer = document.getElementById('modalContainer')
+       let searchResultCards = [];
+       let resultPosters = [];
+       let resultTitles = [];
+       let resultYears = [];
+       let resultGenres = [];
+       let resultRates = [];
+       let resultVotes = [];
+       let resultDescriptions = [];
+       for(let i = 0; i < NUM_RESULTS; i++){
+         searchResultCards.push(document.getElementById(`resultCard${i}`))
+         resultPosters.push(document.getElementById(`resultPoster${i}`))
+         resultTitles.push(document.getElementById(`resultTitle${i}`))
+         resultYears.push(document.getElementById(`resultYear${i}`))
+         resultGenres.push(document.getElementById(`resultGenre${i}`))
+         resultRates.push(document.getElementById(`resultRate${i}`))
+         resultVotes.push(document.getElementById(`resultVote${i}`))
+         resultDescriptions.push(document.getElementById(`resultDescription${i}`))
+       }
+       const modalPoster = document.getElementById('modalPoster');
+       const modalTitle = document.getElementById('modalTitle');
+       const modalYear = document.getElementById('modalYear');
+       const modalGenre = document.getElementById('modalGenre');
+       const modalRate = document.getElementById('modalRate');
+       const modalVote = document.getElementById('modalVote');
+       const modalDescription = document.getElementById('modalDescription');
+       const modalSpokenLanguages = document.getElementById('modalSpokenLanguages');
+       let modalCastSlots = [];
+       let modalCastAvatars = [];
+       let modalCastNames = [];
+       let modalCastCharacterNames = [];
+       for(let i = 0; i < NUM_CAST; i++){
+        modalCastSlots.push(document.getElementById(`modalCastSlot${i}`));
+        modalCastAvatars.push(document.getElementById(`modalCastAvatar${i}`));
+        modalCastNames.push(document.getElementById(`modalCastName${i}`));
+        modalCastCharacterNames.push(document.getElementById(`modalCastCharacterName${i}`));
+       }
+       let modalReviewCards = [];
+       let reviewRateSlots = [];
+       let reviewUsernames =[];
+       let reviewDates = [];
+       let reviewRates = [];
+       let reviewComments = [];
+       for(let i = 0; i < NUM_COMMENTS; i++){
+        modalReviewCards.push(document.getElementById(`modalReviewCard${i}`));
+        reviewRateSlots.push(document.getElementById(`reviewRateSlot${i}`));
+        reviewUsernames.push(document.getElementById(`reviewUsername${i}`));
+        reviewDates.push(document.getElementById(`reviewDate${i}`));
+        reviewRates.push(document.getElementById(`reviewRate${i}`));
+        reviewComments.push(document.getElementById(`reviewComment${i}`));
+       }
+
       //Event Handlers
       const onHomeTabClick = () =>{
         state.tab = "home";
@@ -1012,10 +984,10 @@
       }
 
       const onSearchButtonClick = async() => {
-        // if(state.keyword === "" || state.category === ""){
-        //   alert("Please enter valid values");
-        //   return;
-        // }
+        if(state.keyword === "" || state.category === ""){
+          alert("Please enter valid values");
+          return;
+        }
         const queryResults = await fetchQueryResults();
         state.queryResults = queryResults.data;
         await renderQueryResults();
@@ -1309,8 +1281,9 @@
         searchResultCards.forEach((searchResultCard, index) => {
           const result = state.queryResults[index];
           searchResultCard.style.display = result == null ? 'none' : 'flex';
-          resultPosters[index].setAttribute("src", result.poster_path == null ? 
-          "img/movie_placeholder.png" :`${BASE_URL_IMG}/w185${result.poster_path}`)
+          resultPosters[index].setAttribute("src", !result.hasOwnProperty('poster_path') || 
+            result.poster_path == null || result.poster_path.length === 0 ? 
+            "img/movie_placeholder.png" :`${BASE_URL_IMG}/w185${result.poster_path}`)
           resultTitles[index].innerHTML = getTitle(result);
           resultYears[index].innerHTML = getYear(result);
           resultGenres[index].innerHTML = getGenres(result);
@@ -1327,7 +1300,7 @@
         
 
         modalPoster.setAttribute("src", 
-          modalMediaDetails.backdrop_path == null ? 
+          !modalMediaDetails.hasOwnProperty('backdrop_path') || modalMediaDetails.backdrop_path == null || modalMediaDetails.backdrop_path.length === 0 ? 
             "img/movie-placeholder.jpg" :
             `${BASE_URL_IMG}/w780${modalMediaDetails.backdrop_path}`
           )
@@ -1342,7 +1315,7 @@
         modalCasts.forEach((modalCast, index) => {
           modalCastSlots[index].style.display = modalCasts[index] == null ? 'none' : 'flex'
           modalCastAvatars[index].setAttribute("src", 
-          modalCast.profile_path == null || modalCast.profile_path.length === 0 ? 
+            !modalCast.hasOwnProperty('profile_path') || modalCast.profile_path == null || modalCast.profile_path.length === 0 ? 
             "img/person-placeholder.png" :
             `${BASE_URL_IMG}/w185${modalCast.profile_path}`);
           modalCastNames[index].innerHTML = getCastName(modalCast);
