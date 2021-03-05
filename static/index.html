@@ -429,7 +429,6 @@
             </div>
             <div style="font-weight: 700; color: black; font-size: 24px; margin-top: 40px;">Review</div>
             <div class="reviewsContainer">
-
               <div id="modalReviewCard0" class="modalReviewCard">
                 <div class="reviewUsernameSlot">
                   <span id="reviewUsername0" class="reviewUsername">{reviewUsername}</span><!--
@@ -446,7 +445,6 @@
                 </div>
                 <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
-
               <div id="modalReviewCard1" class="modalReviewCard">
                 <div class="reviewUsernameSlot">
                   <span id="reviewUsername1" class="reviewUsername">{reviewUsername}</span><!--
@@ -463,7 +461,6 @@
                 </div>
                 <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
-
               <div id="modalReviewCard2" class="modalReviewCard">
                 <div class="reviewUsernameSlot">
                   <span id="reviewUsername2" class="reviewUsername">{reviewUsername}</span><!--
@@ -480,7 +477,6 @@
                 </div>
                 <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
-
               <div id="modalReviewCard3" class="modalReviewCard">
                 <div class="reviewUsernameSlot">
                   <span id="reviewUsername3" class="reviewUsername">{reviewUsername}</span><!--
@@ -497,7 +493,6 @@
                 </div>
                 <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
               </div>
-
               <div id="modalReviewCard4" class="modalReviewCard">
                 <div class="reviewUsernameSlot">
                   <span id="reviewUsername4" class="reviewUsername">{reviewUsername}</span><!--
@@ -550,31 +545,25 @@
               </div>
             </div>
           </div>
-
           <div id="homePage">
-
             <div class="homeCard">
               <div style="color: white">Trending Movies</div>
               <div style="margin-top: 25px;">
                 <img id="trendingMovieImage" src="" alt="loading"> 
               </div>
             </div>
-
             <div class="homeCard">
               <div style="color: white">TV Shows On-Air Today</div>
               <div style="margin-top: 25px;">
                 <img id="trendingTVShowImage" src="" alt="loading"> 
               </div>
             </div>
-
             <div id="searchPadding"></div>
-
             <div id="footer">
               <div>Designed and developed by Akansha, Pranav & Yash</div>
               <div>Powered by TMDB</div>
             </div>
           </div>
-
           <div id="searchPage">
             <div id="searchForm" 
                   class="searchForm"
@@ -613,12 +602,10 @@
               </button>
             </div>
             </div>
-
             <div id="notFound">
               <div style="flex: 1"></div>
               <div style="flex: 5">No results found.</div>
             </div>
-
             <div id="searchResults">
               <div id="searchResultsTitle"style="color: white; padding: 25px 0px">Showing results...</div>
               <div id="resultCard0" class="resultCard">
@@ -842,21 +829,21 @@
                 </div>
               </div>
             </div>
-
             <div id="searchPadding"></div>
-
             <div id="footer">
               <div>Designed and developed by Akansha, Pranav & Yash</div>
               <div>Powered by TMDB</div>
             </div>
           </div>
-
       </div>
      <script>
       //Configs
       const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
       //const BASE_URL = 'http://localhost:5000'  //Dev server
       const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
+      const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
+      const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
+      const RESULT_PLACEHOLDER = `${BASE_URL}/static/img/result-placeholder.png`;
       const NUM_RESULTS = 10;
       const NUM_CAST = 8;
       const NUM_COMMENTS = 5;
@@ -1283,7 +1270,7 @@
           searchResultCard.style.display = result == null ? 'none' : 'flex';
           resultPosters[index].setAttribute("src", !result.hasOwnProperty('poster_path') || 
             result.poster_path == null || result.poster_path.length === 0 ? 
-            "img/movie_placeholder.png" :`${BASE_URL_IMG}/w185${result.poster_path}`)
+            RESULT_PLACEHOLDER :`${BASE_URL_IMG}/w185${result.poster_path}`)
           resultTitles[index].innerHTML = getTitle(result);
           resultYears[index].innerHTML = getYear(result);
           resultGenres[index].innerHTML = getGenres(result);
@@ -1301,7 +1288,7 @@
 
         modalPoster.setAttribute("src", 
           !modalMediaDetails.hasOwnProperty('backdrop_path') || modalMediaDetails.backdrop_path == null || modalMediaDetails.backdrop_path.length === 0 ? 
-            "img/movie-placeholder.jpg" :
+            MOVIE_PLACEHOLDER :
             `${BASE_URL_IMG}/w780${modalMediaDetails.backdrop_path}`
           )
         modalTitle.innerHTML = getTitle(modalMediaDetails);
@@ -1316,7 +1303,7 @@
           modalCastSlots[index].style.display = modalCasts[index] == null ? 'none' : 'flex'
           modalCastAvatars[index].setAttribute("src", 
             !modalCast.hasOwnProperty('profile_path') || modalCast.profile_path == null || modalCast.profile_path.length === 0 ? 
-            "img/person-placeholder.png" :
+            PERSON_PLACEHOLDER :
             `${BASE_URL_IMG}/w185${modalCast.profile_path}`);
           modalCastNames[index].innerHTML = getCastName(modalCast);
           modalCastCharacterNames[index].innerHTML = getCharacterName(modalCast);
