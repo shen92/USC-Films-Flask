@@ -232,7 +232,7 @@
         #modal {
             width: 50%;
             margin: 5% auto;
-            padding: 30px 0px 30px 50px ;
+            padding: 30px 0px 30px 50px;
             display: flex;
             flex-direction: row;
             background-color: #d0d0d0;
@@ -245,17 +245,19 @@
         }
 
         .modalCloseButton {
-          background: none; 
-          color:rgb(128, 128, 128);
-          font-size: 20px;
-          cursor: pointer;
-          position: relative;
-          left: 25px;
-          top: 15px;
+            background: none;
+            color: rgb(128, 128, 128);
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+            left: 25px;
+            top: 15px;
         }
+
         .modalCloseButton:hover {
-          color: black
+            color: black
         }
+
         #modalPoster {
             width: 100%;
         }
@@ -364,9 +366,11 @@
             <div class="modalPosterContainer">
                 <img id="modalPoster" src="" alt="Modal Poster">
             </div>
-            <div class="modalTitle" >
+            <div class="modalTitle">
                 <span id="modalTitle">{modalTitle}</span>
-                <div style="display: inline-flex; border: 1px solid red; border-radius: 20px; height: 20px; width: 20px; font-size: 16px; align-items: center; justify-content: center; color: red; cursor: pointer;" onclick="onGetMoreIconButtonClick()">i</div>
+                <div style="display: inline-flex; border: 1px solid red; border-radius: 20px; height: 20px; width: 20px; font-size: 16px; align-items: center; justify-content: center; color: red; cursor: pointer;"
+                     onclick="onGetMoreIconButtonClick()">i
+                </div>
             </div>
             <div class="modalYearAndGenres" style="margin-top: 20px; color: black;">
                 <span id="modalYear" class="modalYear">{modalYear}</span><!--
@@ -1144,13 +1148,20 @@
   }
 
   const onClearButtonClick = () => {
+    //Reset display UI Components
+    searchInput.value = "";
+    searchDropdown.selectedIndex = -1;
+    searchResults.style.display = "none";
+    notFound.style.display = "none";
+    //Reset state
     state.keyword = "";
     state.category = "";
     state.queryResults = [];
-    searchInput.value = "";
-    searchDropdown.selectedIndex = -1;
-    //TODO: clear query results
-    searchResults.style.display = "none";
+    state.targetMediaIndex = -1;
+    state.modalOpen = false;
+    state.modalMediaDetails = {};
+    state.modalCasts = [];
+    state.modalReviews = [];
   }
 
   const onShowMoreButtonClick = async (index) => {
@@ -1462,7 +1473,12 @@
   }
 
   const renderQueryResults = async () => {
-    console.log(state.queryResults)
+    if(state.queryResults.length === 0 || state.queryResults == null) {
+      searchResults.style.display = "none";
+      notFound.style.display = 'flex';
+      return;
+    }
+    notFound.style.display = 'none';
     searchResults.style.display = "flex";
     searchResultCards.forEach((searchResultCard, index) => {
       const result = state.queryResults[index];
