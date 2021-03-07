@@ -88,7 +88,7 @@
         .slideImage {
             width: 100%;
             opacity: 20%;
-            animation: fadeIn ease 2.9s infinite 0.1s;
+            animation: fadeIn ease 3s infinite;
         }
 
         @keyframes fadeIn {
@@ -636,7 +636,12 @@
                      class="slideImage"
                      src=""
                      alt="loading"
-                     style="display: none;">
+                     style="display: none;"
+                >
+                <div>
+                  <span id="trendingMovieInfo1">{trendingMovieInfo}</span>
+                  <span id="trendingMovieInfo2">{trendingMovieInfo}</span>
+                </div>
             </div>
         </div>
         <div class="homeCard">
@@ -650,7 +655,12 @@
                      class="slideImage"
                      src=""
                      alt="loading"
-                     style="display: none;">
+                     style="display: none;"
+                >
+                <div>
+                  <span id="trendingTVShowInfo1">{trendingTVShowInfo}</span>
+                  <span id="trendingTVShowInfo2">{trendingTVShowInfo}</span>
+                </div>
             </div>
         </div>
         <div id="flexPadding"></div>
@@ -933,8 +943,8 @@
 </div>
 <script>
   //Configs
-  const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-  //const BASE_URL = 'http://localhost:5000'  //Development server
+  //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+  const BASE_URL = 'http://localhost:5000'  //Development server
   const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
   const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
   const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
@@ -967,6 +977,10 @@
   const trendingTVShowImage1 = document.getElementById("trendingTVShowImage1");
   const trendingMovieImage2 = document.getElementById("trendingMovieImage2");
   const trendingTVShowImage2 = document.getElementById("trendingTVShowImage2");
+  const trendingMovieInfo1 = document.getElementById('trendingMovieInfo1');
+  const trendingMovieInfo2 = document.getElementById('trendingMovieInfo2');
+  const trendingTVShowInfo1 = document.getElementById('trendingTVShowInfo1');
+  const trendingTVShowInfo2 = document.getElementById('trendingTVShowInfo2');
   const searchInput = document.getElementById("searchInput");
   const searchDropdown = document.getElementById("searchDropdown");
   const notFound = document.getElementById("notFound");
@@ -1130,7 +1144,9 @@
   }
 
   const getYear = (media) => {
+    console.log(media)
     if (media == null) return "Not Available";
+    console.log('bp')
     return media.media_type === 'movie' ?
         (!media.hasOwnProperty('release_date') || media.release_date == null || media.release_date.length === 0 ?
             "Not Available" : media.release_date.substring(0, 4)) :
@@ -1354,13 +1370,18 @@
     let index = 0;
     trendingMovieImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`);
     trendingTVShowImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`)
-    trendingMovieImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[index + 1].backdrop_path}`);
-    trendingTVShowImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[index + 1].backdrop_path}`)
+    trendingMovieInfo1.innerHTML = `${getTitle(state.homeMovies[index])} (${getYear(state.homeMovies[index])})`
+    trendingTVShowInfo1.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
+    ++index;
+    trendingMovieImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`);
+    trendingTVShowImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`)
+    trendingMovieInfo2.innerHTML = `${getTitle(state.homeMovies[index])} (${getYear(state.homeMovies[index])})`
+    trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
     setInterval(() => updateHomeSlides((index++)), 3000);
   }
 
   const updateHomeSlides = (index) => {
-    const nextIndex = (index + 1) % 5;
+    const nextIndex = index % 5;
     if(index % 2 === 0){
       trendingMovieImage1.style.display = "none";
       trendingMovieImage2.style.display = "block";

@@ -30,8 +30,9 @@ def get_home_movies():
             movie = {
                 "title": result["title"] if "title" in result else None, 
                 "backdrop_path": result["backdrop_path"] if "backdrop_path" in result else None,
-                "release_date": result["release_date"] if "release_date" in result else None
-                }
+                "release_date": result["release_date"] if "release_date" in result else None,   
+                "media_type": "movie" #Additional field
+            }
             response.append(movie)
         return jsonify({"data": response})
     else:
@@ -52,8 +53,9 @@ def get_home_tv_shows():
             tvshow = {
                 "name": result["name"] if "name" in result else None, 
                 "backdrop_path": result["backdrop_path"] if "backdrop_path" in result else None,
-                "first_air_date": result["first_air_date"] if "first_air_date" in result else None
-                }
+                "first_air_date": result["first_air_date"] if "first_air_date" in result else None,
+                "media_type": "tv"  #Additional field
+            }
             response.append(tvshow)
         return jsonify({"data": response})
     else:
