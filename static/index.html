@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>HW6</title>
+    <title>THE MOVIE DB</title>
     <style>
         html, body {
             height: 100%;
@@ -79,7 +79,7 @@
 
         .homeCard {
             width: 80%;
-            padding: 20px 0px 80px;
+            padding: 20px 0px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -94,6 +94,9 @@
         @keyframes fadeIn {
             0% {
                 opacity: 0.2;
+            }
+            80% {
+                opacity: 1;
             }
             100% {
                 opacity: 1;
@@ -309,11 +312,8 @@
         }
 
         .reviewUsernameSlot {
-            color: black
-        }
-
-        .reviewRateSlot {
-            margin-top: 20px;
+            color: black;
+            margin-bottom: 20px;
         }
 
         .reviewUsername {
@@ -322,7 +322,6 @@
         }
 
         .reviewComment {
-            margin-top: 20px;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -626,40 +625,77 @@
     <div id="homePage">
         <div class="homeCard">
             <div style="color: white">Trending Movies</div>
-            <div style="margin-top: 25px;">
+            <div id="trendingMovie1" style="margin-top: 25px;">
                 <img id="trendingMovieImage1"
                      class="slideImage"
                      src=""
-                     alt="loading"
+                     alt="trendingMovieImage1"
                 >
+                <div style=
+                             "display: flex;
+                    justify-content: center; 
+                    align-items: center; 
+                    height: 20%; 
+                    background-color: rgba(0,0,0,0.4); 
+                    position: relative; 
+                    top: -20%"
+                >
+                    <div id="trendingMovieInfo1" style="color: white;">{trendingMovieInfo}</div>
+                </div>
+            </div>
+            <div id="trendingMovie2" style="margin-top: 25px; display: none;">
                 <img id="trendingMovieImage2"
                      class="slideImage"
                      src=""
-                     alt="loading"
-                     style="display: none;"
+                     alt="trendingMovieImage2"
                 >
-                <div>
-                  <span id="trendingMovieInfo1">{trendingMovieInfo}</span>
-                  <span id="trendingMovieInfo2">{trendingMovieInfo}</span>
+                <div style=
+                             "display: flex;
+                    justify-content: center; 
+                    align-items: center; 
+                    height: 20%; 
+                    background-color: rgba(0,0,0,0.4); 
+                    position: relative; 
+                    top: -20%"
+                >
+                    <div id="trendingMovieInfo2" style="color: white;">{trendingMovieInfo}</div>
                 </div>
             </div>
         </div>
         <div class="homeCard">
             <div style="color: white">TV Shows On-Air Today</div>
-            <div style="margin-top: 25px;">
+            <div id="trendingTVShow1" style="margin-top: 25px;">
                 <img id="trendingTVShowImage1"
                      class="slideImage"
                      src=""
                      alt="loading">
+                <div style=
+                             "display: flex;
+                    justify-content: center; 
+                    align-items: center; 
+                    height: 20%; 
+                    background-color: rgba(0,0,0,0.4); 
+                    position: relative; 
+                    top: -20%"
+                >
+                    <div id="trendingTVShowInfo1" style="color: white;">{trendingTVShowInfo}</div>
+                </div>
+            </div>
+            <div id="trendingTVShow2" style="margin-top: 25px; display: none;">
                 <img id="trendingTVShowImage2"
                      class="slideImage"
                      src=""
-                     alt="loading"
-                     style="display: none;"
+                     alt="loading">
+                <div style=
+                             "display: flex;
+                    justify-content: center; 
+                    align-items: center; 
+                    height: 20%; 
+                    background-color: rgba(0,0,0,0.4); 
+                    position: relative; 
+                    top: -20%"
                 >
-                <div>
-                  <span id="trendingTVShowInfo1">{trendingTVShowInfo}</span>
-                  <span id="trendingTVShowInfo2">{trendingTVShowInfo}</span>
+                    <div id="trendingTVShowInfo2" style="color: white;">{trendingTVShowInfo}</div>
                 </div>
             </div>
         </div>
@@ -973,13 +1009,17 @@
   const searchTab = document.getElementById("searchTab");
   const homePage = document.getElementById("homePage");
   const searchPage = document.getElementById("searchPage");
+  const trendingMovie1 = document.getElementById('trendingMovie1');
   const trendingMovieImage1 = document.getElementById("trendingMovieImage1");
-  const trendingTVShowImage1 = document.getElementById("trendingTVShowImage1");
-  const trendingMovieImage2 = document.getElementById("trendingMovieImage2");
-  const trendingTVShowImage2 = document.getElementById("trendingTVShowImage2");
   const trendingMovieInfo1 = document.getElementById('trendingMovieInfo1');
-  const trendingMovieInfo2 = document.getElementById('trendingMovieInfo2');
+  const trendingTVShow1 = document.getElementById('trendingTVShow1');
+  const trendingTVShowImage1 = document.getElementById("trendingTVShowImage1");
   const trendingTVShowInfo1 = document.getElementById('trendingTVShowInfo1');
+  const trendingMovie2 = document.getElementById('trendingMovie2');
+  const trendingMovieImage2 = document.getElementById("trendingMovieImage2");
+  const trendingMovieInfo2 = document.getElementById('trendingMovieInfo2');
+  const trendingTVShow2 = document.getElementById('trendingTVShow2');
+  const trendingTVShowImage2 = document.getElementById("trendingTVShowImage2");
   const trendingTVShowInfo2 = document.getElementById('trendingTVShowInfo2');
   const searchInput = document.getElementById("searchInput");
   const searchDropdown = document.getElementById("searchDropdown");
@@ -1144,9 +1184,7 @@
   }
 
   const getYear = (media) => {
-    console.log(media)
     if (media == null) return "Not Available";
-    console.log('bp')
     return media.media_type === 'movie' ?
         (!media.hasOwnProperty('release_date') || media.release_date == null || media.release_date.length === 0 ?
             "Not Available" : media.release_date.substring(0, 4)) :
@@ -1372,30 +1410,38 @@
     trendingTVShowImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`)
     trendingMovieInfo1.innerHTML = `${getTitle(state.homeMovies[index])} (${getYear(state.homeMovies[index])})`
     trendingTVShowInfo1.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
-    ++index;
+    index++;
     trendingMovieImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`);
     trendingTVShowImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`)
     trendingMovieInfo2.innerHTML = `${getTitle(state.homeMovies[index])} (${getYear(state.homeMovies[index])})`
     trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
-    setInterval(() => updateHomeSlides((index++)), 3000);
+    setInterval(() => updateHomeSlides((++index)), 3000);
   }
 
   const updateHomeSlides = (index) => {
     const nextIndex = index % 5;
-    if(index % 2 === 0){
-      trendingMovieImage1.style.display = "none";
-      trendingMovieImage2.style.display = "block";
-      trendingTVShowImage1.style.display = "none";
-      trendingTVShowImage2.style.display = "block";
+    if (index % 2 === 0) {
+      //Load current card
+      trendingMovie1.style.display = "none";
+      trendingMovie2.style.display = "block";
+      trendingTVShow1.style.display = "none";
+      trendingTVShow2.style.display = "block";
+      //Set next card
       trendingMovieImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[nextIndex].backdrop_path}`);
-      trendingTVShowImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`)
-    }else{
-      trendingMovieImage1.style.display = "block";
-      trendingMovieImage2.style.display = "none";
-      trendingTVShowImage1.style.display = "block";
-      trendingTVShowImage2.style.display = "none";
+      trendingTVShowImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`);
+      trendingMovieInfo1.innerHTML = `${getTitle(state.homeMovies[nextIndex])} (${getYear(state.homeMovies[nextIndex])})`
+      trendingTVShowInfo1.innerHTML = `${getTitle(state.homeTVShows[nextIndex])} (${getYear(state.homeTVShows[nextIndex])})`
+    } else {
+      //Load current card
+      trendingMovie1.style.display = "block";
+      trendingMovie2.style.display = "none";
+      trendingTVShow1.style.display = "block";
+      trendingTVShow2.style.display = "none";
+      //Set next card
       trendingMovieImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[nextIndex].backdrop_path}`);
-      trendingTVShowImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`)
+      trendingTVShowImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`);
+      trendingMovieInfo2.innerHTML = `${getTitle(state.homeMovies[nextIndex])} (${getYear(state.homeMovies[nextIndex])})`
+      trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[nextIndex])} (${getYear(state.homeTVShows[nextIndex])})`
     }
   }
 
@@ -1480,6 +1526,8 @@
         state.tvGenres = tvGenres.data;
       }
     }
+    console.table(state.homeMovies)
+    console.table(state.homeTVShows)
     renderHomeSlides();
   }
 
