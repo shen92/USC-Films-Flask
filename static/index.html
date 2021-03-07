@@ -232,7 +232,7 @@
         #modal {
             width: 50%;
             margin: 5% auto;
-            padding: 30px 50px;
+            padding: 30px 0px 30px 50px ;
             display: flex;
             flex-direction: row;
             background-color: #d0d0d0;
@@ -244,7 +244,18 @@
             flex-direction: column;
         }
 
-
+        .modalCloseButton {
+          background: none; 
+          color:rgb(128, 128, 128);
+          font-size: 20px;
+          cursor: pointer;
+          position: relative;
+          left: 25px;
+          top: 15px;
+        }
+        .modalCloseButton:hover {
+          color: black
+        }
         #modalPoster {
             width: 100%;
         }
@@ -353,8 +364,9 @@
             <div class="modalPosterContainer">
                 <img id="modalPoster" src="" alt="Modal Poster">
             </div>
-            <div class="modalTitle" id="modalTitle">
-                {modalTitle}
+            <div class="modalTitle" >
+                <span id="modalTitle">{modalTitle}</span>
+                <div style="display: inline-flex; border: 1px solid red; border-radius: 20px; height: 20px; width: 20px; font-size: 16px; align-items: center; justify-content: center; color: red; cursor: pointer;" onclick="onGetMoreIconButtonClick()">i</div>
             </div>
             <div class="modalYearAndGenres" style="margin-top: 20px; color: black;">
                 <span id="modalYear" class="modalYear">{modalYear}</span><!--
@@ -589,7 +601,7 @@
             </div>
         </div>
         <div class="modalButton">
-            <button onclick="onCloseModalButtonClick()">close</button>
+            <span onclick="onCloseModalButtonClick()" class="modalCloseButton">✖</span>
         </div>
     </div>
 </div>
@@ -979,8 +991,8 @@
 </div>
 <script>
   //Configs
-  //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-  const BASE_URL = 'http://localhost:5000'  //Development server
+  const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+  //const BASE_URL = 'http://localhost:5000'  //Development server
   const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
   const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
   const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
@@ -992,8 +1004,8 @@
     tab: "home",
     homeMovies: [],
     homeTVShows: [],
-    keyword: "intern",
-    category: "movie",
+    keyword: "",
+    category: "",
     queryResults: [],
     movieGenres: [],
     tvGenres: [],
@@ -1160,6 +1172,10 @@
     }
     console.log(state)
     renderModal();
+  }
+
+  const onGetMoreIconButtonClick = () => {
+    window.open(`https://themoviedb.org/${state.modalMediaDetails.media_type}/${state.modalMediaDetails.id}`, "_blank")
   }
 
   const onCloseModalButtonClick = () => {
