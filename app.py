@@ -42,7 +42,7 @@ def get_home_movies():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
-@app.route('/home/tvshows', methods=['GET'])
+@app.route('/home/tv', methods=['GET'])
 def get_home_tv_shows():
     url = Template('$base_url/tv/airing_today?api_key=$api_key').substitute(base_url=BASE_URL, api_key=API_KEY)
     api_response = requests.get(url)
@@ -93,7 +93,7 @@ def get_search_movies():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/search/tv', methods=['GET'])
 def get_search_tv_shows():
     params = request.args
@@ -122,7 +122,7 @@ def get_search_tv_shows():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/search/multi', methods=['GET'])
 def get_search_multi():
     params = request.args
@@ -165,7 +165,7 @@ def get_search_multi():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/genres/movie', methods=['GET'])
 def get_movie_genres(): 
     url = Template('$base_url/genre/movie/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
@@ -178,7 +178,7 @@ def get_movie_genres():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/genres/tv', methods=['GET'])
 def get_tv_show_genres():
     url = Template('$base_url/genre/tv/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
@@ -191,7 +191,7 @@ def get_tv_show_genres():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/details/movie', methods=['GET'])
 def get_movie_details():
     params = request.args
@@ -218,7 +218,7 @@ def get_movie_details():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/details/tv', methods=['GET'])
 def get_tv_details():
     params = request.args
@@ -247,7 +247,7 @@ def get_tv_details():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/cast/movie', methods=['GET'])
 def get_movie_cast():
     params = request.args
@@ -270,7 +270,7 @@ def get_movie_cast():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/cast/tv', methods=['GET'])
 def get_tv_cast():
     params = request.args
@@ -293,7 +293,7 @@ def get_tv_cast():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/reviews/movie', methods=['GET'])
 def get_movie_reviews():
     params = request.args
@@ -318,7 +318,7 @@ def get_movie_reviews():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 @app.route('/reviews/tv', methods=['GET'])
 def get_tv_reviews():
     params = request.args
@@ -343,6 +343,6 @@ def get_tv_reviews():
     else:
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
-        
+
 if __name__ == '__main__':
     app.run()
