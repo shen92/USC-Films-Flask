@@ -11,6 +11,9 @@ CORS(app)
 
 BASE_URL = "https://api.themoviedb.org/3"
 API_KEY = 'ffacc501334b9c13b0136b785a4a2d81'
+NUM_RESULTS = 10
+NUM_CAST = 8
+NUM_COMMENTS = 5
 
 @app.route('/', methods=['GET'])
 def get_landing_page():
@@ -71,7 +74,7 @@ def get_search_movies():
         #Extract response
         results = api_response.json()
         results = results["results"] if "results" in results else None
-        results = results[0:10]
+        results = results[0:NUM_RESULTS] 
         response = []
         for result in results:
             movie = {
@@ -100,7 +103,7 @@ def get_search_tv_shows():
         #Extract response
         results = api_response.json()
         results = results["results"] if "results" in results else None
-        results = results[0:10]
+        results = results[0:NUM_RESULTS] 
         response = []
         for result in results:
             tvshow = {
@@ -157,7 +160,7 @@ def get_search_multi():
                     "media_type": "tv" #Additional field
                 }
                 response.append(data)
-        response = response[0:10]
+        response = response[0:NUM_RESULTS]
         return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
@@ -254,7 +257,7 @@ def get_movie_cast():
         #Extract response
         results = api_response.json()
         results = results["cast"] if "cast" in results else []
-        results = results[0:8] if len(results) > 0 else []
+        results = results[0:NUM_CAST] if len(results) > 0 else []
         response = []
         for result in results:
             data = {
@@ -277,7 +280,7 @@ def get_tv_cast():
         #Extract response
         results = api_response.json()
         results = results["cast"] if "cast" in results else []
-        results = results[0:8] if len(results) > 0 else []
+        results = results[0:NUM_CAST] if len(results) > 0 else []
         response = []
         for result in results:
             data = {
@@ -300,7 +303,7 @@ def get_movie_reviews():
         #Extract response
         results = api_response.json()
         results = results["results"] if "results" in results else []
-        results = results[0:5] if len(results) > 0 else []
+        results = results[0:NUM_COMMENTS] if len(results) > 0 else []
         response = []
         for result in results:
             author_details = result["author_details"] if "author_details" in result else None
@@ -325,7 +328,7 @@ def get_tv_reviews():
         #Extract response
         results = api_response.json()
         results = results["results"] if "results" in results else []
-        results = results[0:5] if len(results) > 0 else []
+        results = results[0:NUM_COMMENTS] if len(results) > 0 else []
         response = []
         for result in results:
             author_details = result["author_details"] if "author_details" in result else None
