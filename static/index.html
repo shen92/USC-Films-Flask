@@ -1101,16 +1101,17 @@
     reviewRates.push(document.getElementById(`reviewRate${i}`));
     reviewComments.push(document.getElementById(`reviewComment${i}`));
   }
+  let slideShow;
 
   //Event Handlers
   const onHomeTabClick = () => {
-    state.tab = "home";
     homeTab.style.color = 'red';
     homePage.style.display = 'flex';
     searchTab.style.color = 'white';
     searchPage.style.display = 'none';
-    renderHomePage();
+    onHomePageMounted();
     onClearButtonClick();
+    state.tab = "home";
   }
 
   const onHomeTabMouseOver = () => {
@@ -1122,11 +1123,12 @@
   }
 
   const onSearchTabClick = () => {
-    state.tab = "search";
     homeTab.style.color = 'white';
     homePage.style.display = 'none';
     searchTab.style.color = 'red';
     searchPage.style.display = 'flex';
+    onSearchPageMounted();
+    state.tab = "search";
   }
 
   const onSearchTabMouseOver = () => {
@@ -1445,7 +1447,7 @@
   }
 
   //Render Functions
-  const renderHomeSlides = () => {
+  const startHomeSlides = () => {
     //Load images first
     let index = 0;
     trendingMovieImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`);
@@ -1466,7 +1468,7 @@
       trendingTVShowImage1.style.animation = "fadeIn ease 5s infinite";
       trendingTVShowImage2.style.animation = "fadeIn ease 5s infinite";
     }, 150)
-    setInterval(() => updateHomeSlides((++index)), 5000);
+    slideShow = setInterval(() => updateHomeSlides((++index)), 5000);
   }
 
   const updateHomeSlides = (index) => {
@@ -1494,6 +1496,18 @@
       trendingMovieInfo2.innerHTML = `${getTitle(state.homeMovies[nextIndex])} (${getYear(state.homeMovies[nextIndex])})`
       trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[nextIndex])} (${getYear(state.homeTVShows[nextIndex])})`
     }
+  }
+
+  const endHomeSlides = () => {
+    clearInterval(slideShow);
+    trendingMovie1.style.display = "none";
+    trendingMovie2.style.display = "none";
+    trendingTVShow1.style.display = "none";
+    trendingTVShow2.style.display = "none";
+    trendingMovieImage1.style.animation = "none";
+    trendingMovieImage2.style.animation = "none";
+    trendingTVShowImage1.style.animation = "none";
+    trendingTVShowImage2.style.animation = "none";
   }
 
   const renderQueryResults = () => {
@@ -1572,36 +1586,43 @@
 
   }
 
-  const renderHomePage = async () => {
+  const onHomePageMounted = () => {
+    startHomeSlides();
+  }
+
+  const onSearchPageMounted = () => {
+    if (state.tab !== 'search') {
+      searchDropdown.selectedIndex = -1;
+    }
+    endHomeSlides();
+  }
+
+  const onAppMounted = async () => {
     const homeMovies = await fetchHomeMovies();
     if (homeMovies.data.length !== 0) {
       state.homeMovies = homeMovies.data;
     }
+
     const homeTVShows = await fetchHomeTVShows();
     if (homeTVShows.data.length !== 0) {
       state.homeTVShows = homeTVShows.data;
     }
-    if (state.movieGenres.length === 0) {
-      const movieGenres = await fetchGenres('movie')
-      if (movieGenres.data.length !== 0) {
-        state.movieGenres = movieGenres.data;
-      }
+
+    const movieGenres = await fetchGenres('movie')
+    if (movieGenres.data.length !== 0) {
+      state.movieGenres = movieGenres.data;
     }
-    if (state.tvGenres.length === 0) {
-      const tvGenres = await fetchGenres('tv')
-      if (tvGenres.data.length !== 0) {
-        state.tvGenres = tvGenres.data;
-      }
+
+    const tvGenres = await fetchGenres('tv')
+    if (tvGenres.data.length !== 0) {
+      state.tvGenres = tvGenres.data;
     }
-    renderHomeSlides();
   }
 
-  const renderSearchPage = () => {
-    searchDropdown.selectedIndex = -1;
-  }
+  onAppMounted().then(() => {
+    onHomePageMounted();
+  });
 
-  renderHomePage();
-  renderSearchPage();
 </script>
 </body>
 </html>
