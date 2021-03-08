@@ -1004,20 +1004,20 @@
 </div>
 <script>
   //Configs
-  //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-  const BASE_URL = 'http://localhost:5000'  //Development server
+  const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+  //const BASE_URL = 'http://localhost:5000'  //Development server
   const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
   const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
   const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
   const RESULT_PLACEHOLDER = `${BASE_URL}/static/img/result-placeholder.png`;
   const NUM_RESULTS = 10;
-  const NUM_CAST = 8;
+  const NUM_CASTS = 8;
   const NUM_COMMENTS = 5;
   let state = {
     tab: "home",
     homeMovies: [],
     homeTVShows: [],
-    keyword: "avengers",
+    keyword: "",
     category: "",
     queryResults: [],
     movieGenres: [],
@@ -1082,7 +1082,7 @@
   let modalCastAvatars = [];
   let modalCastNames = [];
   let modalCastCharacterNames = [];
-  for (let i = 0; i < NUM_CAST; i++) {
+  for (let i = 0; i < NUM_CASTS; i++) {
     modalCastSlots.push(document.getElementById(`modalCastSlot${i}`));
     modalCastAvatars.push(document.getElementById(`modalCastAvatar${i}`));
     modalCastNames.push(document.getElementById(`modalCastName${i}`));
@@ -1111,6 +1111,7 @@
     searchTab.style.color = 'white';
     searchPage.style.display = 'none';
     renderHomePage();
+    onClearButtonClick();
   }
 
   const onHomeTabMouseOver = () => {
@@ -1138,7 +1139,7 @@
   }
 
   const onSearchInputChange = (keyword) => {
-    const keywords = validateInput(keyword).split(' ').join('%20');
+    const keywords = validateInput(keyword).split(' ').join('%20'); //TODO
     state.keyword = keywords;
   }
 
@@ -1148,7 +1149,7 @@
 
   const onSearchButtonClick = async () => {
     if (state.keyword === "" || state.category === "") {
-      alert("Please enter valid values");
+      alert("Please enter valid values.");
       return;
     }
     const queryResults = await fetchQueryResults();
@@ -1176,9 +1177,6 @@
   const onShowMoreButtonClick = async (index) => {
     state.modalOpen = true;
     state.targetMediaIndex = index;
-    modalContainer.style.display = 'block';
-    document.documentElement.style.overflow = "hidden";
-
     if (state.targetMediaIndex >= 0 && state.targetMediaIndex <= 9) {
       const targetMedia = state.queryResults[state.targetMediaIndex];
       if (targetMedia != null) {
@@ -1190,7 +1188,6 @@
         state.modalReviews = modalReviews.data;
       }
     }
-    console.log(state)
     renderModal();
   }
 
@@ -1517,6 +1514,9 @@
   }
 
   const renderModal = () => {
+    modalContainer.style.display = 'block';
+    document.documentElement.style.overflow = "hidden";
+
     const modalMediaDetails = state.modalMediaDetails;
     const modalCasts = state.modalCasts;
     const modalReviews = state.modalReviews;
@@ -1534,15 +1534,18 @@
     modalDescription.innerHTML = getDescription(modalMediaDetails);
     modalSpokenLanguages.innerHTML = getSpokenLanguages(modalMediaDetails);
 
-    modalCasts.forEach((modalCast, index) => {
-      modalCastSlots[index].style.display = modalCasts[index] == null ? 'none' : 'flex'
-      modalCastAvatars[index].setAttribute("src",
-          !modalCast.hasOwnProperty('profile_path') || modalCast.profile_path == null || modalCast.profile_path.length === 0 ?
+    for(let i = 0; i< NUM_CASTS; i++){
+      const isEmpty = modalCasts[i] == null;
+      modalCastSlots[i].style.display = isEmpty ? 'none' : 'flex';
+      if(!isEmpty){
+        modalCastAvatars[i].setAttribute("src",
+          !modalCasts[i].hasOwnProperty('profile_path') || modalCasts[i].profile_path == null || modalCasts[i].profile_path.length === 0 ?
               PERSON_PLACEHOLDER :
-              `${BASE_URL_IMG}/w185${modalCast.profile_path}`);
-      modalCastNames[index].innerHTML = getCastName(modalCast);
-      modalCastCharacterNames[index].innerHTML = getCharacterName(modalCast);
-    })
+              `${BASE_URL_IMG}/w185${modalCasts[i].profile_path}`);
+        modalCastNames[i].innerHTML = getCastName(modalCasts[i]);
+        modalCastCharacterNames[i].innerHTML = getCharacterName(modalCasts[i]);
+      }
+    }
 
     for (let i = 0; i < NUM_COMMENTS; i++) {
       const isEmpty = modalReviews[i] == null;
