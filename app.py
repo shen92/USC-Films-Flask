@@ -19,6 +19,7 @@ NUM_COMMENTS = 5
 def get_landing_page():
     return app.send_static_file("index.html")
 
+#2.1.1 TMDB Trending Endpoint
 @app.route('/home/movie', methods=['GET'])
 def get_home_movies():
     url = Template('$base_url/trending/movie/week?api_key=$api_key').substitute(base_url=BASE_URL, api_key=API_KEY)
@@ -26,7 +27,7 @@ def get_home_movies():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        results = results["results"]
+        results = results["results"] if "results" in results else []
         results = results[0:5]
         response = []
         for result in results:
@@ -42,6 +43,7 @@ def get_home_movies():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.1.2 TMDB TV Airing Today Endpoint
 @app.route('/home/tv', methods=['GET'])
 def get_home_tv_shows():
     url = Template('$base_url/tv/airing_today?api_key=$api_key').substitute(base_url=BASE_URL, api_key=API_KEY)
@@ -49,7 +51,7 @@ def get_home_tv_shows():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        results = results["results"]
+        results = results["results"] if "results" in results else []
         results = results[0:5]
         response = []
         for result in results:
@@ -65,6 +67,7 @@ def get_home_tv_shows():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.3.1 Search Movie Endpoint
 @app.route('/search/movie', methods=['GET'])
 def get_search_movies():
     params = request.args
@@ -73,7 +76,7 @@ def get_search_movies():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        results = results["results"] if "results" in results else None
+        results = results["results"] if "results" in results else []
         results = results[0:NUM_RESULTS] 
         response = []
         for result in results:
@@ -94,6 +97,7 @@ def get_search_movies():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.3.2 Search TV Endpoint
 @app.route('/search/tv', methods=['GET'])
 def get_search_tv_shows():
     params = request.args
@@ -102,7 +106,7 @@ def get_search_tv_shows():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        results = results["results"] if "results" in results else None
+        results = results["results"] if "results" in results else []
         results = results[0:NUM_RESULTS] 
         response = []
         for result in results:
@@ -123,6 +127,7 @@ def get_search_tv_shows():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.3.3 Multi-Search Endpoint
 @app.route('/search/multi', methods=['GET'])
 def get_search_multi():
     params = request.args
@@ -131,10 +136,10 @@ def get_search_multi():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        results = results["results"]
+        results = results["results"] if "results" in results else []
         response = []
         for result in results:
-            if(result["media_type"] == "movie"):
+            if("media_type" in result and result["media_type"] == "movie"):
                 data = {
                     "id": result["id"] if "id" in result else None, 
                     "title": result["title"] if "title" in result else None,
@@ -147,7 +152,7 @@ def get_search_multi():
                     "media_type": "movie" #Additional field
                     }
                 response.append(data)
-            elif(result["media_type"] == "tv"):
+            elif("media_type" in result and result["media_type"] == "tv"):
                 data = {
                     "id": result["id"] if "id" in result else None,
                     "name": result["name"] if "name" in result else None,
@@ -173,7 +178,7 @@ def get_movie_genres():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        response = results["genres"] if "genres" in results else None
+        response = results["genres"] if "genres" in results else []
         return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
@@ -186,7 +191,7 @@ def get_tv_show_genres():
     if api_response.status_code == 200:
         #Extract response
         results = api_response.json()
-        response = results["genres"] if "genres" in results else None
+        response = results["genres"] if "genres" in results else []
         return jsonify({"data": response})
     else:
         response = {"message": "Unknown error occurred."}
@@ -257,7 +262,7 @@ def get_movie_cast():
         #Extract response
         results = api_response.json()
         results = results["cast"] if "cast" in results else []
-        results = results[0:NUM_CASTS] if len(results) > 0 else []
+        results = results[0:NUM_CASTS]
         response = []
         for result in results:
             data = {
@@ -280,7 +285,7 @@ def get_tv_cast():
         #Extract response
         results = api_response.json()
         results = results["cast"] if "cast" in results else []
-        results = results[0:NUM_CASTS] if len(results) > 0 else []
+        results = results[0:NUM_CASTS]
         response = []
         for result in results:
             data = {
@@ -303,7 +308,7 @@ def get_movie_reviews():
         #Extract response
         results = api_response.json()
         results = results["results"] if "results" in results else []
-        results = results[0:NUM_COMMENTS] if len(results) > 0 else []
+        results = results[0:NUM_COMMENTS]
         response = []
         for result in results:
             author_details = result["author_details"] if "author_details" in result else None
@@ -328,7 +333,7 @@ def get_tv_reviews():
         #Extract response
         results = api_response.json()
         results = results["results"] if "results" in results else []
-        results = results[0:NUM_COMMENTS] if len(results) > 0 else []
+        results = results[0:NUM_COMMENTS]
         response = []
         for result in results:
             author_details = result["author_details"] if "author_details" in result else None
