@@ -1003,8 +1003,8 @@
 </div>
 <script>
   //Configs
-  //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-  const BASE_URL = 'http://localhost:5000'  //Development server
+  const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+  //const BASE_URL = 'http://localhost:5000'  //Development server
   const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
   const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
   const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
@@ -1208,18 +1208,18 @@
   const getTitle = (media) => {
     if (media == null) return "Not Available";
     return media.media_type === 'movie' ?
-        (!media.hasOwnProperty('title') || media.title == null || media.title.length === 0 ?
+        (!media.hasOwnProperty('title') || media.title == null || !isString(media.title) || media.title.length === 0 ?
             "Not Available" : media.title) :
-        (!media.hasOwnProperty('name') || media.name == null || media.name.length === 0 ?
+        (!media.hasOwnProperty('name') || media.name == null || !isString(media.name) || media.name.length === 0 ?
             "Not Available" : media.name);
   }
 
   const getYear = (media) => {
     if (media == null) return "Not Available";
     return media.media_type === 'movie' ?
-        (!media.hasOwnProperty('release_date') || media.release_date == null || media.release_date.length === 0 ?
+        (!media.hasOwnProperty('release_date') || media.release_date == null || !isString(media.release_date) || media.release_date.length === 0 ?
             "Not Available" : media.release_date.substring(0, 4)) :
-        (!media.hasOwnProperty('first_air_date') || media.first_air_date == null || media.first_air_date.length === 0 ?
+        (!media.hasOwnProperty('first_air_date') || media.first_air_date == null || !isString(media.first_air_date) || media.first_air_date.length === 0 ?
             "Not Available" : media.first_air_date.substring(0, 4));
   }
 
@@ -1233,18 +1233,20 @@
       media.media_type === "movie" ?
           (media.genre_ids.forEach(genreId => {
             const genre = state.movieGenres.find(genre => genre.id === genreId);
-            if (genre != null) result.push(genre.name);
+            if (genre != null && genre.hasOwnProperty('name') &&
+                genre.name != null && isString(genre.name) && genre.name !== "") result.push(genre.name);
           })) :
           (media.genre_ids.forEach(genreId => {
             const genre = state.tvGenres.find(genre => genre.id === genreId);
-            if (genre != null) result.push(genre.name);
+            if (genre != null && genre.hasOwnProperty('name') &&
+                genre.name != null && isString(genre.name) && genre.name !== "") result.push(genre.name);
           }))
     } else if (media.hasOwnProperty('genres')) {
       if (media.genres == null || media.genres.length === 0)
         return "";
       result = media.genres.map(genre => {
         if (genre != null && genre.hasOwnProperty('name') &&
-            genre.name != null && genre.name.length > 0)
+            genre.name != null && isString(genre.name) && genre.name.length !== 0)
           return genre.name
       })
     }
@@ -1259,13 +1261,13 @@
 
   const getVotes = (media) => {
     if (media == null) return "";
-    return !media.hasOwnProperty('vote_count') || media.vote_count == null ?
+    return !media.hasOwnProperty('vote_count') || media.vote_count == null || isNaN(media.vote_count) ?
         0 : media.vote_count;
   }
 
   const getDescription = (media) => {
     if (media == null) return "";
-    return !media.hasOwnProperty('overview') || media.overview == null || media.overview.length === 0 ? "" : media.overview;
+    return !media.hasOwnProperty('overview') || media.overview == null || !isString(media.overview) || media.overview.length === 0 ? "" : media.overview;
   }
 
   const getSpokenLanguages = (media) => {
@@ -1277,7 +1279,7 @@
     if (spokenLanguages == null || spokenLanguages.length === 0) return "";
     const result = spokenLanguages.map(spokenLanguage => {
       if (spokenLanguage != null && spokenLanguage.hasOwnProperty('english_name') &&
-          spokenLanguage.english_name != null && spokenLanguage.english_name.length !== 0)
+          spokenLanguage.english_name != null && isString(spokenLanguage.english_name) && spokenLanguage.english_name.length !== 0)
         return spokenLanguage.english_name;
     });
     return result.join(', ');
@@ -1285,19 +1287,19 @@
 
   const getCastName = (cast) => {
     if (cast == null) return "";
-    return !cast.hasOwnProperty('name') || cast.name == null || cast.name.length === 0 ?
+    return !cast.hasOwnProperty('name') || cast.name == null || !isString(cast.name) || cast.name.length === 0 ?
         "" : cast.name;
   }
 
   const getCharacterName = (cast) => {
     if (cast == null) return "";
-    return !cast.hasOwnProperty('character') || cast.character == null || cast.character.length === 0 ?
+    return !cast.hasOwnProperty('character') || cast.character == null || !isString(cast.character) || cast.character.length === 0 ?
         "" : cast.character;
   }
 
   const getReviewUserName = (review) => {
     if (review == null) return "";
-    return !review.hasOwnProperty('username') || review.username == null || review.username.length === 0 ?
+    return !review.hasOwnProperty('username') || review.username == null || !isString(review.username) || review.username.length === 0 ?
         "" : review.username;
   }
 
@@ -1316,13 +1318,17 @@
 
   const getReviewComment = (review) => {
     if (review == null) return "";
-    return !review.hasOwnProperty('content') || review.content == null || review.content.length === 0 ?
+    return !review.hasOwnProperty('content') || review.content == null || !isString(review.content) || review.content.length === 0 ?
         "" : review.content;
+  }
+
+  const isString = (str) => {
+    return typeof str === 'string' || str instanceof String
   }
 
   const keepTwoDecimal = (num) => {
     let result = parseFloat(num);
-    if (isNaN(result)) {
+    if (isNaN(result) || num <= 0) {
       return 0.0;
     }
     result = Math.round(num * 100) / 100;
@@ -1332,11 +1338,15 @@
   }
 
   const unixToTime = (unixTime) => {
-    const date = new Date(unixTime);
-    const day = date.getUTCDate();
-    const month = date.getUTCMonth() + 1;
-    const year = date.getUTCFullYear();
-    return `${month < 10 ? "0" + month : month}/${day < 10 ? "0" + day : day}/${year}`;
+    try {
+      const date = new Date(unixTime);
+      const day = date.getUTCDate();
+      const month = date.getUTCMonth() + 1;
+      const year = date.getUTCFullYear();
+      return `${month < 10 ? "0" + month : month}/${day < 10 ? "0" + day : day}/${year}`;
+    } catch (e) {
+      return "Not Available"
+    }
   }
 
   //API Calls
