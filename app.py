@@ -6,7 +6,7 @@ import requests
 from string import Template
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='static')
 CORS(app)
 
 BASE_URL = "https://api.themoviedb.org/3"
@@ -16,6 +16,7 @@ NUM_CASTS = 8
 NUM_COMMENTS = 5
 
 @app.route('/', methods=['GET'])
+@app.route('/index.html', methods=['GET'])
 def get_landing_page():
     return app.send_static_file("index.html")
 
