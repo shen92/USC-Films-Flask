@@ -650,7 +650,7 @@
     <div id="homePage">
         <div class="homeCard">
             <div style="color: white">Trending Movies</div>
-            <div id="trendingMovie1" style="margin-top: 25px;">
+            <div id="trendingMovie1" style="display: none; margin-top: 25px;">
                 <img id="trendingMovieImage1"
                      class="slideImage"
                      src=""
@@ -668,7 +668,7 @@
                     <div id="trendingMovieInfo1" style="color: white;">{trendingMovieInfo}</div>
                 </div>
             </div>
-            <div id="trendingMovie2" style="margin-top: 25px; display: none;">
+            <div id="trendingMovie2" style="display: none; margin-top: 25px;">
                 <img id="trendingMovieImage2"
                      class="slideImage"
                      src=""
@@ -689,7 +689,7 @@
         </div>
         <div class="homeCard">
             <div style="color: white">TV Shows On-Air Today</div>
-            <div id="trendingTVShow1" style="margin-top: 25px;">
+            <div id="trendingTVShow1" style="display: none; margin-top: 25px;">
                 <img id="trendingTVShowImage1"
                      class="slideImage"
                      src=""
@@ -706,7 +706,7 @@
                     <div id="trendingTVShowInfo1" style="color: white;">{trendingTVShowInfo}</div>
                 </div>
             </div>
-            <div id="trendingTVShow2" style="margin-top: 25px; display: none;">
+            <div id="trendingTVShow2" style="display: none; margin-top: 25px;">
                 <img id="trendingTVShowImage2"
                      class="slideImage"
                      src=""
@@ -1459,6 +1459,8 @@
     trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
     //Start animation until images are loaded
     setTimeout(() => {
+      trendingMovie1.style.display = "block";
+      trendingTVShow1.style.display = "block";
       trendingMovieImage1.style.animation = "fadeIn ease 5s infinite";
       trendingMovieImage2.style.animation = "fadeIn ease 5s infinite";
       trendingTVShowImage1.style.animation = "fadeIn ease 5s infinite";
