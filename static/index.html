@@ -146,6 +146,7 @@
 
         .buttonRow {
             justify-content: center;
+            gap: 60px;
         }
 
         .searchButton {
@@ -179,7 +180,7 @@
         }
 
         .resultImageContainer {
-          margin: 10px 0px
+            margin: 10px 0px
         }
 
         .resultCardInfo {
@@ -378,7 +379,7 @@
             <div class="modalTitle">
                 <span id="modalTitle">{modalTitle}</span>
                 <span style="font-size: 16px; cursor: pointer; color: red"
-                     onclick="onGetMoreIconButtonClick()">ⓘ
+                      onclick="onGetMoreIconButtonClick()">ⓘ
                 </span>
             </div>
             <div class="modalYearAndGenres" style="margin-top: 20px; color: black;">
@@ -738,8 +739,8 @@
             <div class="searchFormRow">
                 <div class="searchFormLabel">Keyword<span style="color:red; font-style:italic">*</span></div>
                 <input id="searchInput"
+                       type="text"
                        class="searchInput"
-                       autocomplete="off"
                        onchange="onSearchInputChange(this.value)"
                 >
             </div>
@@ -760,7 +761,6 @@
                 >
                     Search
                 </button>
-                <div style="width: 60px;"></div>
                 <button class="searchButton"
                         onclick="onClearButtonClick()"
                 >
@@ -1004,8 +1004,8 @@
 </div>
 <script>
   //Configs
-  const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-  //const BASE_URL = 'http://localhost:5000'  //Development server
+  //const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
+  const BASE_URL = 'http://localhost:5000'  //Development server
   const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
   const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
   const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
@@ -1139,8 +1139,7 @@
   }
 
   const onSearchInputChange = (keyword) => {
-    const keywords = validateInput(keyword).split(' ').join('%20'); //TODO
-    state.keyword = keywords;
+    state.keyword = validateInput(keyword);
   }
 
   const onSearchDropdownChange = (category) => {
@@ -1204,7 +1203,7 @@
 
   //Helper Functions
   const validateInput = (keyword) => {
-    return validKeyword = keyword.replace(/[^a-zA-Z0-9- _]/g, '').replace(/\s+/g, ' ').trim();
+    return validKeyword = keyword.replace(/[ ]/g, '%20');
   }
 
   const getTitle = (media) => {
@@ -1451,10 +1450,11 @@
     trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
     //Start animation until images are loaded
     setTimeout(() => {
-    trendingMovieImage1.style.animation = "fadeIn ease 5s infinite";
-    trendingMovieImage2.style.animation = "fadeIn ease 5s infinite";
-    trendingTVShowImage1.style.animation = "fadeIn ease 5s infinite";
-    trendingTVShowImage2.style.animation = "fadeIn ease 5s infinite";}, 150)
+      trendingMovieImage1.style.animation = "fadeIn ease 5s infinite";
+      trendingMovieImage2.style.animation = "fadeIn ease 5s infinite";
+      trendingTVShowImage1.style.animation = "fadeIn ease 5s infinite";
+      trendingTVShowImage2.style.animation = "fadeIn ease 5s infinite";
+    }, 150)
     setInterval(() => updateHomeSlides((++index)), 5000);
   }
 
@@ -1487,7 +1487,7 @@
 
   const renderQueryResults = () => {
     //If no results: queryResults = []
-    if(state.queryResults.length === 0 || state.queryResults == null) {
+    if (state.queryResults.length === 0 || state.queryResults == null) {
       searchResults.style.display = "none";
       notFound.style.display = 'flex';
       return;
@@ -1496,13 +1496,13 @@
     searchResults.style.display = "flex";
     notFound.style.display = 'none';
     const queryResults = state.queryResults;
-    for(let i = 0; i < NUM_RESULTS; i++){
+    for (let i = 0; i < NUM_RESULTS; i++) {
       const isEmpty = queryResults[i] == null;
       searchResultCards[i].style.display = isEmpty ? 'none' : 'flex';
-      if(!isEmpty){
+      if (!isEmpty) {
         resultPosters[i].setAttribute("src", !queryResults[i].hasOwnProperty('poster_path') ||
         queryResults[i].poster_path == null || queryResults[i].poster_path.length === 0 ?
-        RESULT_PLACEHOLDER : `${BASE_URL_IMG}/w185${queryResults[i].poster_path}`)
+            RESULT_PLACEHOLDER : `${BASE_URL_IMG}/w185${queryResults[i].poster_path}`)
         resultTitles[i].innerHTML = getTitle(queryResults[i]);
         resultYears[i].innerHTML = getYear(queryResults[i]);
         resultGenres[i].innerHTML = getGenres(queryResults[i]);
@@ -1534,14 +1534,14 @@
     modalDescription.innerHTML = getDescription(modalMediaDetails);
     modalSpokenLanguages.innerHTML = getSpokenLanguages(modalMediaDetails);
 
-    for(let i = 0; i< NUM_CASTS; i++){
+    for (let i = 0; i < NUM_CASTS; i++) {
       const isEmpty = modalCasts[i] == null;
       modalCastSlots[i].style.display = isEmpty ? 'none' : 'flex';
-      if(!isEmpty){
+      if (!isEmpty) {
         modalCastAvatars[i].setAttribute("src",
-          !modalCasts[i].hasOwnProperty('profile_path') || modalCasts[i].profile_path == null || modalCasts[i].profile_path.length === 0 ?
-              PERSON_PLACEHOLDER :
-              `${BASE_URL_IMG}/w185${modalCasts[i].profile_path}`);
+            !modalCasts[i].hasOwnProperty('profile_path') || modalCasts[i].profile_path == null || modalCasts[i].profile_path.length === 0 ?
+                PERSON_PLACEHOLDER :
+                `${BASE_URL_IMG}/w185${modalCasts[i].profile_path}`);
         modalCastNames[i].innerHTML = getCastName(modalCasts[i]);
         modalCastCharacterNames[i].innerHTML = getCharacterName(modalCasts[i]);
       }
