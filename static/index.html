@@ -1451,11 +1451,11 @@
     trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
     //Start animation until images are loaded
     setTimeout(() => {
-    trendingMovieImage1.style.animation = "fadeIn ease 3s infinite";
-    trendingMovieImage2.style.animation = "fadeIn ease 3s infinite";
-    trendingTVShowImage1.style.animation = "fadeIn ease 3s infinite";
-    trendingTVShowImage2.style.animation = "fadeIn ease 3s infinite";}, 120)
-    setInterval(() => updateHomeSlides((++index)), 3000);
+    trendingMovieImage1.style.animation = "fadeIn ease 5s infinite";
+    trendingMovieImage2.style.animation = "fadeIn ease 5s infinite";
+    trendingTVShowImage1.style.animation = "fadeIn ease 5s infinite";
+    trendingTVShowImage2.style.animation = "fadeIn ease 5s infinite";}, 150)
+    setInterval(() => updateHomeSlides((++index)), 5000);
   }
 
   const updateHomeSlides = (index) => {
