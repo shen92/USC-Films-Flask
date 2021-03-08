@@ -1192,7 +1192,7 @@
   }
 
   const onGetMoreIconButtonClick = () => {
-    window.open(`https://themoviedb.org/${state.modalMediaDetails.media_type}/${state.modalMediaDetails.id}`, "_blank")
+    window.open(`https://themoviedb.org/${state.modalMediaDetails.media_type}/${state.modalMediaDetails.id}`, "_blank");
   }
 
   const onCloseModalButtonClick = () => {
@@ -1348,7 +1348,7 @@
       redirect: 'follow'
     };
     try {
-      const response = await fetch(`${BASE_URL}/home/movies`, requestOptions);
+      const response = await fetch(`${BASE_URL}/home/movie`, requestOptions);
       return await response.json();
     } catch (error) {
       console.log('Request Failed', error);

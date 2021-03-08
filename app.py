@@ -19,7 +19,7 @@ NUM_COMMENTS = 5
 def get_landing_page():
     return app.send_static_file("index.html")
 
-@app.route('/home/movies', methods=['GET'])
+@app.route('/home/movie', methods=['GET'])
 def get_home_movies():
     url = Template('$base_url/trending/movie/week?api_key=$api_key').substitute(base_url=BASE_URL, api_key=API_KEY)
     api_response = requests.get(url)
