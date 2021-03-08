@@ -171,6 +171,7 @@ def get_search_multi():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.5.1 TMDB Movie Genres Endpoint
 @app.route('/genres/movie', methods=['GET'])
 def get_movie_genres(): 
     url = Template('$base_url/genre/movie/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
@@ -184,6 +185,7 @@ def get_movie_genres():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.5.2 TMDB TV Genres Endpoint
 @app.route('/genres/tv', methods=['GET'])
 def get_tv_show_genres():
     url = Template('$base_url/genre/tv/list?api_key=$api_key&language=en-US').substitute(base_url=BASE_URL, api_key=API_KEY)
@@ -197,6 +199,7 @@ def get_tv_show_genres():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.4.1 Get Movie Details Endpoint
 @app.route('/details/movie', methods=['GET'])
 def get_movie_details():
     params = request.args
@@ -224,6 +227,7 @@ def get_movie_details():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.4.4 Get TV Show Details Endpoint
 @app.route('/details/tv', methods=['GET'])
 def get_tv_details():
     params = request.args
@@ -253,6 +257,7 @@ def get_tv_details():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.4.2 Get Movie Credits Endpoint
 @app.route('/cast/movie', methods=['GET'])
 def get_movie_cast():
     params = request.args
@@ -276,6 +281,7 @@ def get_movie_cast():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.4.5 Get TV Show Credits Endpoint
 @app.route('/cast/tv', methods=['GET'])
 def get_tv_cast():
     params = request.args
@@ -299,6 +305,7 @@ def get_tv_cast():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.4.3 Get Movie Reviews Endpoint
 @app.route('/reviews/movie', methods=['GET'])
 def get_movie_reviews():
     params = request.args
@@ -324,6 +331,7 @@ def get_movie_reviews():
         response = {"message": "Unknown error occurred."}
         return jsonify(response)
 
+#2.4.6 Get TV Show Reviews Endpoint
 @app.route('/reviews/tv', methods=['GET'])
 def get_tv_reviews():
     params = request.args
