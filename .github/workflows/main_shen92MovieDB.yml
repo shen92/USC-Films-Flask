@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'shen92MovieDB'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_9329b9f229b94975bb2e142d74300391 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_22790b5ec1124d63adae716c9180fd78 }}
