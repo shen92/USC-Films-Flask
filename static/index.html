@@ -1,1654 +1,2150 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>THE MOVIE DB</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap');
-        
-        html, body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #A5221D;
-            background-color: black;
-            overflow-x: hidden;
-        }
+      @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap");
 
-        body {
-            display: flex;
-            flex-direction: column;
-        }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #a5221d;
+        background-color: black;
+        overflow-x: hidden;
+      }
 
-        #header {
-            display: flex;
-            flex-direction: row;
-            margin: 10px;
-        }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
 
-        .headerTitle {
-            font-size: 25px;
-            font-weight: 700;
-        }
+      #header {
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+      }
 
-        .headerGradient {
-            flex: 1;
-            background: linear-gradient(90deg, rgba(0, 0, 0, 1) 40%, #A5221D 100%);
-        }
+      .headerTitle {
+        font-size: 25px;
+        font-weight: 700;
+      }
 
-        #content {
-            display: flex;
-            flex: 1;
-            flex-direction: row;
-        }
+      .headerGradient {
+        flex: 1;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 1) 40%, #a5221d 100%);
+      }
 
-        #sideBar {
-            flex: 1;
-            display: flex;
-            border-right: 1px solid white;
-        }
+      #content {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+      }
 
-        #homeTab {
-            display: flex;
-            border-bottom: 1px solid white;
-            padding: 20px 10px;
-            color: #A5221D;
-            cursor: pointer;
-        }
+      #sideBar {
+        flex: 1;
+        display: flex;
+        border-right: 1px solid white;
+      }
 
-        #searchTab {
-            display: flex;
-            padding: 20px 10px;
-            color: white;
-            cursor: pointer;
-        }
+      #homeTab {
+        display: flex;
+        border-bottom: 1px solid white;
+        padding: 20px 10px;
+        color: #a5221d;
+        cursor: pointer;
+      }
 
-        #homePage {
-            flex: 5;
-            height: 100%;
-            max-width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+      #searchTab {
+        display: flex;
+        padding: 20px 10px;
+        color: white;
+        cursor: pointer;
+      }
 
-        #searchPage {
-            flex: 5;
-            height: 100%;
-            max-width: 100%;
-            display: none;
-            flex-direction: column;
-        }
+      #homePage {
+        flex: 5;
+        height: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
 
-        .homeCardTitle {
-            color: white;
-            font-family: 'Raleway', sans-serif;
-            font-size: 20px;
-        }
+      #searchPage {
+        flex: 5;
+        height: 100%;
+        max-width: 100%;
+        display: none;
+        flex-direction: column;
+      }
 
-        .homeCard {
-            width: 80%;
-            padding: 20px 0px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+      .homeCardTitle {
+        color: white;
+        font-family: "Raleway", sans-serif;
+        font-size: 20px;
+      }
 
-        .slideImage {
-            width: 100%;
-            opacity: 20%;
-            /* animation: fadeIn ease 3s infinite; */
-        }
+      .homeCard {
+        width: 80%;
+        padding: 20px 0px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0.2;
-            }
-            80% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+      .slideImage {
+        width: 100%;
+        opacity: 20%;
+        /* animation: fadeIn ease 3s infinite; */
+      }
 
-        .homeCardInfo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 20%;
-            background-color: rgba(0, 0, 0, 0.4);
-            position: relative;
-            top: -20%;
-            font-family: 'Raleway', sans-serif;
-            font-size: 16px;
+      @keyframes fadeIn {
+        0% {
+          opacity: 0.2;
         }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
 
-        .searchForm {
-            width: 80%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-left: 10px;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, #A5221D 100%);
-        }
+      .homeCardInfo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20%;
+        background-color: rgba(0, 0, 0, 0.4);
+        position: relative;
+        top: -20%;
+        font-family: "Raleway", sans-serif;
+        font-size: 16px;
+      }
 
-        .searchTitle {
-            margin: 20px 0px;
-            font-size: 25px;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 700;
-            color: white;
-        }
+      .searchForm {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 10px;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, #a5221d 100%);
+      }
 
-        .searchFormRow {
-            width: 40%;
-            display: flex;
-            margin: 10px 0px;
-        }
+      .searchTitle {
+        margin: 20px 0px;
+        font-size: 25px;
+        font-family: "Raleway", sans-serif;
+        font-weight: 700;
+        color: white;
+      }
 
-        .searchFormLabel {
-            width: 80px;
-            font-family: 'Raleway', sans-serif;
-            color: white;
-        }
+      .searchFormRow {
+        width: 40%;
+        display: flex;
+        margin: 10px 0px;
+      }
 
-        .searchInput {
-            height: 20px;
-            flex: 1;
-            margin-left: 10px;
-            border: none;
-            border-radius: 5px;
-        }
+      .searchFormLabel {
+        width: 80px;
+        font-family: "Raleway", sans-serif;
+        color: white;
+      }
 
-        .searchDropdown {
-            height: 23px;
-            flex: 0.4;
-            margin-left: 10px;
-            border: none;
-            border-radius: 5px;
-        }
+      .searchInput {
+        height: 20px;
+        flex: 1;
+        margin-left: 10px;
+        border: none;
+        border-radius: 5px;
+      }
 
-        .buttonRow {
-            justify-content: center;
-            gap: 60px;
-        }
+      .searchDropdown {
+        height: 23px;
+        flex: 0.4;
+        margin-left: 10px;
+        border: none;
+        border-radius: 5px;
+      }
 
-        .searchButton {
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-        }
+      .buttonRow {
+        justify-content: center;
+        gap: 60px;
+      }
 
-        .searchButton:hover {
-            background-color: #A5221D;
-        }
+      .searchButton {
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+      }
 
-        #flexPadding {
-            margin-left: 10px;
-            display: flex;
-            flex: 1;
-        }
+      .searchButton:hover {
+        background-color: #a5221d;
+      }
 
-        #searchResults {
-            display: none;
-            width: 80%;
-            margin-left: 10px;
-            flex-direction: column;
-        }
+      #flexPadding {
+        margin-left: 10px;
+        display: flex;
+        flex: 1;
+      }
 
-        .resultCard {
-            display: none;
-            margin: 10px 0px;
-        }
+      #searchResults {
+        display: none;
+        width: 80%;
+        margin-left: 10px;
+        flex-direction: column;
+      }
 
-        .resultImageContainer {
-            margin: 10px 0px
-        }
+      .resultCard {
+        display: none;
+        margin: 10px 0px;
+      }
 
-        .resultCardInfo {
-            flex: 1;
-            margin-left: 40px;
-            color: white;
-        }
+      .resultImageContainer {
+        margin: 10px 0px;
+      }
 
-        .resultTitle {
-            margin: 25px 0px;
-            font-weight: 700;
-            font-size: 25px;
-        }
+      .resultCardInfo {
+        flex: 1;
+        margin-left: 40px;
+        color: white;
+      }
 
-        .resultDescription {
-            height: 55px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin: 20px 0px;
-            font-family: 'Raleway', sans-serif;
-        }
+      .resultTitle {
+        margin: 25px 0px;
+        font-weight: 700;
+        font-size: 25px;
+      }
 
-        .showMoreButton {
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            background-color: #A5221D;
-            color: white;
-        }
+      .resultDescription {
+        height: 55px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 20px 0px;
+        font-family: "Raleway", sans-serif;
+      }
 
-        .showMoreButton:hover {
-            background-color: gray;
-        }
+      .showMoreButton {
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #a5221d;
+        color: white;
+      }
 
-        #notFound {
-            margin-left: 10px;
-            width: 80%;
-            flex-direction: column;
-            display: none;
-            flex: 1;
-            color: white;
-            align-items: center;
-        }
+      .showMoreButton:hover {
+        background-color: gray;
+      }
 
-        #modalContainer {
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.8);
-            width: 100%;
-            height: 105%;
-            z-index: 100;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
+      #notFound {
+        margin-left: 10px;
+        width: 80%;
+        flex-direction: column;
+        display: none;
+        flex: 1;
+        color: white;
+        align-items: center;
+      }
 
-        #modal {
-            width: 50%;
-            margin: 5% auto;
-            padding: 30px 0px 30px 50px;
-            display: flex;
-            flex-direction: row;
-            background-color: #d0d0d0;
-        }
+      #modalContainer {
+        display: none;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.8);
+        width: 100%;
+        height: 105%;
+        z-index: 100;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
 
-        .modalContent {
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-        }
+      #modal {
+        width: 50%;
+        margin: 5% auto;
+        padding: 30px 0px 30px 50px;
+        display: flex;
+        flex-direction: row;
+        background-color: #d0d0d0;
+      }
 
-        .modalCloseButton {
-            background: none;
-            color: rgb(128, 128, 128);
-            font-size: 20px;
-            cursor: pointer;
-            position: relative;
-            left: 25px;
-            top: 15px;
-        }
+      .modalContent {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+      }
 
-        .modalCloseButton:hover {
-            color: black
-        }
+      .modalCloseButton {
+        background: none;
+        color: rgb(128, 128, 128);
+        font-size: 20px;
+        cursor: pointer;
+        position: relative;
+        left: 25px;
+        top: 15px;
+      }
 
-        #modalPoster {
-            width: 100%;
-        }
+      .modalCloseButton:hover {
+        color: black;
+      }
 
-        .modalTitle {
-            margin-top: 24px;
-            color: black;
-            font-size: 25px;
-            font-family: 'Raleway', sans-serif;
-        }
+      #modalPoster {
+        width: 100%;
+      }
 
-        .modalYear {
-            color: black;
-        }
+      .modalTitle {
+        margin-top: 24px;
+        color: black;
+        font-size: 25px;
+        font-family: "Raleway", sans-serif;
+      }
 
-        .modalGenres {
-            color: black;
-        }
+      .modalYear {
+        color: black;
+      }
 
-        .modalDescription {
-            margin-top: 30px;
-            color: black;
-            font-family: 'Raleway', sans-serif
-        }
+      .modalGenres {
+        color: black;
+      }
 
-        .modalSpokenLanguages {
-            margin-top: 30px;
-            color: black;
-            font-family: 'Raleway', sans-serif;
-            font-style: italic;
-        }
+      .modalDescription {
+        margin-top: 30px;
+        color: black;
+        font-family: "Raleway", sans-serif;
+      }
 
-        .castRow {
-            width: 100%;
-            display: flex;
-            align-items: flex-start;
-            align-content: space-between;
-            gap: 10px;
-            margin-top: 20px;
-        }
+      .modalSpokenLanguages {
+        margin-top: 30px;
+        color: black;
+        font-family: "Raleway", sans-serif;
+        font-style: italic;
+      }
 
-        .modalCastSlot {
-            width: 24%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: black;
-        }
+      .castRow {
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        align-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+      }
 
-        .modalCastName {
-            width: 100%;
-            height: 24px;
-            text-align: center;
-            white-space: nowrap;
-            overflow-x: hidden;
-            text-overflow: ellipsis;
-            font-family: 'Raleway', sans-serif;
-        }
+      .modalCastSlot {
+        width: 24%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: black;
+      }
 
-        .modalCastAvatar {
-            width: 100%;
-            height: 30vh;
-            object-fit: cover;
-        }
+      .modalCastName {
+        width: 100%;
+        height: 24px;
+        text-align: center;
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        font-family: "Raleway", sans-serif;
+      }
 
-        .modalReviewCard {
-            margin-top: 25px;
-        }
+      .modalCastAvatar {
+        width: 100%;
+        height: 30vh;
+        object-fit: cover;
+      }
 
-        .reviewUsernameSlot {
-            color: black;
-            margin-bottom: 20px;
-        }
+      .modalReviewCard {
+        margin-top: 25px;
+      }
 
-        .reviewUsername {
-            font-weight: 700;
-            font-size: 20px;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 700;
-        }
+      .reviewUsernameSlot {
+        color: black;
+        margin-bottom: 20px;
+      }
 
-        .reviewRateSlot {
-            font-family: 'Raleway', sans-serif;
-        }
+      .reviewUsername {
+        font-weight: 700;
+        font-size: 20px;
+        font-family: "Raleway", sans-serif;
+        font-weight: 700;
+      }
 
-        .reviewComment {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            font-family: 'Raleway', sans-serif;
-            color: black
-        }
+      .reviewRateSlot {
+        font-family: "Raleway", sans-serif;
+      }
 
-        #footer {
-            display: flex;
-            flex-direction: column;
-            margin: 10px 10px 0px 10px;
-            padding: 15px 5px;
-            background-color: #A5221D;
-            color: white;
-            font-family: 'Raleway', sans-serif;
-            font-style: italic;
-        }
+      .reviewComment {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-family: "Raleway", sans-serif;
+        color: black;
+      }
 
-        #footer div {
-            display: flex;
-            flex-direction: row-reverse;
-        }
+      #footer {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 10px 0px 10px;
+        padding: 15px 5px;
+        background-color: #a5221d;
+        color: white;
+        font-family: "Raleway", sans-serif;
+        font-style: italic;
+      }
+
+      #footer div {
+        display: flex;
+        flex-direction: row-reverse;
+      }
     </style>
-
-</head>
-<body>
-<div id="modalContainer" class="disabledArea">
-    <div id="modal">
+  </head>
+  <body>
+    <div id="modalContainer" class="disabledArea">
+      <div id="modal">
         <div class="modalContent">
-            <div class="modalPosterContainer">
-                <img id="modalPoster" src="" alt="Modal Poster">
-            </div>
-            <div class="modalTitle">
-                <span id="modalTitle">{modalTitle}</span>
-                <span style="font-size: 16px; cursor: pointer; color: #A5221D"
-                      onclick="onGetMoreIconButtonClick()">ⓘ
-                </span>
-            </div>
-            <div class="modalYearAndGenres"
-                 style="margin-top: 20px; color: black; font-family: 'Raleway', sans-serif;">
-                <span id="modalYear" class="modalYear">{modalYear}</span><!--
-            --><span> | </span><!--
+          <div class="modalPosterContainer">
+            <img id="modalPoster" src="" alt="Modal Poster" />
+          </div>
+          <div class="modalTitle">
+            <span id="modalTitle">{modalTitle}</span>
+            <span
+              style="font-size: 16px; cursor: pointer; color: #a5221d"
+              onclick="onGetMoreIconButtonClick()"
+              >ⓘ
+            </span>
+          </div>
+          <div
+            class="modalYearAndGenres"
+            style="
+              margin-top: 20px;
+              color: black;
+              font-family: 'Raleway', sans-serif;
+            "
+          >
+            <span id="modalYear" class="modalYear">{modalYear}</span
+            ><!--
+            --><span> | </span
+            ><!--
             --><span id="modalGenres" class="modalGenres">{modalGenres}</span>
+          </div>
+          <div
+            class="modalRateAndVote"
+            style="
+              margin-top: 15px;
+              color: black;
+              font-family: 'Raleway', sans-serif;
+            "
+          >
+            <span style="color: #a5221d">★</span>
+            <span id="modalRate" style="color: #a5221d">{modalRate}</span
+            ><!--
+            --><span style="color: #a5221d">/5</span>
+            <span id="modalVote">{modalVote}</span>
+            <span>votes</span>
+          </div>
+          <div class="modalDescription" id="modalDescription">
+            {modalDescription}
+          </div>
+          <div class="modalSpokenLanguages">
+            <span>Spoken languages:</span>
+            <span id="modalSpokenLanguages">{modalSpokenLanguages}</span>
+          </div>
+          <div class="modalCastContainer">
+            <div
+              style="
+                font-weight: 700;
+                color: black;
+                font-size: 24px;
+                margin-top: 40px;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 700;
+              "
+            >
+              Cast
             </div>
-            <div class="modalRateAndVote"
-                 style="margin-top: 15px; color: black; font-family: 'Raleway', sans-serif">
-                <span style="color:#A5221D">★</span>
-                <span id="modalRate" style="color:#A5221D">{modalRate}</span><!--
-            --><span style="color:#A5221D">/5</span>
-                <span id="modalVote">{modalVote}</span>
-                <span>votes</span>
-            </div>
-            <div class="modalDescription" id="modalDescription">
-                {modalDescription}
-            </div>
-            <div class="modalSpokenLanguages">
-                <span>Spoken languages:</span>
-                <span id="modalSpokenLanguages">{modalSpokenLanguages}</span>
-            </div>
-            <div class="modalCastContainer">
-                <div style="font-weight: 700; color: black; font-size: 24px; margin-top: 40px; font-family: 'Raleway', sans-serif;
-                font-weight: 700;">
-                    Cast
+            <div class="castRow">
+              <div id="modalCastSlot0" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar0"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 0"
+                />
+                <div
+                  id="modalCastName0"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
                 </div>
-                <div class="castRow">
-                    <div id="modalCastSlot0" class="modalCastSlot">
-                        <img id="modalCastAvatar0" class="modalCastAvatar" src="" alt="cast 0">
-                        <div id="modalCastName0"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName0"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div><!--
-              -->
-                    <div id="modalCastSlot1" class="modalCastSlot">
-                        <img id="modalCastAvatar1" class="modalCastAvatar" src="" alt="cast 1">
-                        <div id="modalCastName1"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName1"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div><!--
-              -->
-                    <div id="modalCastSlot2" class="modalCastSlot">
-                        <img id="modalCastAvatar2" class="modalCastAvatar" src="" alt="cast 2">
-                        <div id="modalCastName2"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName2"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div><!--
-              -->
-                    <div id="modalCastSlot3" class="modalCastSlot">
-                        <img id="modalCastAvatar3" class="modalCastAvatar" src="" alt="cast 3">
-                        <div id="modalCastName3"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName3"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div>
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
                 </div>
-                <div class="castRow">
-                    <div id="modalCastSlot4" class="modalCastSlot">
-                        <img id="modalCastAvatar4" class="modalCastAvatar" src="" alt="cast 4">
-                        <div id="modalCastName4"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName4"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div><!--
-              -->
-                    <div id="modalCastSlot5" class="modalCastSlot">
-                        <img id="modalCastAvatar5" class="modalCastAvatar" src="" alt="cast 5">
-                        <div id="modalCastName5"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName5"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div><!--
-              -->
-                    <div id="modalCastSlot6" class="modalCastSlot">
-                        <img id="modalCastAvatar6" class="modalCastAvatar" src="" alt="cast 6">
-                        <div id="modalCastName6"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName6"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div><!--
-              -->
-                    <div id="modalCastSlot7" class="modalCastSlot">
-                        <img id="modalCastAvatar7" class="modalCastAvatar" src="" alt="cast 7">
-                        <div id="modalCastName7"
-                             style="font-family: 'Raleway', sans-serif;
-                             font-weight: 700; margin-top: 10px"
-                             class="modalCastName"
-                        >
-                            {modalCastName}
-                        </div>
-                        <div style="font-family: 'Raleway', sans-serif; margin: -4px 0px 0px">AS</div>
-                        <div id="modalCastCharacterName7"
-                             class="modalCastName">
-                            {modalCharacterName}
-                        </div>
-                    </div>
+                <div id="modalCastCharacterName0" class="modalCastName">
+                  {modalCharacterName}
                 </div>
+              </div>
+              <!--
+              -->
+              <div id="modalCastSlot1" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar1"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 1"
+                />
+                <div
+                  id="modalCastName1"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
+                </div>
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
+                </div>
+                <div id="modalCastCharacterName1" class="modalCastName">
+                  {modalCharacterName}
+                </div>
+              </div>
+              <!--
+              -->
+              <div id="modalCastSlot2" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar2"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 2"
+                />
+                <div
+                  id="modalCastName2"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
+                </div>
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
+                </div>
+                <div id="modalCastCharacterName2" class="modalCastName">
+                  {modalCharacterName}
+                </div>
+              </div>
+              <!--
+              -->
+              <div id="modalCastSlot3" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar3"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 3"
+                />
+                <div
+                  id="modalCastName3"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
+                </div>
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
+                </div>
+                <div id="modalCastCharacterName3" class="modalCastName">
+                  {modalCharacterName}
+                </div>
+              </div>
             </div>
-            <div class="modalReviewsContainer">
-                <div style="font-weight: 700; color: black; font-size: 24px; margin-top: 40px; font-family: 'Raleway', sans-serif"
-                     font-weight: 700;>
-                    Reviews
+            <div class="castRow">
+              <div id="modalCastSlot4" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar4"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 4"
+                />
+                <div
+                  id="modalCastName4"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
                 </div>
-                <div id="modalReviewCard0" class="modalReviewCard">
-                    <div class="reviewUsernameSlot">
-                        <span id="reviewUsername0" class="reviewUsername">{reviewUsername}</span><!--
-                  --><span style="font-family: 'Raleway', sans-serif;"> on </span><!--
-                  --><span id="reviewDate0"
-                           style="font-family: 'Raleway', sans-serif;">{reviewDate}</span>
-                    </div>
-                    <div id="reviewRateSlot0" class="reviewRateSlot">
-                        <span>★</span>
-                        <span id="reviewRate0">{reviewRate}</span><!--
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
+                </div>
+                <div id="modalCastCharacterName4" class="modalCastName">
+                  {modalCharacterName}
+                </div>
+              </div>
+              <!--
+              -->
+              <div id="modalCastSlot5" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar5"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 5"
+                />
+                <div
+                  id="modalCastName5"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
+                </div>
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
+                </div>
+                <div id="modalCastCharacterName5" class="modalCastName">
+                  {modalCharacterName}
+                </div>
+              </div>
+              <!--
+              -->
+              <div id="modalCastSlot6" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar6"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 6"
+                />
+                <div
+                  id="modalCastName6"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
+                </div>
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
+                </div>
+                <div id="modalCastCharacterName6" class="modalCastName">
+                  {modalCharacterName}
+                </div>
+              </div>
+              <!--
+              -->
+              <div id="modalCastSlot7" class="modalCastSlot">
+                <img
+                  id="modalCastAvatar7"
+                  class="modalCastAvatar"
+                  src=""
+                  alt="cast 7"
+                />
+                <div
+                  id="modalCastName7"
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    font-weight: 700;
+                    margin-top: 10px;
+                  "
+                  class="modalCastName"
+                >
+                  {modalCastName}
+                </div>
+                <div
+                  style="
+                    font-family: 'Raleway', sans-serif;
+                    margin: -4px 0px 0px;
+                  "
+                >
+                  AS
+                </div>
+                <div id="modalCastCharacterName7" class="modalCastName">
+                  {modalCharacterName}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modalReviewsContainer">
+            <div
+              style="
+                font-weight: 700;
+                color: black;
+                font-size: 24px;
+                margin-top: 40px;
+                font-family: 'Raleway', sans-serif;
+              "
+              font-weight:
+              700;
+            >
+              Reviews
+            </div>
+            <div id="modalReviewCard0" class="modalReviewCard">
+              <div class="reviewUsernameSlot">
+                <span id="reviewUsername0" class="reviewUsername"
+                  >{reviewUsername}</span
+                ><!--
+                  --><span style="font-family: 'Raleway', sans-serif"> on </span
+                ><!--
+                  --><span
+                  id="reviewDate0"
+                  style="font-family: 'Raleway', sans-serif"
+                  >{reviewDate}</span
+                >
+              </div>
+              <div id="reviewRateSlot0" class="reviewRateSlot">
+                <span>★</span>
+                <span id="reviewRate0">{reviewRate}</span
+                ><!--
                   --><span>/5</span>
-                    </div>
-                    <div id="reviewComment0" class="reviewComment">
-                        {reviewComment}
-                    </div>
-                    <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
-                </div>
-                <div id="modalReviewCard1" class="modalReviewCard">
-                    <div class="reviewUsernameSlot">
-                        <span id="reviewUsername1" class="reviewUsername">{reviewUsername}</span><!--
-                  --><span style="font-family: 'Raleway', sans-serif;"> on </span><!--
-                  --><span id="reviewDate1"
-                           style="font-family: 'Raleway', sans-serif;">{reviewDate}</span>
-                    </div>
-                    <div id="reviewRateSlot1" class="reviewRateSlot">
-                        <span>★</span>
-                        <span id="reviewRate1">{reviewRate}</span><!--
-                  --><span>/5</span>
-                    </div>
-                    <div id="reviewComment1" class="reviewComment">
-                        {reviewComment}
-                    </div>
-                    <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
-                </div>
-                <div id="modalReviewCard2" class="modalReviewCard">
-                    <div class="reviewUsernameSlot">
-                        <span id="reviewUsername2" class="reviewUsername">{reviewUsername}</span><!--
-                  --><span style="font-family: 'Raleway', sans-serif;"> on </span><!--
-                  --><span id="reviewDate2"
-                           style="font-family: 'Raleway', sans-serif;">{reviewDate}</span>
-                    </div>
-                    <div id="reviewRateSlot2" class="reviewRateSlot">
-                        <span>★</span>
-                        <span id="reviewRate2">{reviewRate}</span><!--
-                  --><span>/5</span>
-                    </div>
-                    <div id="reviewComment2" class="reviewComment">
-                        {reviewComment}
-                    </div>
-                    <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
-                </div>
-                <div id="modalReviewCard3" class="modalReviewCard">
-                    <div class="reviewUsernameSlot">
-                        <span id="reviewUsername3" class="reviewUsername">{reviewUsername}</span><!--
-                  --><span style="font-family: 'Raleway', sans-serif;"> on </span><!--
-                  --><span id="reviewDate3"
-                           style="font-family: 'Raleway', sans-serif;">{reviewDate}</span>
-                    </div>
-                    <div id="reviewRateSlot3" class="reviewRateSlot">
-                        <span>★</span>
-                        <span id="reviewRate3">{reviewRate}</span><!--
-                  --><span>/5</span>
-                    </div>
-                    <div id="reviewComment3" class="reviewComment">
-                        {reviewComment}
-                    </div>
-                    <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
-                </div>
-                <div id="modalReviewCard4" class="modalReviewCard">
-                    <div class="reviewUsernameSlot">
-                        <span id="reviewUsername4" class="reviewUsername">{reviewUsername}</span><!--
-                  --><span style="font-family: 'Raleway', sans-serif;"> on </span><!--
-                  --><span id="reviewDate4"
-                           style="font-family: 'Raleway', sans-serif;">{reviewDate}</span>
-                    </div>
-                    <div id="reviewRateSlot4" class="reviewRateSlot">
-                        <span>★</span>
-                        <span id="reviewRate4">{reviewRate}</span><!--
-                  --><span>/5</span>
-                    </div>
-                    <div id="reviewComment4" class="reviewComment">
-                        {reviewComment}
-                    </div>
-                    <div style="width: 85%; margin: 20px auto 0px; border-bottom: 1px solid rgb(155, 155, 155)"></div>
-                </div>
+              </div>
+              <div id="reviewComment0" class="reviewComment">
+                {reviewComment}
+              </div>
+              <div
+                style="
+                  width: 85%;
+                  margin: 20px auto 0px;
+                  border-bottom: 1px solid rgb(155, 155, 155);
+                "
+              ></div>
             </div>
+            <div id="modalReviewCard1" class="modalReviewCard">
+              <div class="reviewUsernameSlot">
+                <span id="reviewUsername1" class="reviewUsername"
+                  >{reviewUsername}</span
+                ><!--
+                  --><span style="font-family: 'Raleway', sans-serif"> on </span
+                ><!--
+                  --><span
+                  id="reviewDate1"
+                  style="font-family: 'Raleway', sans-serif"
+                  >{reviewDate}</span
+                >
+              </div>
+              <div id="reviewRateSlot1" class="reviewRateSlot">
+                <span>★</span>
+                <span id="reviewRate1">{reviewRate}</span
+                ><!--
+                  --><span>/5</span>
+              </div>
+              <div id="reviewComment1" class="reviewComment">
+                {reviewComment}
+              </div>
+              <div
+                style="
+                  width: 85%;
+                  margin: 20px auto 0px;
+                  border-bottom: 1px solid rgb(155, 155, 155);
+                "
+              ></div>
+            </div>
+            <div id="modalReviewCard2" class="modalReviewCard">
+              <div class="reviewUsernameSlot">
+                <span id="reviewUsername2" class="reviewUsername"
+                  >{reviewUsername}</span
+                ><!--
+                  --><span style="font-family: 'Raleway', sans-serif"> on </span
+                ><!--
+                  --><span
+                  id="reviewDate2"
+                  style="font-family: 'Raleway', sans-serif"
+                  >{reviewDate}</span
+                >
+              </div>
+              <div id="reviewRateSlot2" class="reviewRateSlot">
+                <span>★</span>
+                <span id="reviewRate2">{reviewRate}</span
+                ><!--
+                  --><span>/5</span>
+              </div>
+              <div id="reviewComment2" class="reviewComment">
+                {reviewComment}
+              </div>
+              <div
+                style="
+                  width: 85%;
+                  margin: 20px auto 0px;
+                  border-bottom: 1px solid rgb(155, 155, 155);
+                "
+              ></div>
+            </div>
+            <div id="modalReviewCard3" class="modalReviewCard">
+              <div class="reviewUsernameSlot">
+                <span id="reviewUsername3" class="reviewUsername"
+                  >{reviewUsername}</span
+                ><!--
+                  --><span style="font-family: 'Raleway', sans-serif"> on </span
+                ><!--
+                  --><span
+                  id="reviewDate3"
+                  style="font-family: 'Raleway', sans-serif"
+                  >{reviewDate}</span
+                >
+              </div>
+              <div id="reviewRateSlot3" class="reviewRateSlot">
+                <span>★</span>
+                <span id="reviewRate3">{reviewRate}</span
+                ><!--
+                  --><span>/5</span>
+              </div>
+              <div id="reviewComment3" class="reviewComment">
+                {reviewComment}
+              </div>
+              <div
+                style="
+                  width: 85%;
+                  margin: 20px auto 0px;
+                  border-bottom: 1px solid rgb(155, 155, 155);
+                "
+              ></div>
+            </div>
+            <div id="modalReviewCard4" class="modalReviewCard">
+              <div class="reviewUsernameSlot">
+                <span id="reviewUsername4" class="reviewUsername"
+                  >{reviewUsername}</span
+                ><!--
+                  --><span style="font-family: 'Raleway', sans-serif"> on </span
+                ><!--
+                  --><span
+                  id="reviewDate4"
+                  style="font-family: 'Raleway', sans-serif"
+                  >{reviewDate}</span
+                >
+              </div>
+              <div id="reviewRateSlot4" class="reviewRateSlot">
+                <span>★</span>
+                <span id="reviewRate4">{reviewRate}</span
+                ><!--
+                  --><span>/5</span>
+              </div>
+              <div id="reviewComment4" class="reviewComment">
+                {reviewComment}
+              </div>
+              <div
+                style="
+                  width: 85%;
+                  margin: 20px auto 0px;
+                  border-bottom: 1px solid rgb(155, 155, 155);
+                "
+              ></div>
+            </div>
+          </div>
         </div>
         <div class="modalButton">
-            <span onclick="onCloseModalButtonClick()" class="modalCloseButton">✖</span>
+          <span onclick="onCloseModalButtonClick()" class="modalCloseButton"
+            >✖</span
+          >
         </div>
+      </div>
     </div>
-</div>
-<div id="header">
-    <div class="headerTitle">THE MOVIE DB</div>
-    <div style="flex: 1"></div>
-    <div class="headerGradient"></div>
-</div>
-<div id=content>
-    <div id="sideBar">
+    <div id="header">
+      <div class="headerTitle">THE MOVIE DB</div>
+      <div style="flex: 1"></div>
+      <div class="headerGradient"></div>
+    </div>
+    <div id="content">
+      <div id="sideBar">
         <div style="flex: 1"></div>
         <div style="flex: 1">
-            <div id="homeTab"
-                 onclick="onHomeTabClick()"
-                 onmouseover="onHomeTabMouseOver()"
-                 onmouseout="onHomeTabMouseOut()"
-            >
-                <div>Home</div>
-                <div style="flex: 1"></div>
-                <div>⟶</div>
-            </div>
-            <div id="searchTab"
-                 onclick="onSearchTabClick()"
-                 onmouseover="onSearchTabMouseOver()"
-                 onmouseout="onSearchTabMouseOut()"
-            >
-                <div>Search</div>
-                <div style="flex: 1"></div>
-                <div>⟶</div>
-            </div>
+          <div
+            id="homeTab"
+            onclick="onHomeTabClick()"
+            onmouseover="onHomeTabMouseOver()"
+            onmouseout="onHomeTabMouseOut()"
+          >
+            <div>Home</div>
+            <div style="flex: 1"></div>
+            <div>⟶</div>
+          </div>
+          <div
+            id="searchTab"
+            onclick="onSearchTabClick()"
+            onmouseover="onSearchTabMouseOver()"
+            onmouseout="onSearchTabMouseOut()"
+          >
+            <div>Search</div>
+            <div style="flex: 1"></div>
+            <div>⟶</div>
+          </div>
         </div>
-    </div>
-    <div id="homePage">
+      </div>
+      <div id="homePage">
         <div class="homeCard">
-            <div class="homeCardTitle">Trending Movies</div>
-            <div id="trendingMovie1" style="display: none; margin-top: 25px;">
-                <img id="trendingMovieImage1"
-                     class="slideImage"
-                     src=""
-                     alt="trendingMovieImage1"
-                >
-                <div class="homeCardInfo"
-                >
-                    <div id="trendingMovieInfo1" style="color: white;">{trendingMovieInfo}</div>
-                </div>
+          <div class="homeCardTitle">Trending Movies</div>
+          <div id="trendingMovie1" style="display: none; margin-top: 25px">
+            <img
+              id="trendingMovieImage1"
+              class="slideImage"
+              src=""
+              alt="trendingMovieImage1"
+            />
+            <div class="homeCardInfo">
+              <div id="trendingMovieInfo1" style="color: white">
+                {trendingMovieInfo}
+              </div>
             </div>
-            <div id="trendingMovie2" style="display: none; margin-top: 25px;">
-                <img id="trendingMovieImage2"
-                     class="slideImage"
-                     src=""
-                     alt="trendingMovieImage2"
-                >
-                <div class="homeCardInfo"
-                >
-                    <div id="trendingMovieInfo2" style="color: white;">{trendingMovieInfo}</div>
-                </div>
+          </div>
+          <div id="trendingMovie2" style="display: none; margin-top: 25px">
+            <img
+              id="trendingMovieImage2"
+              class="slideImage"
+              src=""
+              alt="trendingMovieImage2"
+            />
+            <div class="homeCardInfo">
+              <div id="trendingMovieInfo2" style="color: white">
+                {trendingMovieInfo}
+              </div>
             </div>
+          </div>
         </div>
-        <div class="homeCard" style="margin-bottom: 15vh;">
-            <div class="homeCardTitle">TV Shows On-Air Today</div>
-            <div id="trendingTVShow1" style="display: none; margin-top: 25px;">
-                <img id="trendingTVShowImage1"
-                     class="slideImage"
-                     src=""
-                     alt="loading">
-                <div class="homeCardInfo"
-                >
-                    <div id="trendingTVShowInfo1" style="color: white;">{trendingTVShowInfo}</div>
-                </div>
+        <div class="homeCard" style="margin-bottom: 15vh">
+          <div class="homeCardTitle">TV Shows On-Air Today</div>
+          <div id="trendingTVShow1" style="display: none; margin-top: 25px">
+            <img
+              id="trendingTVShowImage1"
+              class="slideImage"
+              src=""
+              alt="loading"
+            />
+            <div class="homeCardInfo">
+              <div id="trendingTVShowInfo1" style="color: white">
+                {trendingTVShowInfo}
+              </div>
             </div>
-            <div id="trendingTVShow2" style="display: none; margin-top: 25px;">
-                <img id="trendingTVShowImage2"
-                     class="slideImage"
-                     src=""
-                     alt="loading">
-                <div class="homeCardInfo"
-                >
-                    <div id="trendingTVShowInfo2" style="color: white;">{trendingTVShowInfo}</div>
-                </div>
+          </div>
+          <div id="trendingTVShow2" style="display: none; margin-top: 25px">
+            <img
+              id="trendingTVShowImage2"
+              class="slideImage"
+              src=""
+              alt="loading"
+            />
+            <div class="homeCardInfo">
+              <div id="trendingTVShowInfo2" style="color: white">
+                {trendingTVShowInfo}
+              </div>
             </div>
+          </div>
         </div>
         <div id="flexPadding"></div>
         <div id="footer">
-            <div>Designed and developed by Akansha, Pranav & Yash</div>
-            <div>Powered by TMDB</div>
+          <div>Designed and developed by Akansha, Pranav & Yash</div>
+          <div>Powered by TMDB</div>
         </div>
-    </div>
-    <div id="searchPage">
-        <div id="searchForm"
-             class="searchForm"
-        >
-            <div class="searchTitle">Search</div>
-            <div class="searchFormRow">
-                <div class="searchFormLabel">Keyword<span style="color:red; font-style:italic">*</span></div>
-                <input id="searchInput"
-                       type="text"
-                       class="searchInput"
-                       onchange="onSearchInputChange(this.value)"
-                >
+      </div>
+      <div id="searchPage">
+        <div id="searchForm" class="searchForm">
+          <div class="searchTitle">Search</div>
+          <div class="searchFormRow">
+            <div class="searchFormLabel">
+              Keyword<span style="color: red; font-style: italic">*</span>
             </div>
-            <div class="searchFormRow">
-                <div class="searchFormLabel">Category<span style="color:red; font-style:italic">*</span></div>
-                <select id="searchDropdown"
-                        class="searchDropdown"
-                        onchange="onSearchDropdownChange(this.value)">
-                    <option></option>
-                    <option value="movie">Movies</option>
-                    <option value="tv">TV Shows</option>
-                    <option value="multi">Movies and TV Shows</option>
-                </select>
+            <input
+              id="searchInput"
+              type="text"
+              class="searchInput"
+              onchange="onSearchInputChange(this.value)"
+            />
+          </div>
+          <div class="searchFormRow">
+            <div class="searchFormLabel">
+              Category<span style="color: red; font-style: italic">*</span>
             </div>
-            <div class="searchFormRow buttonRow">
-                <button class="searchButton"
-                        onclick="onSearchButtonClick()"
-                >
-                    Search
-                </button>
-                <button class="searchButton"
-                        onclick="onClearButtonClick()"
-                >
-                    Clear
-                </button>
-            </div>
+            <select
+              id="searchDropdown"
+              class="searchDropdown"
+              onchange="onSearchDropdownChange(this.value)"
+            >
+              <option></option>
+              <option value="movie">Movies</option>
+              <option value="tv">TV Shows</option>
+              <option value="multi">Movies and TV Shows</option>
+            </select>
+          </div>
+          <div class="searchFormRow buttonRow">
+            <button class="searchButton" onclick="onSearchButtonClick()">
+              Search
+            </button>
+            <button class="searchButton" onclick="onClearButtonClick()">
+              Clear
+            </button>
+          </div>
         </div>
         <div id="notFound">
-            <div style="margin-top: 10vh; font-family: 'Raleway', sans-serif;">No results found.</div>
+          <div style="margin-top: 10vh; font-family: 'Raleway', sans-serif">
+            No results found.
+          </div>
         </div>
         <div id="searchResults">
-            <div id="searchResultsTitle"
-                 style="color: white; padding: 25px 0px; font-family: 'Raleway', sans-serif;">Showing
-                results...
+          <div
+            id="searchResultsTitle"
+            style="
+              color: white;
+              padding: 25px 0px;
+              font-family: 'Raleway', sans-serif;
+            "
+          >
+            Showing results...
+          </div>
+          <div id="resultCard0" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster0" alt="poster0" />
             </div>
-            <div id="resultCard0" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster0" alt="poster0">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle0" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear0" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre0">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate0" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote0">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription0" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(0)">Show more</button>
-                </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle0" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear0" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre0">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate0" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote0">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription0" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(0)">
+                Show more
+              </button>
             </div>
-            <div id="resultCard1" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster1" alt="poster1">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle1" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear1" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre1">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate1" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote1">{vote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription1" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(1)">Show more</button>
-                </div>
+          </div>
+          <div id="resultCard1" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster1" alt="poster1" />
             </div>
-            <div id="resultCard2" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster2" alt="poster2">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle2" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear2" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre2">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate2" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote2">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription2" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(2)">Show more</button>
-                </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle1" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear1" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre1">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate1" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote1">{vote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription1" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(1)">
+                Show more
+              </button>
             </div>
-            <div id="resultCard3" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster3" alt="poster3">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle3" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear3" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre3">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate3" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote3">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription3" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(3)">Show more</button>
-                </div>
+          </div>
+          <div id="resultCard2" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster2" alt="poster2" />
             </div>
-            <div id="resultCard4" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster4" alt="poster4">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle4" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear4" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre4">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate4" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote4">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription4" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(4)">Show more</button>
-                </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle2" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear2" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre2">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate2" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote2">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription2" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(2)">
+                Show more
+              </button>
             </div>
-            <div id="resultCard5" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster5" alt="poster5">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle5" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear5" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre5">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate5" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote5">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription5" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(5)">Show more</button>
-                </div>
+          </div>
+          <div id="resultCard3" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster3" alt="poster3" />
             </div>
-            <div id="resultCard6" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster6" alt="poster6">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle6" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear6" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre6">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate6" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote6">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription6" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(6)">Show more</button>
-                </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle3" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear3" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre3">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate3" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote3">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription3" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(3)">
+                Show more
+              </button>
             </div>
-            <div id="resultCard7" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster7" alt="poster7">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle7" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear7" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre7">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate7" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote7">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription7" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(7)">Show more</button>
-                </div>
+          </div>
+          <div id="resultCard4" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster4" alt="poster4" />
             </div>
-            <div id="resultCard8" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster8" alt="poster8">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle8" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear8" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre8">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate8" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote8">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription8" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(8)">Show more</button>
-                </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle4" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear4" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre4">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate4" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote4">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription4" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(4)">
+                Show more
+              </button>
             </div>
-            <div id="resultCard9" class="resultCard">
-                <div style="background-color: #A5221D; width: 8px; margin-right: 8px"></div>
-                <div class="resultImageContainer">
-                    <img id="resultPoster9" alt="poster9">
-                </div>
-                <div class="resultCardInfo">
-                    <div id="resultTitle9" class="resultTitle">{resultTitle}</div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span id="resultYear9" class="resultYear">{resultYear}</span> |
-                        <span id="resultGenre9">{resultGenre}</span>
-                    </div>
-                    <div style="font-family: 'Raleway', sans-serif;">
-                        <span style="color: #A5221D">★</span>
-                        <span id="resultRate9" style="color: #A5221D;">{resultRate}</span><!--
-                    --><span style="color: #A5221D;">/5</span>
-                        <span id="resultVote9">{resultVote}</span>
-                        <span>votes</span>
-                    </div>
-                    <div id="resultDescription9" class="resultDescription">{resultDescription}</div>
-                    <button class="showMoreButton" onclick="onShowMoreButtonClick(9)">Show more</button>
-                </div>
+          </div>
+          <div id="resultCard5" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster5" alt="poster5" />
             </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle5" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear5" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre5">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate5" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote5">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription5" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(5)">
+                Show more
+              </button>
+            </div>
+          </div>
+          <div id="resultCard6" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster6" alt="poster6" />
+            </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle6" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear6" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre6">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate6" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote6">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription6" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(6)">
+                Show more
+              </button>
+            </div>
+          </div>
+          <div id="resultCard7" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster7" alt="poster7" />
+            </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle7" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear7" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre7">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate7" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote7">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription7" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(7)">
+                Show more
+              </button>
+            </div>
+          </div>
+          <div id="resultCard8" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster8" alt="poster8" />
+            </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle8" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear8" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre8">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate8" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote8">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription8" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(8)">
+                Show more
+              </button>
+            </div>
+          </div>
+          <div id="resultCard9" class="resultCard">
+            <div
+              style="background-color: #a5221d; width: 8px; margin-right: 8px"
+            ></div>
+            <div class="resultImageContainer">
+              <img id="resultPoster9" alt="poster9" />
+            </div>
+            <div class="resultCardInfo">
+              <div id="resultTitle9" class="resultTitle">{resultTitle}</div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span id="resultYear9" class="resultYear">{resultYear}</span> |
+                <span id="resultGenre9">{resultGenre}</span>
+              </div>
+              <div style="font-family: 'Raleway', sans-serif">
+                <span style="color: #a5221d">★</span>
+                <span id="resultRate9" style="color: #a5221d">{resultRate}</span
+                ><!--
+                    --><span style="color: #a5221d">/5</span>
+                <span id="resultVote9">{resultVote}</span>
+                <span>votes</span>
+              </div>
+              <div id="resultDescription9" class="resultDescription">
+                {resultDescription}
+              </div>
+              <button class="showMoreButton" onclick="onShowMoreButtonClick(9)">
+                Show more
+              </button>
+            </div>
+          </div>
         </div>
         <div id="flexPadding"></div>
         <div id="footer">
-            <div>Designed and developed by Yingjie Shen</div>
-            <div>Powered by Flask and TMDB</div>
+          <div>Designed and developed by Yingjie Shen</div>
+          <div>Powered by Flask & TMDB</div>
         </div>
+      </div>
     </div>
-</div>
-<script>
-  //Configs
-  const BASE_URL = "https://shen92moviedb.azurewebsites.net" //Production server
-  //const BASE_URL = 'http://localhost:5000'  //Development server
-  const BASE_URL_IMG = 'https://image.tmdb.org/t/p'
-  const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
-  const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
-  const RESULT_PLACEHOLDER = `${BASE_URL}/static/img/result-placeholder.png`;
-  const NUM_RESULTS = 10;
-  const NUM_CASTS = 8;
-  const NUM_COMMENTS = 5;
-  let state = {
-    tab: "home",
-    homeMovies: [],
-    homeTVShows: [],
-    keyword: "",
-    category: "",
-    queryResults: [],
-    movieGenres: [],
-    tvGenres: [],
-    targetMediaIndex: -1,
-    modalOpen: false,
-    modalMediaDetails: {},
-    modalCasts: [],
-    modalReviews: [],
-  }
+    <script>
+      //Configs
+      const BASE_URL = "https://shen92moviedb.azurewebsites.net"; //Production server
+      //const BASE_URL = 'http://localhost:5000'  //Development server
+      const BASE_URL_IMG = "https://image.tmdb.org/t/p";
+      const MOVIE_PLACEHOLDER = `${BASE_URL}/static/img/movie-placeholder.jpg`;
+      const PERSON_PLACEHOLDER = `${BASE_URL}/static/img/person-placeholder.png`;
+      const RESULT_PLACEHOLDER = `${BASE_URL}/static/img/result-placeholder.png`;
+      const NUM_RESULTS = 10;
+      const NUM_CASTS = 8;
+      const NUM_COMMENTS = 5;
+      let state = {
+        tab: "home",
+        homeMovies: [],
+        homeTVShows: [],
+        keyword: "",
+        category: "",
+        queryResults: [],
+        movieGenres: [],
+        tvGenres: [],
+        targetMediaIndex: -1,
+        modalOpen: false,
+        modalMediaDetails: {},
+        modalCasts: [],
+        modalReviews: [],
+      };
 
-  //Node References
-  const homeTab = document.getElementById("homeTab");
-  const searchTab = document.getElementById("searchTab");
-  const homePage = document.getElementById("homePage");
-  const searchPage = document.getElementById("searchPage");
-  const trendingMovie1 = document.getElementById('trendingMovie1');
-  const trendingMovieImage1 = document.getElementById("trendingMovieImage1");
-  const trendingMovieInfo1 = document.getElementById('trendingMovieInfo1');
-  const trendingTVShow1 = document.getElementById('trendingTVShow1');
-  const trendingTVShowImage1 = document.getElementById("trendingTVShowImage1");
-  const trendingTVShowInfo1 = document.getElementById('trendingTVShowInfo1');
-  const trendingMovie2 = document.getElementById('trendingMovie2');
-  const trendingMovieImage2 = document.getElementById("trendingMovieImage2");
-  const trendingMovieInfo2 = document.getElementById('trendingMovieInfo2');
-  const trendingTVShow2 = document.getElementById('trendingTVShow2');
-  const trendingTVShowImage2 = document.getElementById("trendingTVShowImage2");
-  const trendingTVShowInfo2 = document.getElementById('trendingTVShowInfo2');
-  const searchInput = document.getElementById("searchInput");
-  const searchDropdown = document.getElementById("searchDropdown");
-  const notFound = document.getElementById("notFound");
-  const searchResults = document.getElementById("searchResults");
-  const searchResultsTitle = document.getElementById("searchResultsTitle");
-  const modalContainer = document.getElementById('modalContainer')
-  let searchResultCards = [];
-  let resultPosters = [];
-  let resultTitles = [];
-  let resultYears = [];
-  let resultGenres = [];
-  let resultRates = [];
-  let resultVotes = [];
-  let resultDescriptions = [];
-  for (let i = 0; i < NUM_RESULTS; i++) {
-    searchResultCards.push(document.getElementById(`resultCard${i}`))
-    resultPosters.push(document.getElementById(`resultPoster${i}`))
-    resultTitles.push(document.getElementById(`resultTitle${i}`))
-    resultYears.push(document.getElementById(`resultYear${i}`))
-    resultGenres.push(document.getElementById(`resultGenre${i}`))
-    resultRates.push(document.getElementById(`resultRate${i}`))
-    resultVotes.push(document.getElementById(`resultVote${i}`))
-    resultDescriptions.push(document.getElementById(`resultDescription${i}`))
-  }
-  const modalPoster = document.getElementById('modalPoster');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalYear = document.getElementById('modalYear');
-  const modalGenres = document.getElementById('modalGenres');
-  const modalRate = document.getElementById('modalRate');
-  const modalVote = document.getElementById('modalVote');
-  const modalDescription = document.getElementById('modalDescription');
-  const modalSpokenLanguages = document.getElementById('modalSpokenLanguages');
-  let modalCastSlots = [];
-  let modalCastAvatars = [];
-  let modalCastNames = [];
-  let modalCastCharacterNames = [];
-  for (let i = 0; i < NUM_CASTS; i++) {
-    modalCastSlots.push(document.getElementById(`modalCastSlot${i}`));
-    modalCastAvatars.push(document.getElementById(`modalCastAvatar${i}`));
-    modalCastNames.push(document.getElementById(`modalCastName${i}`));
-    modalCastCharacterNames.push(document.getElementById(`modalCastCharacterName${i}`));
-  }
-  let modalReviewCards = [];
-  let reviewRateSlots = [];
-  let reviewUsernames = [];
-  let reviewDates = [];
-  let reviewRates = [];
-  let reviewComments = [];
-  for (let i = 0; i < NUM_COMMENTS; i++) {
-    modalReviewCards.push(document.getElementById(`modalReviewCard${i}`));
-    reviewRateSlots.push(document.getElementById(`reviewRateSlot${i}`));
-    reviewUsernames.push(document.getElementById(`reviewUsername${i}`));
-    reviewDates.push(document.getElementById(`reviewDate${i}`));
-    reviewRates.push(document.getElementById(`reviewRate${i}`));
-    reviewComments.push(document.getElementById(`reviewComment${i}`));
-  }
-  let slideShow;
-
-  //Event Handlers
-  const onHomeTabClick = () => {
-    homeTab.style.color = '#A5221D';
-    homePage.style.display = 'flex';
-    searchTab.style.color = 'white';
-    searchPage.style.display = 'none';
-    onHomePageMounted();
-    onClearButtonClick();
-    state.tab = "home";
-  }
-
-  const onHomeTabMouseOver = () => {
-    homeTab.style.color = '#A5221D';
-  }
-
-  const onHomeTabMouseOut = () => {
-    homeTab.style.color = state.tab === 'home' ? '#A5221D' : 'white';
-  }
-
-  const onSearchTabClick = () => {
-    homeTab.style.color = 'white';
-    homePage.style.display = 'none';
-    searchTab.style.color = '#A5221D';
-    searchPage.style.display = 'flex';
-    onSearchPageMounted();
-    state.tab = "search";
-  }
-
-  const onSearchTabMouseOver = () => {
-    searchTab.style.color = "#A5221D";
-  }
-
-  const onSearchTabMouseOut = () => {
-    searchTab.style.color = state.tab === 'search' ? '#A5221D' : 'white';
-  }
-
-  const onSearchInputChange = (keyword) => {
-    state.keyword = validateInput(keyword);
-  }
-
-  const onSearchDropdownChange = (category) => {
-    state.category = category;
-  }
-
-  const onSearchButtonClick = async () => {
-    if (state.keyword === "" || state.category === "") {
-      alert("Please enter valid values.");
-      return;
-    }
-    const queryResults = await fetchQueryResults();
-    state.queryResults = queryResults.data;
-    renderQueryResults();
-  }
-
-  const onClearButtonClick = () => {
-    //Reset display UI Components
-    searchInput.value = "";
-    searchDropdown.selectedIndex = -1;
-    searchResults.style.display = "none";
-    notFound.style.display = "none";
-    //Reset state
-    state.keyword = "";
-    state.category = "";
-    state.queryResults = [];
-    state.targetMediaIndex = -1;
-    state.modalOpen = false;
-    state.modalMediaDetails = {};
-    state.modalCasts = [];
-    state.modalReviews = [];
-  }
-
-  const onShowMoreButtonClick = async (index) => {
-    state.modalOpen = true;
-    state.targetMediaIndex = index;
-    if (state.targetMediaIndex >= 0 && state.targetMediaIndex <= 9) {
-      const targetMedia = state.queryResults[state.targetMediaIndex];
-      if (targetMedia != null) {
-        const modalMediaDetails = await fetchResultDetails(targetMedia.media_type, targetMedia.id);
-        state.modalMediaDetails = modalMediaDetails.data;
-        const modalCasts = await fetchCasts(targetMedia.media_type, targetMedia.id);
-        state.modalCasts = modalCasts.data;
-        const modalReviews = await fetchReviews(targetMedia.media_type, targetMedia.id);
-        state.modalReviews = modalReviews.data;
+      //Node References
+      const homeTab = document.getElementById("homeTab");
+      const searchTab = document.getElementById("searchTab");
+      const homePage = document.getElementById("homePage");
+      const searchPage = document.getElementById("searchPage");
+      const trendingMovie1 = document.getElementById("trendingMovie1");
+      const trendingMovieImage1 = document.getElementById(
+        "trendingMovieImage1"
+      );
+      const trendingMovieInfo1 = document.getElementById("trendingMovieInfo1");
+      const trendingTVShow1 = document.getElementById("trendingTVShow1");
+      const trendingTVShowImage1 = document.getElementById(
+        "trendingTVShowImage1"
+      );
+      const trendingTVShowInfo1 = document.getElementById(
+        "trendingTVShowInfo1"
+      );
+      const trendingMovie2 = document.getElementById("trendingMovie2");
+      const trendingMovieImage2 = document.getElementById(
+        "trendingMovieImage2"
+      );
+      const trendingMovieInfo2 = document.getElementById("trendingMovieInfo2");
+      const trendingTVShow2 = document.getElementById("trendingTVShow2");
+      const trendingTVShowImage2 = document.getElementById(
+        "trendingTVShowImage2"
+      );
+      const trendingTVShowInfo2 = document.getElementById(
+        "trendingTVShowInfo2"
+      );
+      const searchInput = document.getElementById("searchInput");
+      const searchDropdown = document.getElementById("searchDropdown");
+      const notFound = document.getElementById("notFound");
+      const searchResults = document.getElementById("searchResults");
+      const searchResultsTitle = document.getElementById("searchResultsTitle");
+      const modalContainer = document.getElementById("modalContainer");
+      let searchResultCards = [];
+      let resultPosters = [];
+      let resultTitles = [];
+      let resultYears = [];
+      let resultGenres = [];
+      let resultRates = [];
+      let resultVotes = [];
+      let resultDescriptions = [];
+      for (let i = 0; i < NUM_RESULTS; i++) {
+        searchResultCards.push(document.getElementById(`resultCard${i}`));
+        resultPosters.push(document.getElementById(`resultPoster${i}`));
+        resultTitles.push(document.getElementById(`resultTitle${i}`));
+        resultYears.push(document.getElementById(`resultYear${i}`));
+        resultGenres.push(document.getElementById(`resultGenre${i}`));
+        resultRates.push(document.getElementById(`resultRate${i}`));
+        resultVotes.push(document.getElementById(`resultVote${i}`));
+        resultDescriptions.push(
+          document.getElementById(`resultDescription${i}`)
+        );
       }
-    }
-    renderModal();
-  }
-
-  const onGetMoreIconButtonClick = () => {
-    window.open(`https://themoviedb.org/${state.modalMediaDetails.media_type}/${state.modalMediaDetails.id}`, "_blank");
-  }
-
-  const onCloseModalButtonClick = () => {
-    state.modalOpen = false;
-    modalContainer.style.display = 'none';
-    document.documentElement.style.overflowX = "hidden";
-    document.documentElement.style.overflowY = "auto";
-  }
-
-  //Helper Functions
-  const validateInput = (keyword) => {
-    return validKeyword = keyword.replace(/[ ]/g, '%20');
-  }
-
-  const getTitle = (media) => {
-    if (media == null) return "Not Available";
-    return media.media_type === 'movie' ?
-        (!media.hasOwnProperty('title') || media.title == null || !isString(media.title) || media.title.length === 0 ?
-            "Not Available" : media.title) :
-        (!media.hasOwnProperty('name') || media.name == null || !isString(media.name) || media.name.length === 0 ?
-            "Not Available" : media.name);
-  }
-
-  const getYear = (media) => {
-    if (media == null) return "Not Available";
-    return media.media_type === 'movie' ?
-        (!media.hasOwnProperty('release_date') || media.release_date == null || !isString(media.release_date) || media.release_date.length === 0 ?
-            "Not Available" : media.release_date.substring(0, 4)) :
-        (!media.hasOwnProperty('first_air_date') || media.first_air_date == null || !isString(media.first_air_date) || media.first_air_date.length === 0 ?
-            "Not Available" : media.first_air_date.substring(0, 4));
-  }
-
-  const getGenres = (media) => {
-    if (media == null) return "";
-
-    let result = [];
-    if (media.hasOwnProperty('genre_ids')) {
-      if (media.genre_ids == null || media.genre_ids.length === 0)
-        return "";
-      media.media_type === "movie" ?
-          (media.genre_ids.forEach(genreId => {
-            const genre = state.movieGenres.find(genre => genre.id === genreId);
-            if (genre != null && genre.hasOwnProperty('name') &&
-                genre.name != null && isString(genre.name) && genre.name !== "") result.push(genre.name);
-          })) :
-          (media.genre_ids.forEach(genreId => {
-            const genre = state.tvGenres.find(genre => genre.id === genreId);
-            if (genre != null && genre.hasOwnProperty('name') &&
-                genre.name != null && isString(genre.name) && genre.name !== "") result.push(genre.name);
-          }))
-    } else if (media.hasOwnProperty('genres')) {
-      if (media.genres == null || media.genres.length === 0)
-        return "";
-      result = media.genres.map(genre => {
-        if (genre != null && genre.hasOwnProperty('name') &&
-            genre.name != null && isString(genre.name) && genre.name.length !== 0)
-          return genre.name
-      })
-    }
-    return result.join(', ');
-  }
-
-  const getRates = (media) => {
-    if (media == null) return "";
-    return !media.hasOwnProperty('vote_average') || media.vote_average == null ?
-        "0.0" : keepTwoDecimal(media.vote_average / 2);
-  }
-
-  const getVotes = (media) => {
-    if (media == null) return "";
-    return !media.hasOwnProperty('vote_count') || media.vote_count == null || isNaN(media.vote_count) ?
-        0 : media.vote_count;
-  }
-
-  const getDescription = (media) => {
-    if (media == null) return "";
-    return !media.hasOwnProperty('overview') || media.overview == null || !isString(media.overview) || media.overview.length === 0 ? "" : media.overview;
-  }
-
-  const getSpokenLanguages = (media) => {
-    if (media == null ||
-        !(media.hasOwnProperty("spoken_languages") || media.hasOwnProperty("spoken languages"))
-    )
-      return "";
-    const spokenLanguages = media["spoken_languages"] || media["spoken languages"];
-    if (spokenLanguages == null || spokenLanguages.length === 0) return "";
-    const result = spokenLanguages.map(spokenLanguage => {
-      if (spokenLanguage != null && spokenLanguage.hasOwnProperty('english_name') &&
-          spokenLanguage.english_name != null && isString(spokenLanguage.english_name) && spokenLanguage.english_name.length !== 0)
-        return spokenLanguage.english_name;
-    });
-    return result.join(', ');
-  }
-
-  const getCastName = (cast) => {
-    if (cast == null) return "";
-    return !cast.hasOwnProperty('name') || cast.name == null || !isString(cast.name) || cast.name.length === 0 ?
-        "" : cast.name;
-  }
-
-  const getCharacterName = (cast) => {
-    if (cast == null) return "";
-    return !cast.hasOwnProperty('character') || cast.character == null || !isString(cast.character) || cast.character.length === 0 ?
-        "" : cast.character;
-  }
-
-  const getReviewUserName = (review) => {
-    if (review == null) return "";
-    return !review.hasOwnProperty('username') || review.username == null || !isString(review.username) || review.username.length === 0 ?
-        "" : review.username;
-  }
-
-  const getReviewDate = (review) => {
-    if (review == null) return "";
-    return !review.hasOwnProperty('created_at') || review.created_at == null || review.created_at.length === 0 ?
-        "" : unixToTime(review.created_at);
-
-  }
-
-  const getReviewRate = (review) => {
-    if (review == null) return "";
-    return !review.hasOwnProperty('rating') || review.rating == null ?
-        "0.0" : keepTwoDecimal(review.rating / 2);
-  }
-
-  const getReviewComment = (review) => {
-    if (review == null) return "";
-    return !review.hasOwnProperty('content') || review.content == null || !isString(review.content) || review.content.length === 0 ?
-        "" : review.content;
-  }
-
-  const isString = (str) => {
-    return typeof str === 'string' || str instanceof String
-  }
-
-  const keepTwoDecimal = (num) => {
-    let result = parseFloat(num);
-    if (isNaN(result) || num <= 0) {
-      return 0.0;
-    }
-    result = Math.round(num * 100) / 100;
-    if (Number.isInteger(result))
-      return `${result}.0`
-    return result;
-  }
-
-  const unixToTime = (unixTime) => {
-    try {
-      const date = new Date(unixTime);
-      const day = date.getUTCDate();
-      const month = date.getUTCMonth() + 1;
-      const year = date.getUTCFullYear();
-      return `${month < 10 ? "0" + month : month}/${day < 10 ? "0" + day : day}/${year}`;
-    } catch (e) {
-      return "Not Available"
-    }
-  }
-
-  //API Calls
-  const fetchHomeMovies = async () => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
-    };
-    try {
-      const response = await fetch(`${BASE_URL}/home/movie`, requestOptions);
-      return await response.json();
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-
-  const fetchHomeTVShows = async () => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
-    };
-    try {
-      const response = await fetch(`${BASE_URL}/home/tv`, requestOptions);
-      return await response.json();
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-
-  const fetchQueryResults = async () => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    try {
-      const response = await fetch(`${BASE_URL}/search/${state.category}?keyword=${state.keyword}`, requestOptions);
-      return await response.json();
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-
-  const fetchGenres = async (mediaType = "movie") => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    try {
-      const response = await fetch(`${BASE_URL}/genres/${mediaType}`, requestOptions);
-      return await response.json();
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-
-  const fetchResultDetails = async (mediaType = "movie", mediaId = "") => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    try {
-      if (mediaId === "" || mediaId.length === 0) return {};
-      const response = await fetch(`${BASE_URL}/details/${mediaType}?id=${mediaId}`, requestOptions);
-      return await response.json();
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-
-  const fetchCasts = async (mediaType = "movie", mediaId = "") => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    try {
-      if (mediaId === "" || mediaId.length === 0) return {};
-      const response = await fetch(`${BASE_URL}/cast/${mediaType}?id=${mediaId}`, requestOptions);
-      return await response.json();
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-
-  const fetchReviews = async (mediaType = "movie", mediaId = "") => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-    try {
-      if (mediaId === "" || mediaId.length === 0) return {};
-      const response = await fetch(`${BASE_URL}/reviews/${mediaType}?id=${mediaId}`, requestOptions);
-      return await response.json();
-    } catch (error) {
-      console.log('Request Failed', error);
-    }
-  }
-
-  //Render Functions
-  const startHomeSlides = () => {
-    //Load images first
-    let index = 0;
-    trendingMovieImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`);
-    trendingTVShowImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`)
-    trendingMovieInfo1.innerHTML = `${getTitle(state.homeMovies[index])} (${getYear(state.homeMovies[index])})`
-    trendingTVShowInfo1.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
-    index++;
-    trendingMovieImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`);
-    trendingTVShowImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`)
-    trendingMovieInfo2.innerHTML = `${getTitle(state.homeMovies[index])} (${getYear(state.homeMovies[index])})`
-    trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[index])} (${getYear(state.homeTVShows[index])})`
-    //Start animation until images are loaded
-    setTimeout(() => {
-      trendingMovie1.style.display = "block";
-      trendingTVShow1.style.display = "block";
-      trendingMovieImage1.style.animation = "fadeIn ease 5s infinite";
-      trendingMovieImage2.style.animation = "fadeIn ease 5s infinite";
-      trendingTVShowImage1.style.animation = "fadeIn ease 5s infinite";
-      trendingTVShowImage2.style.animation = "fadeIn ease 5s infinite";
-    }, 150)
-    slideShow = setInterval(() => updateHomeSlides((++index)), 5000);
-  }
-
-  const updateHomeSlides = (index) => {
-    const nextIndex = index % 5;
-    if (index % 2 === 0) {
-      //Load current card
-      trendingMovie1.style.display = "none";
-      trendingMovie2.style.display = "block";
-      trendingTVShow1.style.display = "none";
-      trendingTVShow2.style.display = "block";
-      //Set next card
-      trendingMovieImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[nextIndex].backdrop_path}`);
-      trendingTVShowImage1.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`);
-      trendingMovieInfo1.innerHTML = `${getTitle(state.homeMovies[nextIndex])} (${getYear(state.homeMovies[nextIndex])})`
-      trendingTVShowInfo1.innerHTML = `${getTitle(state.homeTVShows[nextIndex])} (${getYear(state.homeTVShows[nextIndex])})`
-    } else {
-      //Load current card
-      trendingMovie1.style.display = "block";
-      trendingMovie2.style.display = "none";
-      trendingTVShow1.style.display = "block";
-      trendingTVShow2.style.display = "none";
-      //Set next card
-      trendingMovieImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeMovies[nextIndex].backdrop_path}`);
-      trendingTVShowImage2.setAttribute("src", `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`);
-      trendingMovieInfo2.innerHTML = `${getTitle(state.homeMovies[nextIndex])} (${getYear(state.homeMovies[nextIndex])})`
-      trendingTVShowInfo2.innerHTML = `${getTitle(state.homeTVShows[nextIndex])} (${getYear(state.homeTVShows[nextIndex])})`
-    }
-  }
-
-  const endHomeSlides = () => {
-    clearInterval(slideShow);
-    trendingMovie1.style.display = "none";
-    trendingMovie2.style.display = "none";
-    trendingTVShow1.style.display = "none";
-    trendingTVShow2.style.display = "none";
-    trendingMovieImage1.style.animation = "none";
-    trendingMovieImage2.style.animation = "none";
-    trendingTVShowImage1.style.animation = "none";
-    trendingTVShowImage2.style.animation = "none";
-  }
-
-  const renderQueryResults = () => {
-    //If no results: queryResults = []
-    if (state.queryResults.length === 0 || state.queryResults == null) {
-      searchResults.style.display = "none";
-      notFound.style.display = 'flex';
-      return;
-    }
-    //If has results: queryResults = [1-10]
-    searchResults.style.display = "flex";
-    notFound.style.display = 'none';
-    const queryResults = state.queryResults;
-    for (let i = 0; i < NUM_RESULTS; i++) {
-      const isEmpty = queryResults[i] == null;
-      searchResultCards[i].style.display = isEmpty ? 'none' : 'flex';
-      if (!isEmpty) {
-        resultPosters[i].setAttribute("src", !queryResults[i].hasOwnProperty('poster_path') ||
-        queryResults[i].poster_path == null || queryResults[i].poster_path.length === 0 ?
-            RESULT_PLACEHOLDER : `${BASE_URL_IMG}/w185${queryResults[i].poster_path}`)
-        resultTitles[i].innerHTML = getTitle(queryResults[i]);
-        resultYears[i].innerHTML = getYear(queryResults[i]);
-        resultGenres[i].innerHTML = getGenres(queryResults[i]);
-        resultRates[i].innerHTML = getRates(queryResults[i]);
-        resultVotes[i].innerHTML = getVotes(queryResults[i]);
-        resultDescriptions[i].innerHTML = getDescription(queryResults[i]);
+      const modalPoster = document.getElementById("modalPoster");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalYear = document.getElementById("modalYear");
+      const modalGenres = document.getElementById("modalGenres");
+      const modalRate = document.getElementById("modalRate");
+      const modalVote = document.getElementById("modalVote");
+      const modalDescription = document.getElementById("modalDescription");
+      const modalSpokenLanguages = document.getElementById(
+        "modalSpokenLanguages"
+      );
+      let modalCastSlots = [];
+      let modalCastAvatars = [];
+      let modalCastNames = [];
+      let modalCastCharacterNames = [];
+      for (let i = 0; i < NUM_CASTS; i++) {
+        modalCastSlots.push(document.getElementById(`modalCastSlot${i}`));
+        modalCastAvatars.push(document.getElementById(`modalCastAvatar${i}`));
+        modalCastNames.push(document.getElementById(`modalCastName${i}`));
+        modalCastCharacterNames.push(
+          document.getElementById(`modalCastCharacterName${i}`)
+        );
       }
-    }
-  }
-
-  const renderModal = () => {
-    modalContainer.style.display = 'block';
-    document.documentElement.style.overflow = "hidden";
-
-    const modalMediaDetails = state.modalMediaDetails;
-    const modalCasts = state.modalCasts;
-    const modalReviews = state.modalReviews;
-
-    modalPoster.setAttribute("src",
-        !modalMediaDetails.hasOwnProperty('backdrop_path') || modalMediaDetails.backdrop_path == null || modalMediaDetails.backdrop_path.length === 0 ?
-            MOVIE_PLACEHOLDER :
-            `${BASE_URL_IMG}/w780${modalMediaDetails.backdrop_path}`
-    )
-    modalTitle.innerHTML = getTitle(modalMediaDetails);
-    modalYear.innerHTML = getYear(modalMediaDetails);
-    modalGenres.innerHTML = getGenres(modalMediaDetails);
-    modalRate.innerHTML = getRates(modalMediaDetails);
-    modalVote.innerHTML = getVotes(modalMediaDetails);
-    modalDescription.innerHTML = getDescription(modalMediaDetails);
-    modalSpokenLanguages.innerHTML = getSpokenLanguages(modalMediaDetails);
-
-    for (let i = 0; i < NUM_CASTS; i++) {
-      const isEmpty = modalCasts[i] == null;
-      modalCastSlots[i].style.display = isEmpty ? 'none' : 'flex';
-      if (!isEmpty) {
-        modalCastAvatars[i].setAttribute("src",
-            !modalCasts[i].hasOwnProperty('profile_path') || modalCasts[i].profile_path == null || modalCasts[i].profile_path.length === 0 ?
-                PERSON_PLACEHOLDER :
-                `${BASE_URL_IMG}/w185${modalCasts[i].profile_path}`);
-        modalCastNames[i].innerHTML = getCastName(modalCasts[i]);
-        modalCastCharacterNames[i].innerHTML = getCharacterName(modalCasts[i]);
+      let modalReviewCards = [];
+      let reviewRateSlots = [];
+      let reviewUsernames = [];
+      let reviewDates = [];
+      let reviewRates = [];
+      let reviewComments = [];
+      for (let i = 0; i < NUM_COMMENTS; i++) {
+        modalReviewCards.push(document.getElementById(`modalReviewCard${i}`));
+        reviewRateSlots.push(document.getElementById(`reviewRateSlot${i}`));
+        reviewUsernames.push(document.getElementById(`reviewUsername${i}`));
+        reviewDates.push(document.getElementById(`reviewDate${i}`));
+        reviewRates.push(document.getElementById(`reviewRate${i}`));
+        reviewComments.push(document.getElementById(`reviewComment${i}`));
       }
-    }
+      let slideShow;
 
-    for (let i = 0; i < NUM_COMMENTS; i++) {
-      const isEmpty = modalReviews[i] == null;
-      modalReviewCards[i].style.display = modalReviews[i] == null ? 'none' : 'block';
-      if (!isEmpty) {
-        reviewRateSlots[i].style.display = modalReviews[i].rating == null ? 'none' : 'block';
-        reviewUsernames[i].innerHTML = getReviewUserName(modalReviews[i]);
-        reviewDates[i].innerHTML = getReviewDate(modalReviews[i]);
-        reviewRates[i].innerHTML = getReviewRate(modalReviews[i]);
-        reviewComments[i].innerHTML = getReviewComment(modalReviews[i]);
-      }
-    }
+      //Event Handlers
+      const onHomeTabClick = () => {
+        homeTab.style.color = "#A5221D";
+        homePage.style.display = "flex";
+        searchTab.style.color = "white";
+        searchPage.style.display = "none";
+        onHomePageMounted();
+        onClearButtonClick();
+        state.tab = "home";
+      };
 
-  }
+      const onHomeTabMouseOver = () => {
+        homeTab.style.color = "#A5221D";
+      };
 
-  const onHomePageMounted = () => {
-    startHomeSlides();
-  }
+      const onHomeTabMouseOut = () => {
+        homeTab.style.color = state.tab === "home" ? "#A5221D" : "white";
+      };
 
-  const onSearchPageMounted = () => {
-    if (state.tab !== 'search') {
-      searchDropdown.selectedIndex = -1;
-    }
-    endHomeSlides();
-  }
+      const onSearchTabClick = () => {
+        homeTab.style.color = "white";
+        homePage.style.display = "none";
+        searchTab.style.color = "#A5221D";
+        searchPage.style.display = "flex";
+        onSearchPageMounted();
+        state.tab = "search";
+      };
 
-  const onAppMounted = async () => {
-    const homeMovies = await fetchHomeMovies();
-    if (homeMovies.data.length !== 0) {
-      state.homeMovies = homeMovies.data;
-    }
+      const onSearchTabMouseOver = () => {
+        searchTab.style.color = "#A5221D";
+      };
 
-    const homeTVShows = await fetchHomeTVShows();
-    if (homeTVShows.data.length !== 0) {
-      state.homeTVShows = homeTVShows.data;
-    }
+      const onSearchTabMouseOut = () => {
+        searchTab.style.color = state.tab === "search" ? "#A5221D" : "white";
+      };
 
-    const movieGenres = await fetchGenres('movie')
-    if (movieGenres.data.length !== 0) {
-      state.movieGenres = movieGenres.data;
-    }
+      const onSearchInputChange = (keyword) => {
+        state.keyword = validateInput(keyword);
+      };
 
-    const tvGenres = await fetchGenres('tv')
-    if (tvGenres.data.length !== 0) {
-      state.tvGenres = tvGenres.data;
-    }
-  }
+      const onSearchDropdownChange = (category) => {
+        state.category = category;
+      };
 
-  onAppMounted().then(() => {
-    onHomePageMounted();
-  });
+      const onSearchButtonClick = async () => {
+        if (state.keyword === "" || state.category === "") {
+          alert("Please enter valid values.");
+          return;
+        }
+        const queryResults = await fetchQueryResults();
+        state.queryResults = queryResults.data;
+        renderQueryResults();
+      };
 
-</script>
-</body>
+      const onClearButtonClick = () => {
+        //Reset display UI Components
+        searchInput.value = "";
+        searchDropdown.selectedIndex = -1;
+        searchResults.style.display = "none";
+        notFound.style.display = "none";
+        //Reset state
+        state.keyword = "";
+        state.category = "";
+        state.queryResults = [];
+        state.targetMediaIndex = -1;
+        state.modalOpen = false;
+        state.modalMediaDetails = {};
+        state.modalCasts = [];
+        state.modalReviews = [];
+      };
+
+      const onShowMoreButtonClick = async (index) => {
+        state.modalOpen = true;
+        state.targetMediaIndex = index;
+        if (state.targetMediaIndex >= 0 && state.targetMediaIndex <= 9) {
+          const targetMedia = state.queryResults[state.targetMediaIndex];
+          if (targetMedia != null) {
+            const modalMediaDetails = await fetchResultDetails(
+              targetMedia.media_type,
+              targetMedia.id
+            );
+            state.modalMediaDetails = modalMediaDetails.data;
+            const modalCasts = await fetchCasts(
+              targetMedia.media_type,
+              targetMedia.id
+            );
+            state.modalCasts = modalCasts.data;
+            const modalReviews = await fetchReviews(
+              targetMedia.media_type,
+              targetMedia.id
+            );
+            state.modalReviews = modalReviews.data;
+          }
+        }
+        renderModal();
+      };
+
+      const onGetMoreIconButtonClick = () => {
+        window.open(
+          `https://themoviedb.org/${state.modalMediaDetails.media_type}/${state.modalMediaDetails.id}`,
+          "_blank"
+        );
+      };
+
+      const onCloseModalButtonClick = () => {
+        state.modalOpen = false;
+        modalContainer.style.display = "none";
+        document.documentElement.style.overflowX = "hidden";
+        document.documentElement.style.overflowY = "auto";
+      };
+
+      //Helper Functions
+      const validateInput = (keyword) => {
+        return (validKeyword = keyword.replace(/[ ]/g, "%20"));
+      };
+
+      const getTitle = (media) => {
+        if (media == null) return "Not Available";
+        return media.media_type === "movie"
+          ? !media.hasOwnProperty("title") ||
+            media.title == null ||
+            !isString(media.title) ||
+            media.title.length === 0
+            ? "Not Available"
+            : media.title
+          : !media.hasOwnProperty("name") ||
+            media.name == null ||
+            !isString(media.name) ||
+            media.name.length === 0
+          ? "Not Available"
+          : media.name;
+      };
+
+      const getYear = (media) => {
+        if (media == null) return "Not Available";
+        return media.media_type === "movie"
+          ? !media.hasOwnProperty("release_date") ||
+            media.release_date == null ||
+            !isString(media.release_date) ||
+            media.release_date.length === 0
+            ? "Not Available"
+            : media.release_date.substring(0, 4)
+          : !media.hasOwnProperty("first_air_date") ||
+            media.first_air_date == null ||
+            !isString(media.first_air_date) ||
+            media.first_air_date.length === 0
+          ? "Not Available"
+          : media.first_air_date.substring(0, 4);
+      };
+
+      const getGenres = (media) => {
+        if (media == null) return "";
+
+        let result = [];
+        if (media.hasOwnProperty("genre_ids")) {
+          if (media.genre_ids == null || media.genre_ids.length === 0)
+            return "";
+          media.media_type === "movie"
+            ? media.genre_ids.forEach((genreId) => {
+                const genre = state.movieGenres.find(
+                  (genre) => genre.id === genreId
+                );
+                if (
+                  genre != null &&
+                  genre.hasOwnProperty("name") &&
+                  genre.name != null &&
+                  isString(genre.name) &&
+                  genre.name !== ""
+                )
+                  result.push(genre.name);
+              })
+            : media.genre_ids.forEach((genreId) => {
+                const genre = state.tvGenres.find(
+                  (genre) => genre.id === genreId
+                );
+                if (
+                  genre != null &&
+                  genre.hasOwnProperty("name") &&
+                  genre.name != null &&
+                  isString(genre.name) &&
+                  genre.name !== ""
+                )
+                  result.push(genre.name);
+              });
+        } else if (media.hasOwnProperty("genres")) {
+          if (media.genres == null || media.genres.length === 0) return "";
+          result = media.genres.map((genre) => {
+            if (
+              genre != null &&
+              genre.hasOwnProperty("name") &&
+              genre.name != null &&
+              isString(genre.name) &&
+              genre.name.length !== 0
+            )
+              return genre.name;
+          });
+        }
+        return result.join(", ");
+      };
+
+      const getRates = (media) => {
+        if (media == null) return "";
+        return !media.hasOwnProperty("vote_average") ||
+          media.vote_average == null
+          ? "0.0"
+          : keepTwoDecimal(media.vote_average / 2);
+      };
+
+      const getVotes = (media) => {
+        if (media == null) return "";
+        return !media.hasOwnProperty("vote_count") ||
+          media.vote_count == null ||
+          isNaN(media.vote_count)
+          ? 0
+          : media.vote_count;
+      };
+
+      const getDescription = (media) => {
+        if (media == null) return "";
+        return !media.hasOwnProperty("overview") ||
+          media.overview == null ||
+          !isString(media.overview) ||
+          media.overview.length === 0
+          ? ""
+          : media.overview;
+      };
+
+      const getSpokenLanguages = (media) => {
+        if (
+          media == null ||
+          !(
+            media.hasOwnProperty("spoken_languages") ||
+            media.hasOwnProperty("spoken languages")
+          )
+        )
+          return "";
+        const spokenLanguages =
+          media["spoken_languages"] || media["spoken languages"];
+        if (spokenLanguages == null || spokenLanguages.length === 0) return "";
+        const result = spokenLanguages.map((spokenLanguage) => {
+          if (
+            spokenLanguage != null &&
+            spokenLanguage.hasOwnProperty("english_name") &&
+            spokenLanguage.english_name != null &&
+            isString(spokenLanguage.english_name) &&
+            spokenLanguage.english_name.length !== 0
+          )
+            return spokenLanguage.english_name;
+        });
+        return result.join(", ");
+      };
+
+      const getCastName = (cast) => {
+        if (cast == null) return "";
+        return !cast.hasOwnProperty("name") ||
+          cast.name == null ||
+          !isString(cast.name) ||
+          cast.name.length === 0
+          ? ""
+          : cast.name;
+      };
+
+      const getCharacterName = (cast) => {
+        if (cast == null) return "";
+        return !cast.hasOwnProperty("character") ||
+          cast.character == null ||
+          !isString(cast.character) ||
+          cast.character.length === 0
+          ? ""
+          : cast.character;
+      };
+
+      const getReviewUserName = (review) => {
+        if (review == null) return "";
+        return !review.hasOwnProperty("username") ||
+          review.username == null ||
+          !isString(review.username) ||
+          review.username.length === 0
+          ? ""
+          : review.username;
+      };
+
+      const getReviewDate = (review) => {
+        if (review == null) return "";
+        return !review.hasOwnProperty("created_at") ||
+          review.created_at == null ||
+          review.created_at.length === 0
+          ? ""
+          : unixToTime(review.created_at);
+      };
+
+      const getReviewRate = (review) => {
+        if (review == null) return "";
+        return !review.hasOwnProperty("rating") || review.rating == null
+          ? "0.0"
+          : keepTwoDecimal(review.rating / 2);
+      };
+
+      const getReviewComment = (review) => {
+        if (review == null) return "";
+        return !review.hasOwnProperty("content") ||
+          review.content == null ||
+          !isString(review.content) ||
+          review.content.length === 0
+          ? ""
+          : review.content;
+      };
+
+      const isString = (str) => {
+        return typeof str === "string" || str instanceof String;
+      };
+
+      const keepTwoDecimal = (num) => {
+        let result = parseFloat(num);
+        if (isNaN(result) || num <= 0) {
+          return 0.0;
+        }
+        result = Math.round(num * 100) / 100;
+        if (Number.isInteger(result)) return `${result}.0`;
+        return result;
+      };
+
+      const unixToTime = (unixTime) => {
+        try {
+          const date = new Date(unixTime);
+          const day = date.getUTCDate();
+          const month = date.getUTCMonth() + 1;
+          const year = date.getUTCFullYear();
+          return `${month < 10 ? "0" + month : month}/${
+            day < 10 ? "0" + day : day
+          }/${year}`;
+        } catch (e) {
+          return "Not Available";
+        }
+      };
+
+      //API Calls
+      const fetchHomeMovies = async () => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          const response = await fetch(
+            `${BASE_URL}/home/movie`,
+            requestOptions
+          );
+          return await response.json();
+        } catch (error) {
+          console.log("Request Failed", error);
+        }
+      };
+
+      const fetchHomeTVShows = async () => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          const response = await fetch(`${BASE_URL}/home/tv`, requestOptions);
+          return await response.json();
+        } catch (error) {
+          console.log("Request Failed", error);
+        }
+      };
+
+      const fetchQueryResults = async () => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          const response = await fetch(
+            `${BASE_URL}/search/${state.category}?keyword=${state.keyword}`,
+            requestOptions
+          );
+          return await response.json();
+        } catch (error) {
+          console.log("Request Failed", error);
+        }
+      };
+
+      const fetchGenres = async (mediaType = "movie") => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          const response = await fetch(
+            `${BASE_URL}/genres/${mediaType}`,
+            requestOptions
+          );
+          return await response.json();
+        } catch (error) {
+          console.log("Request Failed", error);
+        }
+      };
+
+      const fetchResultDetails = async (mediaType = "movie", mediaId = "") => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          if (mediaId === "" || mediaId.length === 0) return {};
+          const response = await fetch(
+            `${BASE_URL}/details/${mediaType}?id=${mediaId}`,
+            requestOptions
+          );
+          return await response.json();
+        } catch (error) {
+          console.log("Request Failed", error);
+        }
+      };
+
+      const fetchCasts = async (mediaType = "movie", mediaId = "") => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          if (mediaId === "" || mediaId.length === 0) return {};
+          const response = await fetch(
+            `${BASE_URL}/cast/${mediaType}?id=${mediaId}`,
+            requestOptions
+          );
+          return await response.json();
+        } catch (error) {
+          console.log("Request Failed", error);
+        }
+      };
+
+      const fetchReviews = async (mediaType = "movie", mediaId = "") => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          if (mediaId === "" || mediaId.length === 0) return {};
+          const response = await fetch(
+            `${BASE_URL}/reviews/${mediaType}?id=${mediaId}`,
+            requestOptions
+          );
+          return await response.json();
+        } catch (error) {
+          console.log("Request Failed", error);
+        }
+      };
+
+      //Render Functions
+      const startHomeSlides = () => {
+        //Load images first
+        let index = 0;
+        trendingMovieImage1.setAttribute(
+          "src",
+          `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`
+        );
+        trendingTVShowImage1.setAttribute(
+          "src",
+          `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`
+        );
+        trendingMovieInfo1.innerHTML = `${getTitle(
+          state.homeMovies[index]
+        )} (${getYear(state.homeMovies[index])})`;
+        trendingTVShowInfo1.innerHTML = `${getTitle(
+          state.homeTVShows[index]
+        )} (${getYear(state.homeTVShows[index])})`;
+        index++;
+        trendingMovieImage2.setAttribute(
+          "src",
+          `${BASE_URL_IMG}/w780${state.homeMovies[index].backdrop_path}`
+        );
+        trendingTVShowImage2.setAttribute(
+          "src",
+          `${BASE_URL_IMG}/w780${state.homeTVShows[index].backdrop_path}`
+        );
+        trendingMovieInfo2.innerHTML = `${getTitle(
+          state.homeMovies[index]
+        )} (${getYear(state.homeMovies[index])})`;
+        trendingTVShowInfo2.innerHTML = `${getTitle(
+          state.homeTVShows[index]
+        )} (${getYear(state.homeTVShows[index])})`;
+        //Start animation until images are loaded
+        setTimeout(() => {
+          trendingMovie1.style.display = "block";
+          trendingTVShow1.style.display = "block";
+          trendingMovieImage1.style.animation = "fadeIn ease 5s infinite";
+          trendingMovieImage2.style.animation = "fadeIn ease 5s infinite";
+          trendingTVShowImage1.style.animation = "fadeIn ease 5s infinite";
+          trendingTVShowImage2.style.animation = "fadeIn ease 5s infinite";
+        }, 150);
+        slideShow = setInterval(() => updateHomeSlides(++index), 5000);
+      };
+
+      const updateHomeSlides = (index) => {
+        const nextIndex = index % 5;
+        if (index % 2 === 0) {
+          //Load current card
+          trendingMovie1.style.display = "none";
+          trendingMovie2.style.display = "block";
+          trendingTVShow1.style.display = "none";
+          trendingTVShow2.style.display = "block";
+          //Set next card
+          trendingMovieImage1.setAttribute(
+            "src",
+            `${BASE_URL_IMG}/w780${state.homeMovies[nextIndex].backdrop_path}`
+          );
+          trendingTVShowImage1.setAttribute(
+            "src",
+            `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`
+          );
+          trendingMovieInfo1.innerHTML = `${getTitle(
+            state.homeMovies[nextIndex]
+          )} (${getYear(state.homeMovies[nextIndex])})`;
+          trendingTVShowInfo1.innerHTML = `${getTitle(
+            state.homeTVShows[nextIndex]
+          )} (${getYear(state.homeTVShows[nextIndex])})`;
+        } else {
+          //Load current card
+          trendingMovie1.style.display = "block";
+          trendingMovie2.style.display = "none";
+          trendingTVShow1.style.display = "block";
+          trendingTVShow2.style.display = "none";
+          //Set next card
+          trendingMovieImage2.setAttribute(
+            "src",
+            `${BASE_URL_IMG}/w780${state.homeMovies[nextIndex].backdrop_path}`
+          );
+          trendingTVShowImage2.setAttribute(
+            "src",
+            `${BASE_URL_IMG}/w780${state.homeTVShows[nextIndex].backdrop_path}`
+          );
+          trendingMovieInfo2.innerHTML = `${getTitle(
+            state.homeMovies[nextIndex]
+          )} (${getYear(state.homeMovies[nextIndex])})`;
+          trendingTVShowInfo2.innerHTML = `${getTitle(
+            state.homeTVShows[nextIndex]
+          )} (${getYear(state.homeTVShows[nextIndex])})`;
+        }
+      };
+
+      const endHomeSlides = () => {
+        clearInterval(slideShow);
+        trendingMovie1.style.display = "none";
+        trendingMovie2.style.display = "none";
+        trendingTVShow1.style.display = "none";
+        trendingTVShow2.style.display = "none";
+        trendingMovieImage1.style.animation = "none";
+        trendingMovieImage2.style.animation = "none";
+        trendingTVShowImage1.style.animation = "none";
+        trendingTVShowImage2.style.animation = "none";
+      };
+
+      const renderQueryResults = () => {
+        //If no results: queryResults = []
+        if (state.queryResults.length === 0 || state.queryResults == null) {
+          searchResults.style.display = "none";
+          notFound.style.display = "flex";
+          return;
+        }
+        //If has results: queryResults = [1-10]
+        searchResults.style.display = "flex";
+        notFound.style.display = "none";
+        const queryResults = state.queryResults;
+        for (let i = 0; i < NUM_RESULTS; i++) {
+          const isEmpty = queryResults[i] == null;
+          searchResultCards[i].style.display = isEmpty ? "none" : "flex";
+          if (!isEmpty) {
+            resultPosters[i].setAttribute(
+              "src",
+              !queryResults[i].hasOwnProperty("poster_path") ||
+                queryResults[i].poster_path == null ||
+                queryResults[i].poster_path.length === 0
+                ? RESULT_PLACEHOLDER
+                : `${BASE_URL_IMG}/w185${queryResults[i].poster_path}`
+            );
+            resultTitles[i].innerHTML = getTitle(queryResults[i]);
+            resultYears[i].innerHTML = getYear(queryResults[i]);
+            resultGenres[i].innerHTML = getGenres(queryResults[i]);
+            resultRates[i].innerHTML = getRates(queryResults[i]);
+            resultVotes[i].innerHTML = getVotes(queryResults[i]);
+            resultDescriptions[i].innerHTML = getDescription(queryResults[i]);
+          }
+        }
+      };
+
+      const renderModal = () => {
+        modalContainer.style.display = "block";
+        document.documentElement.style.overflow = "hidden";
+
+        const modalMediaDetails = state.modalMediaDetails;
+        const modalCasts = state.modalCasts;
+        const modalReviews = state.modalReviews;
+
+        modalPoster.setAttribute(
+          "src",
+          !modalMediaDetails.hasOwnProperty("backdrop_path") ||
+            modalMediaDetails.backdrop_path == null ||
+            modalMediaDetails.backdrop_path.length === 0
+            ? MOVIE_PLACEHOLDER
+            : `${BASE_URL_IMG}/w780${modalMediaDetails.backdrop_path}`
+        );
+        modalTitle.innerHTML = getTitle(modalMediaDetails);
+        modalYear.innerHTML = getYear(modalMediaDetails);
+        modalGenres.innerHTML = getGenres(modalMediaDetails);
+        modalRate.innerHTML = getRates(modalMediaDetails);
+        modalVote.innerHTML = getVotes(modalMediaDetails);
+        modalDescription.innerHTML = getDescription(modalMediaDetails);
+        modalSpokenLanguages.innerHTML = getSpokenLanguages(modalMediaDetails);
+
+        for (let i = 0; i < NUM_CASTS; i++) {
+          const isEmpty = modalCasts[i] == null;
+          modalCastSlots[i].style.display = isEmpty ? "none" : "flex";
+          if (!isEmpty) {
+            modalCastAvatars[i].setAttribute(
+              "src",
+              !modalCasts[i].hasOwnProperty("profile_path") ||
+                modalCasts[i].profile_path == null ||
+                modalCasts[i].profile_path.length === 0
+                ? PERSON_PLACEHOLDER
+                : `${BASE_URL_IMG}/w185${modalCasts[i].profile_path}`
+            );
+            modalCastNames[i].innerHTML = getCastName(modalCasts[i]);
+            modalCastCharacterNames[i].innerHTML = getCharacterName(
+              modalCasts[i]
+            );
+          }
+        }
+
+        for (let i = 0; i < NUM_COMMENTS; i++) {
+          const isEmpty = modalReviews[i] == null;
+          modalReviewCards[i].style.display =
+            modalReviews[i] == null ? "none" : "block";
+          if (!isEmpty) {
+            reviewRateSlots[i].style.display =
+              modalReviews[i].rating == null ? "none" : "block";
+            reviewUsernames[i].innerHTML = getReviewUserName(modalReviews[i]);
+            reviewDates[i].innerHTML = getReviewDate(modalReviews[i]);
+            reviewRates[i].innerHTML = getReviewRate(modalReviews[i]);
+            reviewComments[i].innerHTML = getReviewComment(modalReviews[i]);
+          }
+        }
+      };
+
+      const onHomePageMounted = () => {
+        startHomeSlides();
+      };
+
+      const onSearchPageMounted = () => {
+        if (state.tab !== "search") {
+          searchDropdown.selectedIndex = -1;
+        }
+        endHomeSlides();
+      };
+
+      const onAppMounted = async () => {
+        const homeMovies = await fetchHomeMovies();
+        if (homeMovies.data.length !== 0) {
+          state.homeMovies = homeMovies.data;
+        }
+
+        const homeTVShows = await fetchHomeTVShows();
+        if (homeTVShows.data.length !== 0) {
+          state.homeTVShows = homeTVShows.data;
+        }
+
+        const movieGenres = await fetchGenres("movie");
+        if (movieGenres.data.length !== 0) {
+          state.movieGenres = movieGenres.data;
+        }
+
+        const tvGenres = await fetchGenres("tv");
+        if (tvGenres.data.length !== 0) {
+          state.tvGenres = tvGenres.data;
+        }
+      };
+
+      onAppMounted().then(() => {
+        onHomePageMounted();
+      });
+    </script>
+  </body>
 </html>
